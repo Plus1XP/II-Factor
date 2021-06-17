@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */; };
 		2FEBD9AA267FF66600C98CDC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9A9267FF66600C98CDC /* MainView.swift */; };
 		2FEBD9AD267FF6C300C98CDC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9AB267FF6C300C98CDC /* SettingsView.swift */; };
 		2FEBD9AE267FF6C300C98CDC /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9AC267FF6C300C98CDC /* SettingsStore.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnhancedTextField.swift; sourceTree = "<group>"; };
 		2FEBD9A9267FF66600C98CDC /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2FEBD9AB267FF6C300C98CDC /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2FEBD9AC267FF6C300C98CDC /* SettingsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 		37AD0344266C8CCA0086DD10 /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */,
 				2FEBD9B6267FF7B600C98CDC /* TokenGroupPicker.swift */,
 				2FEBD9B5267FF7B600C98CDC /* TokenGroupPickerView.swift */,
 				37AD0345266C8CCA0086DD10 /* MenuViews.swift */,
@@ -471,6 +474,7 @@
 				37AD0365266C8CCA0086DD10 /* ActivityView.swift in Sources */,
 				37AD0374266C8CCA0086DD10 /* URLExtensions.swift in Sources */,
 				37AD0367266C8CCA0086DD10 /* OTPGenerator.swift in Sources */,
+				2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */,
 				2FEBD9C2267FF8A900C98CDC /* BiometricService.swift in Sources */,
 				2FEBD9AE267FF6C300C98CDC /* SettingsStore.swift in Sources */,
 				37AD036B266C8CCA0086DD10 /* CodeCardView.swift in Sources */,
