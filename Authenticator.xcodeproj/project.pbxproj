@@ -40,6 +40,10 @@
 		37C8D2B62459E0540021575D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37C8D2B52459E0540021575D /* Images.xcassets */; };
 		6E31FC9C266ABEA800CA2C44 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E31FC9B266ABEA800CA2C44 /* BiometricService.swift */; };
 		6E31FC9F266AC03C00CA2C44 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E31FC9E266AC03C00CA2C44 /* MainView.swift */; };
+		6E35BABD267690A900A088EC /* TextExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35BABC267690A900A088EC /* TextExtensions.swift */; };
+		6EAAED0B267508AD00A9DC57 /* TokenGroupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAAED0A267508AD00A9DC57 /* TokenGroupPicker.swift */; };
+		6EAAED0F26750CB200A9DC57 /* TokenGroupPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAAED0E26750CB200A9DC57 /* TokenGroupPickerView.swift */; };
+		6EAAED1826755EC700A9DC57 /* TokenGroupButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAAED1726755EC700A9DC57 /* TokenGroupButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +86,10 @@
 		37E67F782663501B00B6083E /* Authenticator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Authenticator.entitlements; sourceTree = "<group>"; };
 		6E31FC9B266ABEA800CA2C44 /* BiometricService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
 		6E31FC9E266AC03C00CA2C44 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		6E35BABC267690A900A088EC /* TextExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextExtensions.swift; sourceTree = "<group>"; };
+		6EAAED0A267508AD00A9DC57 /* TokenGroupPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGroupPicker.swift; sourceTree = "<group>"; };
+		6EAAED0E26750CB200A9DC57 /* TokenGroupPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGroupPickerView.swift; sourceTree = "<group>"; };
+		6EAAED1726755EC700A9DC57 /* TokenGroupButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGroupButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 		3777B36E2647DC0E00D316E4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6E35BABC267690A900A088EC /* TextExtensions.swift */,
 				37372CEA253456FC0045F835 /* StringExtensions.swift */,
 				3753CBA5265E024600A0DB96 /* DateExtensions.swift */,
 				3753CBA7265E0E8500A0DB96 /* URLExtensions.swift */,
@@ -111,6 +120,8 @@
 			children = (
 				37BE1C68253FFAE400DBFDE4 /* ActivityView.swift */,
 				3777B3702647DC9400D316E4 /* MenuViews.swift */,
+				6EAAED0A267508AD00A9DC57 /* TokenGroupPicker.swift */,
+				6EAAED0E26750CB200A9DC57 /* TokenGroupPickerView.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -134,9 +145,11 @@
 		378C52F4245890B600CC5A1E /* Authenticator */ = {
 			isa = PBXGroup;
 			children = (
+				6EAAED1626755EA100A9DC57 /* Styles */,
 				378C52F5245890B600CC5A1E /* AppDelegate.swift */,
 				378C52F7245890B600CC5A1E /* SceneDelegate.swift */,
 				378C52F9245890B600CC5A1E /* ContentView.swift */,
+				6E31FC9E266AC03C00CA2C44 /* MainView.swift */,
 				3777B36F2647DC6600D316E4 /* ViewComponents */,
 				3777B36E2647DC0E00D316E4 /* Extensions */,
 				37F9979C2541E5E00008B5AF /* Adding */,
@@ -152,7 +165,6 @@
 				378C5303245890B700CC5A1E /* Info.plist */,
 				37AC99292663171D004A3B8B /* InfoPlist.strings */,
 				37AC992826631577004A3B8B /* Localization */,
-				6E31FC9E266AC03C00CA2C44 /* MainView.swift */,
 				378C52FD245890B700CC5A1E /* Preview Content */,
 				6E31FC8F266AAF8800CA2C44 /* Security */,
 			);
@@ -223,6 +235,14 @@
 				6E31FC9B266ABEA800CA2C44 /* BiometricService.swift */,
 			);
 			path = Security;
+			sourceTree = "<group>";
+		};
+		6EAAED1626755EA100A9DC57 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				6EAAED1726755EC700A9DC57 /* TokenGroupButtonStyle.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,14 +341,18 @@
 				3753CBA8265E0E8500A0DB96 /* URLExtensions.swift in Sources */,
 				3796F13E245EB5E200A2E9D0 /* TokenData.swift in Sources */,
 				378C52F8245890B600CC5A1E /* SceneDelegate.swift in Sources */,
+				6E35BABD267690A900A088EC /* TextExtensions.swift in Sources */,
 				3796F137245EADD600A2E9D0 /* Authenticator.xcdatamodeld in Sources */,
 				3768D829245D7CF700988ECB /* DocumentPicker.swift in Sources */,
+				6EAAED1826755EC700A9DC57 /* TokenGroupButtonStyle.swift in Sources */,
 				37AC99172661FAC7004A3B8B /* PhotoPicker.swift in Sources */,
 				3777B3712647DC9400D316E4 /* MenuViews.swift in Sources */,
 				2FDFD446267BB4A800DF1417 /* SettingsView.swift in Sources */,
 				3768D82B245D7E5800988ECB /* ManualEntryView.swift in Sources */,
 				37BE1C69253FFAE400DBFDE4 /* ActivityView.swift in Sources */,
 				6E31FC9C266ABEA800CA2C44 /* BiometricService.swift in Sources */,
+				6EAAED0F26750CB200A9DC57 /* TokenGroupPickerView.swift in Sources */,
+				6EAAED0B267508AD00A9DC57 /* TokenGroupPicker.swift in Sources */,
 				37372CEB253456FC0045F835 /* StringExtensions.swift in Sources */,
 				372C366E245AC1B000F3395A /* AboutView.swift in Sources */,
 				37BCA6492461828600778EBD /* EditAccountView.swift in Sources */,
