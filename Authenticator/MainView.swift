@@ -10,6 +10,8 @@ struct MainView: View {
     @State private var tokens: [Token] = []
     @State private var selectedTokens = Set<Token>()
     
+    @Binding var settings: [GlobalSettings]
+    
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 30 - (Int(Date().timeIntervalSince1970) % 30)
     @State private var codes: [String] = ["000000"]
@@ -224,7 +226,7 @@ struct MainView: View {
                 case .moreExport:
                     ExportView(isPresented: $isSheetPresented, tokens: tokens)
                 case .moreSettings:
-                    SettingsView(isPresented: $isSheetPresented)
+                    SettingsView(isPresented: $isSheetPresented, settings: $settings)
                 case .moreAbout:
                     AboutView(isPresented: $isSheetPresented)
                 case .addByScanner:
