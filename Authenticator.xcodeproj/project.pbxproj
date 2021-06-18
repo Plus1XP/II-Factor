@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FDFD446267BB4A800DF1417 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFD445267BB4A800DF1417 /* SettingsView.swift */; };
 		3725099E245B2D8100928726 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725099D245B2D8100928726 /* Token.swift */; };
 		372C366E245AC1B000F3395A /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372C366D245AC1B000F3395A /* AboutView.swift */; };
 		37354F3E24591CCB000553E2 /* CodeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37354F3D24591CCB000553E2 /* CodeCardView.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2FDFD445267BB4A800DF1417 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3725099D245B2D8100928726 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		372C366D245AC1B000F3395A /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		37354F3D24591CCB000553E2 /* CodeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCardView.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			children = (
 				37BCA64A2461B1BE00778EBD /* ExportView.swift */,
 				372C366D245AC1B000F3395A /* AboutView.swift */,
+				2FDFD445267BB4A800DF1417 /* SettingsView.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				3768D829245D7CF700988ECB /* DocumentPicker.swift in Sources */,
 				37AC99172661FAC7004A3B8B /* PhotoPicker.swift in Sources */,
 				3777B3712647DC9400D316E4 /* MenuViews.swift in Sources */,
+				2FDFD446267BB4A800DF1417 /* SettingsView.swift in Sources */,
 				3768D82B245D7E5800988ECB /* ManualEntryView.swift in Sources */,
 				37BE1C69253FFAE400DBFDE4 /* ActivityView.swift in Sources */,
 				6E31FC9C266ABEA800CA2C44 /* BiometricService.swift in Sources */,

@@ -2,7 +2,7 @@
 //  BiometricService.swift
 //  Authenticator
 //
-//  Created by aleuts on 04/06/2021.
+//  Created by Plus1XP on 04/06/2021.
 //  Copyright © 2021 Bing Jeung. All rights reserved.
 //
 
