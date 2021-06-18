@@ -7,13 +7,14 @@
     </entity>
     <entity name="TokenData" representedClassName="TokenData" syncable="YES">
         <attribute name="displayAccountName" optional="YES" attributeType="String"/>
+        <attribute name="displayGroup" optional="YES" attributeType="String"/>
         <attribute name="displayIssuer" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="indexNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="uri" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="TokenData" positionX="-54" positionY="-9" width="128" height="118"/>
         <element name="GlobalSettings" positionX="-54" positionY="36" width="128" height="74"/>
+        <element name="TokenData" positionX="-54" positionY="-9" width="128" height="119"/>
     </elements>
 </model>

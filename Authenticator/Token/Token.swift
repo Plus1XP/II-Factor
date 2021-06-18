@@ -15,8 +15,9 @@ struct Token: Hashable, Identifiable {
         
         var displayIssuer: String
         var displayAccountName: String
+        var displayGroup: String
         
-        init?(uri: String) {
+        init?(uri: String, group: String) {
                 guard let url: URL = URL(string: uri) else { return nil }
                 guard let components: URLComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
                 guard components.scheme == "otpauth" else { return nil }
@@ -95,6 +96,7 @@ struct Token: Hashable, Identifiable {
                 self.type = .totp
                 self.displayIssuer = self.issuerPrefix ?? ""
                 self.displayAccountName = self.accountName ?? ""
+                self.displayGroup = group
                 self.id = self.secret + Date().timeIntervalSince1970.description
                 
                 if self.displayIssuer.isEmpty && self.issuer.hasContent {
@@ -105,6 +107,7 @@ struct Token: Hashable, Identifiable {
         init?(type: TokenType = .totp,
              issuerPrefix: String?,
              accountName: String?,
+             group: String,
              secret: String,
              issuer: String?,
              algorithm: Algorithm = .sha1,
@@ -155,6 +158,7 @@ struct Token: Hashable, Identifiable {
                 self.id = secret + Date().timeIntervalSince1970.description
                 self.displayIssuer = issuerPrefix ?? issuer ?? ""
                 self.displayAccountName = accountName ?? ""
+                self.displayGroup = group
         }
         
         /// Create Token with TokenData
@@ -163,8 +167,8 @@ struct Token: Hashable, Identifiable {
         ///   - uri: TokenData uri
         ///   - displayIssuer: TokenData displayIssuer
         ///   - displayAccountName: TokenData displayAccountName
-        init?(id: String, uri: String, displayIssuer: String, displayAccountName: String) {
-                guard let temp: Token = Token(uri: uri) else { return nil }
+        init?(id: String, uri: String, displayIssuer: String, displayAccountName: String, displayGroup: String) {
+                guard let temp: Token = Token(uri: uri, group: displayGroup) else { return nil }
                 self.id = id
                 self.uri = uri
                 self.type = temp.type
@@ -177,6 +181,7 @@ struct Token: Hashable, Identifiable {
                 self.period = temp.period
                 self.displayIssuer = displayIssuer
                 self.displayAccountName = displayAccountName
+                self.displayGroup = temp.displayGroup
         }
         
         enum TokenType {

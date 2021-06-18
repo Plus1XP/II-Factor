@@ -32,6 +32,14 @@ struct EditAccountView: View {
                                                         .autocapitalization(.none)
                                         }.padding(.horizontal)
                                         
+                                        VStack {
+                                            HStack {
+                                                Text("Group").font(.headline)
+                                                Spacer()
+                                            }
+                                            TokenGroupButtonStyleView(buttonSelected: $token.displayGroup)
+                                        }.padding()
+                                    
                                         HStack {
                                                 Text("NOTE: Changes would not apply to the Key URI")
                                                         .font(.footnote)
@@ -53,6 +61,7 @@ struct EditAccountView: View {
                                         Button(action: {
                                                 token.displayIssuer = token.displayIssuer.trimmingSpaces()
                                                 token.displayAccountName = token.displayAccountName.trimmingSpaces()
+                                                token.displayGroup = token.displayGroup.trimmingSpaces()
                                                 completion()
                                                 isPresented = false
                                         }) {

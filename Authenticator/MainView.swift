@@ -10,6 +10,10 @@ struct MainView: View {
     @State private var tokens: [Token] = []
     @State private var selectedTokens = Set<Token>()
     
+    var tokenGroupPicker = TokenGroupPicker()
+    @State private var selectedTokenGroup: TokenGroupType = .None
+    @State var tokenGroupSelection: String = ""
+    
     @Binding var settings: [GlobalSettings]
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -24,7 +28,7 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             List(selection: $selectedTokens) {
-                ForEach(tokens, id: \.self) { token in
+                ForEach(tokenGroupPicker.FilterToken(token: tokens, selectedTokenGroup: selectedTokenGroup), id: \.self) { token in
                     if editMode == .active {
                         CodeCardView(token: token,
                                      totp: $codes[tokens.firstIndex(of: token) ?? 0],
@@ -85,8 +89,11 @@ struct MainView: View {
             .alert(isPresented: $isDeletionAlertPresented) {
                 deletionAlert
             }
-            .navigationTitle("2FA Auth")
+            .navigationTitle(tokenGroupPicker.GetTokenGroupNames(tokenGroup: selectedTokenGroup))
             .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    TokenGroupPickerView(selectedTokenGroup: $selectedTokenGroup)
+                }
                 ToolbarItem(placement: .navigationBarLeading) {
                     if self.editMode == .active {
                         Button(action: {
@@ -231,8 +238,14 @@ struct MainView: View {
                     AboutView(isPresented: $isSheetPresented)
                 case .addByScanner:
                     Scanner(isPresented: $isSheetPresented, codeTypes: [.qr], completion: handleScan(result:))
+                        .overlay(
+                            TokenGroupOverlayButtonStyleView(buttonSelected: $tokenGroupSelection)
+                                ,alignment: .bottom)
                 case .addByQRCodeImage:
                     PhotoPicker(completion: handleImagePick(uri:))
+                        .overlay(
+                            TokenGroupOverlayButtonStyleView(buttonSelected: $tokenGroupSelection)
+                                ,alignment: .bottom)
                 case .addByURIFile:
                     DocumentPicker(isPresented: $isSheetPresented, completion: handleImportFromFile(url:))
                 case .addByManually:
@@ -278,7 +291,9 @@ struct MainView: View {
         case .success(let code):
             let uri: String = code.trimmingSpaces()
             guard !uri.isEmpty else { return }
-            guard let newToken: Token = Token(uri: uri) else { return }
+            let group: String = self.tokenGroupSelection
+            self.tokenGroupSelection = ""
+            guard let newToken: Token = Token(uri: uri, group: group) else { return }
             tokens.append(newToken)
             codes = generateCodes()
             updateTokenData()
@@ -290,7 +305,9 @@ struct MainView: View {
     private func handleImagePick(uri: String) {
         let qrCodeUri: String = uri.trimmingSpaces()
         guard !qrCodeUri.isEmpty else { return }
-        guard let newToken: Token = Token(uri: qrCodeUri) else { return }
+        let group: String = self.tokenGroupSelection
+        self.tokenGroupSelection = ""
+        guard let newToken: Token = Token(uri: qrCodeUri, group: group) else { return }
         tokens.append(newToken)
         codes = generateCodes()
         updateTokenData()
@@ -298,10 +315,11 @@ struct MainView: View {
     private func handleImportFromFile(url: URL?) {
         guard let url: URL = url else { return }
         guard let content: String = url.readText() else { return }
+        let group: String = tokenGroupSelection
         let lines: [String] = content.components(separatedBy: .newlines)
         var shouldUpdateTokenData: Bool = false
         _ = lines.map {
-            if let newToken: Token = Token(uri: $0.trimmingSpaces()) {
+            if let newToken: Token = Token(uri: $0.trimmingSpaces(), group: group) {
                 tokens.append(newToken)
                 shouldUpdateTokenData = true
             }
@@ -352,7 +370,7 @@ struct MainView: View {
     private func setupTokens() {
         if tokens.isEmpty {
             _ = fetchedTokens.map {
-                if let token: Token = Token(id: $0.id, uri: $0.uri, displayIssuer: $0.displayIssuer, displayAccountName: $0.displayAccountName) {
+                if let token: Token = Token(id: $0.id, uri: $0.uri, displayIssuer: $0.displayIssuer, displayAccountName: $0.displayAccountName, displayGroup: $0.displayGroup) {
                     tokens.append(token)
                 }
             }
@@ -373,6 +391,7 @@ struct MainView: View {
         let tokenData: TokenData = TokenData(context: context)
         tokenData.id = token.id
         tokenData.uri = token.uri
+        tokenData.displayGroup = token.displayGroup
         tokenData.displayIssuer = token.displayIssuer
         tokenData.displayAccountName = token.displayAccountName
         tokenData.indexNumber = Int64(tokens.firstIndex(of: token) ?? 0)
