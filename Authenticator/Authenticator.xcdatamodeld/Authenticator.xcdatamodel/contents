@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="GlobalSettings" representedClassName="GlobalSettings" syncable="YES" codeGenerationType="class">
         <attribute name="defaultTokenGroup" optional="YES" attributeType="String"/>
+        <attribute name="defaultView" optional="YES" attributeType="String"/>
         <attribute name="isAutoLockEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isLockEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
@@ -14,7 +15,7 @@
         <attribute name="uri" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="GlobalSettings" positionX="-54" positionY="36" width="128" height="74"/>
+        <element name="GlobalSettings" positionX="-54" positionY="36" width="128" height="89"/>
         <element name="TokenData" positionX="-54" positionY="-9" width="128" height="119"/>
     </elements>
 </model>
