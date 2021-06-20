@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct ManualEntryView: View {
-        
+        @Environment(\.managedObjectContext) var context
+        @EnvironmentObject var settings: SettingsStore
+
         @Binding var isPresented: Bool
         let completion: (Token) -> Void
         
@@ -10,6 +12,16 @@ struct ManualEntryView: View {
         @State private var issuer: String = ""
         @State private var accountName: String = ""
         @State private var secretKey: String = ""
+    
+        private var tokenGroup: Binding<String> {
+            Binding<String>(get: {
+                return settings.config!.defaultTokenGroup!
+            }, set: {
+                settings.config?.defaultTokenGroup = $0
+                settings.saveGlobalSettings(context)
+                settings.fetchGlobalSettings(context)
+            })
+        }
         
         @State private var isAlertPresented: Bool = false
         
@@ -37,6 +49,15 @@ struct ManualEntryView: View {
                                                                 .font(.system(.body, design: .monospaced))
                                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 }.padding()
+                                            
+                                                VStack {
+                                                    HStack {
+                                                        Text("Group")
+                                                        Spacer()
+                                                    }
+                                                    TokenGroupAccountButtonStyleView(buttonSelected: tokenGroup)
+                                                }.padding()
+                                            
                                         } else {
                                                 VStack {
                                                         VStack {
@@ -69,6 +90,13 @@ struct ManualEntryView: View {
                                                                         .disableAutocorrection(true)
                                                                         .font(.system(.body, design: .monospaced))
                                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                        }.padding()
+                                                        VStack {
+                                                            HStack {
+                                                                Text("Group")
+                                                                Spacer()
+                                                            }
+                                                            TokenGroupAccountButtonStyleView(buttonSelected: tokenGroup)
                                                         }.padding()
                                                 }
                                         }
@@ -109,12 +137,13 @@ struct ManualEntryView: View {
         private var newToken: Token? {
                 if selection == 0 {
                         guard !keyUri.isEmpty else { return nil }
-                        guard let token: Token = Token(uri: keyUri.trimmingSpaces()) else { return nil }
+                    guard let token: Token = Token(uri: keyUri.trimmingSpaces(), group: tokenGroup.wrappedValue.trimmingSpaces()) else { return nil }
                         return token
                 } else {
                         guard !secretKey.isEmpty else { return nil }
                         guard let token: Token = Token(issuerPrefix: issuer.trimmingSpaces(),
                                                        accountName: accountName.trimmingSpaces(),
+                                                       group: tokenGroup.wrappedValue.trimmingSpaces(),
                                                        secret: secretKey.trimmingSpaces(),
                                                        issuer: issuer.trimmingSpaces()) else { return nil }
                         return token

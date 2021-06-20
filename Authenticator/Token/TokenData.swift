@@ -15,4 +15,5 @@ extension TokenData: Identifiable {
         @NSManaged public var uri: String
         @NSManaged public var displayIssuer: String
         @NSManaged public var displayAccountName: String
+        @NSManaged public var displayGroup: String
 }
