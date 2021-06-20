@@ -34,7 +34,7 @@ struct TokenGroupOverlayButtonStyleView: View {
     }
 }
 
-struct TokenGroupButtonStyleView: View {
+struct TokenGroupAccountButtonStyleView: View {
     @Binding var buttonSelected: String
     var personalGroup: String = "Personal"
     var workGroup: String = "Work"
@@ -56,6 +56,37 @@ struct TokenGroupButtonStyleView: View {
         }
     }
 }
+
+//struct TokenGroupSettingsButtonStyleView: View {
+//    @EnvironmentObject var settings: SettingsStore
+//
+//    @State var buttonSelected: String = ""
+//    var personalGroup: String = "Personal"
+//    var workGroup: String = "Work"
+//
+//    var body: some View {
+//        VStack {
+//            Button(
+//                action: {
+//                    buttonSelected = GetTokenGroupSelection(buttonName: personalGroup, buttonSelected: buttonSelected)
+//                    settings.config?.defaultTokenGroup = buttonSelected
+//                }) {
+//                Text(personalGroup)
+//                    .modifier(TokenGroupTextModifer(buttonName: personalGroup, buttonSelected: $buttonSelected))
+//            }
+//            Button(
+//                action: {
+//                    buttonSelected = GetTokenGroupSelection(buttonName: workGroup, buttonSelected: buttonSelected)
+//                    settings.config?.defaultTokenGroup = buttonSelected
+//                }) {
+//                Text(workGroup)
+//                    .modifier(TokenGroupTextModifer(buttonName: workGroup, buttonSelected: $buttonSelected))
+//            }
+//        }.onAppear(perform: {
+//            buttonSelected = settings.config!.defaultTokenGroup!
+//        })
+//    }
+//}
 
 struct TokenGroupOverlayTextView: View {
     @Binding var buttonSelected: String
