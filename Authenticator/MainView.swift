@@ -4,7 +4,8 @@ import CoreData
 struct MainView: View {
     
     @Environment(\.managedObjectContext) var context
-    
+    @EnvironmentObject var settings: SettingsStore
+
     @State private var editMode: EditMode = .inactive
     
     @State private var tokens: [Token] = []
@@ -12,9 +13,7 @@ struct MainView: View {
     
     var tokenGroupPicker = TokenGroupPicker()
     @State private var selectedTokenGroup: TokenGroupType = .None
-    @State var tokenGroupSelection: String = ""
     
-    @Binding var settings: [GlobalSettings]
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 30 - (Int(Date().timeIntervalSince1970) % 30)
@@ -24,6 +23,16 @@ struct MainView: View {
     @State private var indexSetOnDelete: IndexSet = IndexSet()
     
     @State private var isSheetPresented: Bool = false
+    
+    private var tokenGroupSelected: Binding<String> {
+        Binding<String>(get: {
+            return settings.config!.defaultTokenGroup!
+        }, set: {
+            settings.config?.defaultTokenGroup = $0
+            settings.saveGlobalSettings(context)
+            settings.fetchGlobalSettings(context)
+        })
+    }
     
     var body: some View {
         NavigationView {
@@ -239,17 +248,18 @@ struct MainView: View {
                 case .addByScanner:
                     Scanner(isPresented: $isSheetPresented, codeTypes: [.qr], completion: handleScan(result:))
                         .overlay(
-                            TokenGroupOverlayButtonStyleView(buttonSelected: $tokenGroupSelection)
+                            TokenGroupOverlayButtonStyleView(buttonSelected: tokenGroupSelected)
                                 ,alignment: .bottom)
                 case .addByQRCodeImage:
                     PhotoPicker(completion: handleImagePick(uri:))
                         .overlay(
-                            TokenGroupOverlayButtonStyleView(buttonSelected: $tokenGroupSelection)
+                            TokenGroupOverlayButtonStyleView(buttonSelected: tokenGroupSelected)
                                 ,alignment: .bottom)
                 case .addByURIFile:
                     DocumentPicker(isPresented: $isSheetPresented, completion: handleImportFromFile(url:))
                 case .addByManually:
                     ManualEntryView(isPresented: $isSheetPresented, completion: handleManualEntry(token:))
+                        .environmentObject(settings)
                 case .cardViewDetail:
                     TokenDetailView(isPresented: $isSheetPresented, token: tokens[tokenIndex])
                 case .cardEditing:
@@ -291,8 +301,7 @@ struct MainView: View {
         case .success(let code):
             let uri: String = code.trimmingSpaces()
             guard !uri.isEmpty else { return }
-            let group: String = self.tokenGroupSelection
-            self.tokenGroupSelection = ""
+            let group: String = tokenGroupSelected.wrappedValue
             guard let newToken: Token = Token(uri: uri, group: group) else { return }
             tokens.append(newToken)
             codes = generateCodes()
@@ -305,8 +314,7 @@ struct MainView: View {
     private func handleImagePick(uri: String) {
         let qrCodeUri: String = uri.trimmingSpaces()
         guard !qrCodeUri.isEmpty else { return }
-        let group: String = self.tokenGroupSelection
-        self.tokenGroupSelection = ""
+        let group: String = tokenGroupSelected.wrappedValue
         guard let newToken: Token = Token(uri: qrCodeUri, group: group) else { return }
         tokens.append(newToken)
         codes = generateCodes()
@@ -315,7 +323,7 @@ struct MainView: View {
     private func handleImportFromFile(url: URL?) {
         guard let url: URL = url else { return }
         guard let content: String = url.readText() else { return }
-        let group: String = tokenGroupSelection
+        let group: String = tokenGroupSelected.wrappedValue
         let lines: [String] = content.components(separatedBy: .newlines)
         var shouldUpdateTokenData: Bool = false
         _ = lines.map {
