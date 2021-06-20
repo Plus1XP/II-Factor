@@ -37,7 +37,7 @@ struct EditAccountView: View {
                                                 Text("Group").font(.headline)
                                                 Spacer()
                                             }
-                                            TokenGroupButtonStyleView(buttonSelected: $token.displayGroup)
+                                            TokenGroupAccountButtonStyleView(buttonSelected: $token.displayGroup)
                                         }.padding()
                                     
                                         HStack {
