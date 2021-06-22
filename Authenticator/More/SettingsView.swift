@@ -115,10 +115,28 @@ struct SettingsView: View {
                         }
                         .padding()
                     }
-                    //Uncomment in stach
-//                        }
-//                        .padding()
-//                    }
+                    
+                    VStack {
+                        GroupBox(
+                            label: Label("Export", systemImage: "square.and.arrow.up")
+                                .foregroundColor(.secondary)
+                        ) {
+                            ExportView(tokens: tokens)
+                                .padding(.top)
+                        }
+                        .padding()
+                    }
+                    
+                    VStack {
+                        GroupBox(
+                            label: Label("About", systemImage: "info.circle")
+                                .foregroundColor(.secondary)
+                        ) {
+                            AboutView()
+                                .padding(.top)
+                        }
+                        .padding()
+                    }
                 }
             }
             .navigationTitle("Settings")

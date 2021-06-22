@@ -3,7 +3,6 @@ import CoreImage.CIFilterBuiltins
 
 struct ExportView: View {
 
-        @Binding var isPresented: Bool
         let tokens: [Token]
 
         @State private var isPlainTextActivityPresented: Bool = false
@@ -11,33 +10,37 @@ struct ExportView: View {
         @State private var isZIPFileActivityPresented: Bool = false
 
         var body: some View {
-                NavigationView {
-                        ZStack {
-                                GlobalBackgroundColor().ignoresSafeArea()
-                                ScrollView {
+                                VStack {
                                         Button(action: {
                                                 UIPasteboard.general.string = tokensText
                                         }) {
                                                 HStack {
                                                         Text("Copy all Key URIs to Clipboard")
+                                                            .padding()
+                                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                            .background(Color(UIColor.secondarySystemFill))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                            .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding()
+                                                .padding(.bottom)
                                                 .fillBackground()
-                                                .padding()
                                         }
 
                                         Button(action: {
                                                 isPlainTextActivityPresented = true
                                         }) {
                                                 HStack {
-                                                        Text("Export all Key URIs as plain ") +
-                                                                Text("text").font(.system(.body, design: .monospaced)).foregroundColor(.primary)
-                                                        Spacer()
+                                                    Text("Export all Key URIs as plain text")
+                                                        .padding()
+                                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                        .background(Color(UIColor.secondarySystemFill))
+                                                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                        .foregroundColor(.primary)
+                                                    Spacer()
                                                 }
-                                                .padding()
+                                                .padding(.bottom)
                                                 .fillBackground()
-                                                .padding()
                                         }
                                         .sheet(isPresented: $isPlainTextActivityPresented) {
                                                 ActivityView(activityItems: [tokensText]) {
@@ -49,14 +52,16 @@ struct ExportView: View {
                                                 isTXTFileActivityPresented = true
                                         }) {
                                                 HStack {
-                                                        Text("Export all Key URIs as a ") +
-                                                                Text(".txt").font(.system(.body, design: .monospaced)).foregroundColor(.primary) +
-                                                                Text(" file")
+                                                        Text("Export all Key URIs as a .txt file")
+                                                            .padding()
+                                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                            .background(Color(UIColor.secondarySystemFill))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                            .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding()
+                                                .padding(.bottom)
                                                 .fillBackground()
-                                                .padding()
                                         }
                                         .sheet(isPresented: $isTXTFileActivityPresented) {
                                                 let url = txtFile()
@@ -73,14 +78,16 @@ struct ExportView: View {
                                                 isZIPFileActivityPresented = true
                                         }) {
                                                 HStack {
-                                                        Text("Export all Key URIs as QR Code images combined as a ") +
-                                                                Text(".zip").font(.system(.body, design: .monospaced)).foregroundColor(.primary) +
-                                                                Text(" file")
+                                                        Text("Export all Key URIs as QR Code images combined as a .zip file")
+                                                            .padding()
+                                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                            .background(Color(UIColor.secondarySystemFill))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                            .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding()
+                                                .padding(.bottom)
                                                 .fillBackground()
-                                                .padding()
                                         }
                                         .sheet(isPresented: $isZIPFileActivityPresented) {
                                                 let url: URL = zipFile()
@@ -92,18 +99,6 @@ struct ExportView: View {
                                                 }
                                                 #endif
                                         }
-                                }
-                        }
-                        .navigationTitle("Export accounts")
-                        .toolbar {
-                                ToolbarItem(placement: .navigationBarLeading) {
-                                        Button(action: {
-                                                isPresented  = false
-                                        }) {
-                                                Text("Back")
-                                        }
-                                }
-                        }
                 }
         }
 
