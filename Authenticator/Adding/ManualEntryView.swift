@@ -44,9 +44,10 @@ struct ManualEntryView: View {
                                                                 Spacer()
                                                         }
                                                         TextField("otpauth://totp/...", text: $keyUri)
+                                                                .keyboardType(.URL)
                                                                 .autocapitalization(.none)
                                                                 .disableAutocorrection(true)
-                                                                .font(.system(.body, design: .monospaced))
+                                                                .font(.system(.footnote, design: .monospaced))
                                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 }.padding()
                                             
@@ -66,6 +67,7 @@ struct ManualEntryView: View {
                                                                         Spacer()
                                                                 }
                                                                 TextField("Service Provider (Optional)", text: $issuer)
+                                                                        .disableAutocorrection(true)
                                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                                         }.padding()
                                                         VStack {
@@ -84,7 +86,7 @@ struct ManualEntryView: View {
                                                                         Text("Secret Key")
                                                                         Spacer()
                                                                 }
-                                                                TextField("*SECRET* (Required)", text: $secretKey)
+                                                                TextField("SECRET (Required)", text: $secretKey)
                                                                         .keyboardType(.alphabet)
                                                                         .autocapitalization(.none)
                                                                         .disableAutocorrection(true)
@@ -137,15 +139,15 @@ struct ManualEntryView: View {
         private var newToken: Token? {
                 if selection == 0 {
                         guard !keyUri.isEmpty else { return nil }
-                    guard let token: Token = Token(uri: keyUri.trimmingSpaces(), group: tokenGroup.wrappedValue.trimmingSpaces()) else { return nil }
+                        guard let token: Token = Token(uri: keyUri.trimming(), group: tokenGroup.wrappedValue.trimming()) else { return nil }
                         return token
                 } else {
                         guard !secretKey.isEmpty else { return nil }
-                        guard let token: Token = Token(issuerPrefix: issuer.trimmingSpaces(),
-                                                       accountName: accountName.trimmingSpaces(),
-                                                       group: tokenGroup.wrappedValue.trimmingSpaces(),
-                                                       secret: secretKey.trimmingSpaces(),
-                                                       issuer: issuer.trimmingSpaces()) else { return nil }
+                        guard let token: Token = Token(issuerPrefix: issuer.trimming(),
+                                                       accountName: accountName.trimming(),
+                                                       group: tokenGroup.wrappedValue.trimming(),
+                                                       secret: secretKey.trimming(),
+                                                       issuer: issuer.trimming()) else { return nil }
                         return token
                 }
         }

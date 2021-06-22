@@ -115,9 +115,10 @@ struct SettingsView: View {
                         }
                         .padding()
                     }
-                        }
-                        .padding()
-                    }
+                    //Uncomment in stach
+//                        }
+//                        .padding()
+//                    }
                 }
             }
             .navigationTitle("Settings")
