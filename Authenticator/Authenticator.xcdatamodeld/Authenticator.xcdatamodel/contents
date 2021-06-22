@@ -6,7 +6,7 @@
         <attribute name="isAutoLockEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isLockEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
-    <entity name="TokenData" representedClassName="TokenData" syncable="YES">
+    <entity name="TokenData" representedClassName="TokenData" syncable="YES" codeGenerationType="class">
         <attribute name="displayAccountName" optional="YES" attributeType="String"/>
         <attribute name="displayGroup" optional="YES" attributeType="String"/>
         <attribute name="displayIssuer" optional="YES" attributeType="String"/>

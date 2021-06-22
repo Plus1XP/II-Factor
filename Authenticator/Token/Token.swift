@@ -194,3 +194,9 @@ struct Token: Hashable, Identifiable {
                 case sha512 = "SHA512"
         }
 }
+
+extension Token {
+        init() {
+            self.init(uri: "otpauth://totp/Error:null?algorithm=SHA1&digits=6&issuer=Error&period=30&secret=LLKRKYOT7UCHSHPR", group: TokenGroupType.None.rawValue)!
+        }
+}
