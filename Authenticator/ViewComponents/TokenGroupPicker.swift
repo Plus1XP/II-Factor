@@ -44,6 +44,29 @@ struct TokenGroupPicker {
         }
     }
     
+    func GetTokenGroupValues(tokenGroup: String?) -> TokenGroupType {
+        switch tokenGroup {
+        case TokenGroupType.Personal.rawValue:
+            return .Personal
+        case TokenGroupType.Work.rawValue:
+            return .Work
+        default:
+            return .None
+        }
+    }
+    
+    func FilterToken(selectedTokenGroup: TokenGroupType) -> String? {
+        if selectedTokenGroup == .Personal {
+            return TokenGroupType.Personal.rawValue
+        }
+        else if selectedTokenGroup == .Work {
+            return TokenGroupType.Work.rawValue
+        }
+        else {
+            return nil
+        }
+    }
+    
     func FilterToken(token: [Token], selectedTokenGroup: TokenGroupType) -> [Token] {
         if selectedTokenGroup == .Personal {
             return token.filter { $0.displayGroup.contains(TokenGroupType.Personal.rawValue) }

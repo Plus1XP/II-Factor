@@ -17,40 +17,7 @@ struct SettingsView: View {
     
     var personalGroup: String = "Personal"
     var workGroup: String = "Work"
-    
-//    @State var isAutoLockToggleActive: Bool = false
-//    @State var group: TokenGroupType = .None
-    
-//    private var isLockEnabled: Binding<Bool> {
-//        Binding<Bool>(get: {
-//            return settings.config?.isLockEnabled ?? false
-//        }, set: {
-//            settings.config?.isLockEnabled = $0
-//            if ((settings.config?.isLockEnabled) != nil) {
-//                isAutoLockToggleActive = false
-//            }
-//            if (!(settings.config?.isLockEnabled ?? false)){
-//                isAutoLockToggleActive = true
-//            }
-//        })
-//    }
-//
-//    private var isAutoLockEnabled: Binding<Bool> {
-//        Binding<Bool>(get: {
-//            return settings.config!.isAutoLockEnabled
-//        }, set: {
-//            settings.config?.isAutoLockEnabled = $0
-//        })
-//    }
-//
-//    private var tokenGroupSelected: Binding<String> {
-//        Binding<String>(get: {
-//            return settings.config!.defaultTokenGroup!
-//        }, set: {
-//            settings.config?.defaultTokenGroup = $0
-//        })
-//    }
-    
+
     private var isLockEnabled: Binding<Bool> {
         Binding<Bool>(get: {
             return settings.config!.isLockEnabled
@@ -93,7 +60,6 @@ struct SettingsView: View {
                         ) {
                             Toggle("Enable Password", isOn: isLockEnabled)
                             Toggle("Enable Auto-Lock", isOn: isAutoLockEnabled)
-//                                .disabled(isAutoLockToggleActive)
                                 .disabled(!isLockEnabled.wrappedValue)
                         }
                         .padding()
