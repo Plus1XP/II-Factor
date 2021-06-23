@@ -5,10 +5,11 @@ struct EditAccountView: View {
         @Binding var isPresented: Bool
         let token: Token
         let tokenIndex: Int
-        let completion: (Int, String, String) -> Void
+        let completion: (Int, String, String, String) -> Void
 
         @State private var displayIssuer: String = ""
         @State private var displayAccountName: String = ""
+        @State private var displayGroup: String = TokenGroupType.None.rawValue
 
         var body: some View {
                 NavigationView {
@@ -42,7 +43,7 @@ struct EditAccountView: View {
                                                 Text("Group").font(.headline)
                                                 Spacer()
                                             }
-//                                            TokenGroupAccountButtonStyleView(buttonSelected: $token.displayGroup)
+                                            TokenGroupAccountButtonStyleView(buttonSelected: $displayGroup)
                                         }.padding()
                                     
                                         HStack {
@@ -67,7 +68,8 @@ struct EditAccountView: View {
                                         Button(action: {
                                                 displayIssuer = displayIssuer.trimming()
                                                 displayAccountName = displayAccountName.trimming()
-                                                completion(tokenIndex, displayIssuer, displayAccountName)
+                                                displayGroup = displayGroup.trimming()
+                                                completion(tokenIndex, displayIssuer, displayAccountName, displayGroup)
                                                 isPresented = false
                                         }) {
                                                 Text("Done")
@@ -77,6 +79,7 @@ struct EditAccountView: View {
                 }.onAppear {
                         displayIssuer = token.displayIssuer
                         displayAccountName = token.displayAccountName
+                        displayGroup = token.displayGroup
                 }
         }
 }

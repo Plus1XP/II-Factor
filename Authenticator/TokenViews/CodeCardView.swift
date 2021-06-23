@@ -3,9 +3,10 @@ import SwiftUI
 struct CodeCardView: View {
 
         let token: Token
+        var index: Int
         @Binding var totp: String
         @Binding var timeRemaining: Int
-
+        @Binding var isPresented: Bool
         @State private var isBannerPresented: Bool = false
 
         var body: some View {
@@ -16,12 +17,20 @@ struct CodeCardView: View {
                                 Text(token.displayIssuer).font(.headline)
                                 Spacer(minLength: 16)
                                 Menu {
-                                        Button(action: {
-                                                UIPasteboard.general.string = totp
-                                                isBannerPresented = true
-                                        }) {
-                                                MenuLabel(text: "Copy code", image: "doc.on.doc")
-                                        }
+                                    Button(action: {
+                                        tokenIndex = index
+                                        presentingSheet = .cardDetailView
+                                        isPresented = true
+                                    }) {
+                                        MenuLabel(text: "View Details", image: "text.justifyleft")
+                                    }
+                                    Button(action: {
+                                        tokenIndex = index
+                                        presentingSheet = .cardEditing
+                                        isPresented = true
+                                    }) {
+                                        MenuLabel(text: "Edit Details", image: "square.and.pencil")
+                                    }
                                 } label: {
                                         Image(systemName: "ellipsis.circle")
                                                 .resizable()
