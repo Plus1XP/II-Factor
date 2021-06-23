@@ -34,7 +34,7 @@ struct MainView: View {
     
     private var tokenViewSelected: Binding<TokenGroupType> {
         Binding<TokenGroupType>(get: {
-            return tokenGroupPicker.GetTokenGroupValues(tokenGroup: settings.config!.defaultView)
+            return tokenGroupPicker.GetTokenGroupValues(tokenGroup: settings.config?.defaultView)
         }, set: {
             settings.config?.defaultView = tokenGroupPicker.GetTokenGroupNames(tokenGroup: $0)
             settings.saveGlobalSettings(viewContext)
@@ -45,8 +45,6 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             List(selection: $selectedTokens) {
-//                ForEach(fetchedTokens.filter({ $0.displayGroup == selectedTokenGroup.rawValue }), id: \.self) { item in
-//                ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: selectedTokenGroup) }), id: \.self) { item in
                 ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }), id: \.self) { item in
 
                     let index: Int = Int(fetchedTokens.firstIndex(of: item) ?? 0)
@@ -56,19 +54,6 @@ struct MainView: View {
                         ZStack {
                             GlobalBackgroundColor()
                             CodeCardView(token: token(of: item), index: index, totp: $codes[index], timeRemaining: $timeRemaining, isPresented: $isSheetPresented)
-//                                .contextMenu {
-//                                    Button(action: {
-//                                        selectedTokens.removeAll()
-//                                        indexSetOnDelete.removeAll()
-//                                        editMode = .active
-//                                    }) {
-//                                        HStack {
-//                                            Text("Rearrange")
-//                                            Spacer()
-//                                            Image(systemName: "list.bullet")
-//                                        }
-//                                    }
-//                                }
                                 .padding(.vertical, 4)
                         }
                         .listRowInsets(EdgeInsets())
@@ -77,10 +62,8 @@ struct MainView: View {
                 .onMove(perform: move(from:to:))
                 .onDelete(perform: deleteItems)
                 .onLongPressGesture {
-                    var feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                     feedbackGenerator?.notificationOccurred(.success)
-                    feedbackGenerator = nil
-                    //UINotificationFeedbackGenerator().notificationOccurred(.success)
                     selectedTokens.removeAll()
                     indexSetOnDelete.removeAll()
                     editMode = .active
@@ -226,6 +209,7 @@ struct MainView: View {
             .environment(\.editMode, $editMode)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .accentColor(.primary)
     }
     
     

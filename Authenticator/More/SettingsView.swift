@@ -116,5 +116,6 @@ struct SettingsView: View {
                 }
             }
         }
+        .accentColor(.primary)
     }
 }
