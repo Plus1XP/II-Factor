@@ -6,8 +6,24 @@ struct MainView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var settings: SettingsStore
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \TokenData.indexNumber, ascending: true)], animation: .default)
-    private var fetchedTokens: FetchedResults<TokenData>
+//    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \TokenData.indexNumber, ascending: true)], animation: .default)
+//    private var fetchedTokens: FetchedResults<TokenData>
+//
+//    @FetchRequest(
+//        entity: TokenData.entity(),
+//        sortDescriptors: [NSSortDescriptor(key: "indexNumber", ascending: true)],
+//        predicate: NSPredicate(format: "displayGroup == %@", "Personal"),
+//        animation: .default) var fetchedTokens: FetchedResults<TokenData>
+    
+    
+    @FetchRequest(fetchRequest: TokenData.PersonalResults)
+    var fetchedTokensPeronal: FetchedResults<TokenData>
+
+    @FetchRequest(fetchRequest: TokenData.WorkResults)
+    var fetchedTokensWork: FetchedResults<TokenData>
+
+    @FetchRequest(fetchRequest: TokenData.AllResults)
+    var fetchedTokensAll: FetchedResults<TokenData>
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 30 - (Int(Date().timeIntervalSince1970) % 30)
@@ -45,9 +61,9 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             List(selection: $selectedTokens) {
-                ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }), id: \.self) { item in
-
-                    let index: Int = Int(fetchedTokens.firstIndex(of: item) ?? 0)
+//                ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }), id: \.self) { item in
+                ForEach(fetchedTokens(tokenView: tokenViewSelected.wrappedValue), id: \.self) { item in
+                    let index: Int = Int(fetchedTokens(tokenView: tokenViewSelected.wrappedValue).firstIndex(of: item) ?? 0)
                     if editMode == .active {
                         CodeCardView(token: token(of: item), index: index, totp: $codes[index], timeRemaining: $timeRemaining, isPresented: $isSheetPresented)
                     } else {
@@ -199,9 +215,9 @@ struct MainView: View {
                     ManualEntryView(isPresented: $isSheetPresented, completion: addItem(_:))
                         .environmentObject(settings)
                 case .cardDetailView:
-                    TokenDetailView(isPresented: $isSheetPresented, token: token(of: fetchedTokens[tokenIndex]))
+                    TokenDetailView(isPresented: $isSheetPresented, token: token(of: fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[tokenIndex]))
                 case .cardEditing:
-                    EditAccountView(isPresented: $isSheetPresented, token: token(of: fetchedTokens[tokenIndex]), tokenIndex: tokenIndex) { index, issuer, account, group in
+                    EditAccountView(isPresented: $isSheetPresented, token: token(of: fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[tokenIndex]), tokenIndex: tokenIndex) { index, issuer, account, group in
                         handleAccountEditing(index: index, issuer: issuer, account: account, group: group)
                     }
                 }
@@ -222,7 +238,7 @@ struct MainView: View {
             newTokenData.displayIssuer = token.displayIssuer
             newTokenData.displayAccountName = token.displayAccountName
             newTokenData.displayGroup = token.displayGroup
-            let lastIndexNumber: Int64 = fetchedTokens.last?.indexNumber ?? Int64(fetchedTokens.count)
+            let lastIndexNumber: Int64 = fetchedTokens(tokenView: tokenViewSelected.wrappedValue).last?.indexNumber ?? Int64(fetchedTokens(tokenView: tokenViewSelected.wrappedValue).count)
             newTokenData.indexNumber = lastIndexNumber + 1
             do {
                 try viewContext.save()
@@ -234,13 +250,13 @@ struct MainView: View {
         }
     }
     private func move(from source: IndexSet, to destination: Int) {
-        var idArray: [String] = fetchedTokens.map({ $0.id ?? Token().id })
+        var idArray: [String] = fetchedTokens(tokenView: tokenViewSelected.wrappedValue).map({ $0.id ?? Token().id })
         idArray.move(fromOffsets: source, toOffset: destination)
-        for number in 0..<fetchedTokens.count {
-            let item = fetchedTokens[number]
+        for number in 0..<fetchedTokens(tokenView: tokenViewSelected.wrappedValue).count {
+            let item = fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[number]
             if let index = idArray.firstIndex(where: { $0 == item.id }) {
                 if Int64(index) != item.indexNumber {
-                    fetchedTokens[number].indexNumber = Int64(index)
+                    fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[number].indexNumber = Int64(index)
                 }
             }
         }
@@ -264,12 +280,12 @@ struct MainView: View {
     private func performDeletion() {
         if !selectedTokens.isEmpty {
             _ = selectedTokens.map { oneSelection in
-                _ = fetchedTokens.filter({ $0.id == oneSelection.id }).map(viewContext.delete)
+                _ = fetchedTokens(tokenView: tokenViewSelected.wrappedValue).filter({ $0.id == oneSelection.id }).map(viewContext.delete)
             }
         } else if !indexSetOnDelete.isEmpty {
-            _ = indexSetOnDelete.map({ fetchedTokens[$0] }).map(viewContext.delete)
+            _ = indexSetOnDelete.map({ fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[$0] }).map(viewContext.delete)
         } else {
-            viewContext.delete(fetchedTokens[tokenIndex])
+            viewContext.delete(fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[tokenIndex])
         }
         do {
             try viewContext.save()
@@ -338,11 +354,11 @@ struct MainView: View {
     }
     private func generateCodes() {
         let placeholder: [String] = Array(repeating: "000000", count: 30)
-        guard !fetchedTokens.isEmpty else {
+        guard !fetchedTokens(tokenView: tokenViewSelected.wrappedValue).isEmpty else {
             codes = placeholder
             return
         }
-        let generated: [String] = fetchedTokens.map { code(of: $0) }
+        let generated: [String] = fetchedTokens(tokenView: tokenViewSelected.wrappedValue).map { code(of: $0) }
         codes = generated + placeholder
     }
     private func code(of tokenData: TokenData) -> String {
@@ -354,15 +370,15 @@ struct MainView: View {
     }
     
     private func handleAccountEditing(index: Int, issuer: String, account: String, group: String) {
-        let item: TokenData = fetchedTokens[index]
+        let item: TokenData = fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[index]
         if item.displayIssuer != issuer {
-            fetchedTokens[index].displayIssuer = issuer
+            fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[index].displayIssuer = issuer
         }
         if item.displayAccountName != account {
-            fetchedTokens[index].displayAccountName = account
+            fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[index].displayAccountName = account
         }
         if item.displayGroup != group {
-            fetchedTokens[index].displayGroup = group
+            fetchedTokens(tokenView: tokenViewSelected.wrappedValue)[index].displayGroup = group
         }
         do {
             try viewContext.save()
@@ -374,7 +390,7 @@ struct MainView: View {
     }
     
     private var tokensToExport: [Token] {
-        return fetchedTokens.map({ token(of: $0) })
+        return fetchedTokens(tokenView: tokenViewSelected.wrappedValue).map({ token(of: $0) })
     }
     
     private func clearTemporaryDirectory() {
@@ -390,6 +406,17 @@ struct MainView: View {
         return NSLocalizedString("Read QR Code image", comment: "")
         #endif
     }()
+    
+    func fetchedTokens(tokenView: TokenGroupType) -> FetchedResults<TokenData> {
+        switch tokenView {
+        case .Personal:
+            return fetchedTokensPeronal
+        case .Work:
+            return fetchedTokensWork
+        default:
+            return fetchedTokensAll
+        }
+    }
 }
 
  var presentingSheet: SheetSet = .moreSettings
