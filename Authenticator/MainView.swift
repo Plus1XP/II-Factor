@@ -26,6 +26,8 @@ struct MainView: View {
     @State private var indexSetOnDelete: IndexSet = IndexSet()
     @State private var isDeletionAlertPresented: Bool = false
     
+    @State var searchText: String = ""
+    
     var tokenGroupPicker = TokenGroupPicker()
     
     private var tokenGroupSelected: Binding<String> {
@@ -50,136 +52,142 @@ struct MainView: View {
     
     var body: some View {
         NavigationView {
-            List(selection: $selectedTokens) {
-//                ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }), id: \.self) { item in
-                ForEach(fetchedTokens(tokenView: tokenViewSelected.wrappedValue), id: \.self) { item in
-                    let index: Int = Int(fetchedTokens(tokenView: tokenViewSelected.wrappedValue).firstIndex(of: item) ?? 0)
-                    if editMode == .active {
-                        CodeCardView(token: token(of: item), index: index, totp: $codes[index], timeRemaining: $timeRemaining, isPresented: $isSheetPresented)
-                    } else {
-                        ZStack {
-                            GlobalBackgroundColor()
+            VStack {
+                SearchBar(text: $searchText)
+//                    .isHidden(isSearchView(tokenView: tokenViewSelected.wrappedValue), remove: isSearchView(tokenView: tokenViewSelected.wrappedValue
+//                    ))
+                List(selection: $selectedTokens) {
+//                    ForEach(fetchedTokens(tokenView: tokenViewSelected.wrappedValue).filter({ searchText.isEmpty ? true : $0.displayIssuer!.lowercased().contains(searchText.lowercased()) }), id: \.self) { item in
+                    ForEach(fetchedTokens(tokenView: tokenViewSelected.wrappedValue).filter({ searchText.isEmpty ? true : ($0.displayIssuer ?? "").lowercased().contains(searchText.lowercased()) }), id: \.self) { item in
+                        let index: Int = Int(fetchedTokens(tokenView: tokenViewSelected.wrappedValue).firstIndex(of: item) ?? 0)
+                        if editMode == .active {
                             CodeCardView(token: token(of: item), index: index, totp: $codes[index], timeRemaining: $timeRemaining, isPresented: $isSheetPresented)
-                                .padding(.vertical, 4)
+                        } else {
+                            ZStack {
+                                GlobalBackgroundColor()
+                                CodeCardView(token: token(of: item), index: index, totp: $codes[index], timeRemaining: $timeRemaining, isPresented: $isSheetPresented)
+                                    .padding(.vertical, 4)
+                            }
+                            .listRowInsets(EdgeInsets())
                         }
-                        .listRowInsets(EdgeInsets())
+                    }
+                    .onMove(perform: move(from:to:))
+                    .onDelete(perform: deleteItems)
+                    .onLongPressGesture {
+                        let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                        feedbackGenerator?.notificationOccurred(.success)
+                        selectedTokens.removeAll()
+                        indexSetOnDelete.removeAll()
+                        editMode = .active
                     }
                 }
-                .onMove(perform: move(from:to:))
-                .onDelete(perform: deleteItems)
-                .onLongPressGesture {
-                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-                    feedbackGenerator?.notificationOccurred(.success)
-                    selectedTokens.removeAll()
-                    indexSetOnDelete.removeAll()
-                    editMode = .active
-                }
-            }
-            .listStyle(InsetGroupedListStyle())
-            .onAppear {
-                generateCodes()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                generateCodes()
-                clearTemporaryDirectory()
-            }
-            .onReceive(timer) { _ in
-                timeRemaining = 30 - (Int(Date().timeIntervalSince1970) % 30)
-                if timeRemaining == 30 {
+//                .id(UUID())
+                .listStyle(InsetGroupedListStyle())
+                .onAppear {
                     generateCodes()
                 }
-            }
-            .alert(isPresented: $isDeletionAlertPresented) {
-                deletionAlert
-            }
-            .navigationTitle(tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue))
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    TokenGroupPickerView(selectedTokenGroup: tokenViewSelected)
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                    generateCodes()
+                    clearTemporaryDirectory()
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    if editMode == .active {
-                        Button(action: {
-                            editMode = .inactive
-                            selectedTokens.removeAll()
-                            indexSetOnDelete.removeAll()
-                        }) {
-                            Text("Done")
-                        }
-                    } else {
-                        Button {
-                            presentingSheet = .moreSettings
-                            isSheetPresented = true
-                        } label: {
-                            Image(systemName: "gear")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 24, height: 24)
-                                .padding(.trailing, 8)
-                                .contentShape(Rectangle())
-                        }
+                .onReceive(timer) { _ in
+                    timeRemaining = 30 - (Int(Date().timeIntervalSince1970) % 30)
+                    if timeRemaining == 30 {
+                        generateCodes()
                     }
                 }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if editMode == .active {
-                        Button(action: {
-                            if !selectedTokens.isEmpty {
-                                isDeletionAlertPresented = true
+                .alert(isPresented: $isDeletionAlertPresented) {
+                    deletionAlert
+                }
+                .navigationTitle(tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue))
+                .toolbar {
+                    ToolbarItem(placement: .bottomBar) {
+                        TokenGroupPickerView(selectedTokenGroup: tokenViewSelected)
+                    }
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        if editMode == .active {
+                            Button(action: {
+                                editMode = .inactive
+                                selectedTokens.removeAll()
+                                indexSetOnDelete.removeAll()
+                            }) {
+                                Text("Done")
                             }
-                        }) {
-                            Image(systemName: "trash")
+                        } else {
+                            Button {
+                                presentingSheet = .moreSettings
+                                isSheetPresented = true
+                            } label: {
+                                Image(systemName: "gear")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 24, height: 24)
+                                    .padding(.trailing, 8)
+                                    .contentShape(Rectangle())
+                            }
                         }
-                    } else {
-                        Menu {
-                            #if !targetEnvironment(macCatalyst)
+                    }
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        if editMode == .active {
                             Button(action: {
-                                presentingSheet = .addByScanning
-                                isSheetPresented = true
-                            }) {
-                                HStack {
-                                    Text("Scan QR Code")
-                                    Spacer()
-                                    Image(systemName: "qrcode.viewfinder")
+                                if !selectedTokens.isEmpty {
+                                    isDeletionAlertPresented = true
                                 }
-                            }
-                            #endif
-                            Button(action: {
-                                presentingSheet = .addByQRCodeImage
-                                isSheetPresented = true
                             }) {
-                                HStack {
-                                    Text(readQRCodeImage)
-                                    Spacer()
-                                    Image(systemName: "photo")
-                                }
+                                Image(systemName: "trash")
                             }
-                            Button(action: {
-                                presentingSheet = .addByPickingFile
-                                isSheetPresented = true
-                            }) {
-                                HStack {
-                                    Text("Import from file")
-                                    Spacer()
-                                    Image(systemName: "doc.badge.plus")
+                        } else {
+                            Menu {
+                                #if !targetEnvironment(macCatalyst)
+                                Button(action: {
+                                    presentingSheet = .addByScanning
+                                    isSheetPresented = true
+                                }) {
+                                    HStack {
+                                        Text("Scan QR Code")
+                                        Spacer()
+                                        Image(systemName: "qrcode.viewfinder")
+                                    }
                                 }
-                            }
-                            Button(action: {
-                                presentingSheet = .addByManually
-                                isSheetPresented = true
-                            }) {
-                                HStack {
-                                    Text("Enter manually")
-                                    Spacer()
-                                    Image(systemName: "text.cursor")
+                                #endif
+                                Button(action: {
+                                    presentingSheet = .addByQRCodeImage
+                                    isSheetPresented = true
+                                }) {
+                                    HStack {
+                                        Text(readQRCodeImage)
+                                        Spacer()
+                                        Image(systemName: "photo")
+                                    }
                                 }
+                                Button(action: {
+                                    presentingSheet = .addByPickingFile
+                                    isSheetPresented = true
+                                }) {
+                                    HStack {
+                                        Text("Import from file")
+                                        Spacer()
+                                        Image(systemName: "doc.badge.plus")
+                                    }
+                                }
+                                Button(action: {
+                                    presentingSheet = .addByManually
+                                    isSheetPresented = true
+                                }) {
+                                    HStack {
+                                        Text("Enter manually")
+                                        Spacer()
+                                        Image(systemName: "text.cursor")
+                                    }
+                                }
+                            } label: {
+                                Image(systemName: "qrcode.viewfinder")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 24, height: 24)
+                                    .padding(.leading, 8)
+                                    .contentShape(Rectangle())
                             }
-                        } label: {
-                            Image(systemName: "qrcode.viewfinder")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 24, height: 24)
-                                .padding(.leading, 8)
-                                .contentShape(Rectangle())
                         }
                     }
                 }
@@ -405,6 +413,22 @@ struct MainView: View {
             return fetchedTokensWork
         default:
             return fetchedTokensAll
+        }
+    }
+    
+    func getNavigationTitle(groupView: TokenGroupType) -> String {
+        if groupView != .Search {
+            return tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue)
+        } else {
+            return ""
+        }
+    }
+    
+    func isSearchView(tokenView: TokenGroupType) -> Bool {
+        if tokenView == TokenGroupType.Search {
+            return false
+        } else {
+            return true
         }
     }
 }
