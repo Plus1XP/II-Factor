@@ -6,16 +6,6 @@ struct MainView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var settings: SettingsStore
     
-//    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \TokenData.indexNumber, ascending: true)], animation: .default)
-//    private var fetchedTokens: FetchedResults<TokenData>
-//
-//    @FetchRequest(
-//        entity: TokenData.entity(),
-//        sortDescriptors: [NSSortDescriptor(key: "indexNumber", ascending: true)],
-//        predicate: NSPredicate(format: "displayGroup == %@", "Personal"),
-//        animation: .default) var fetchedTokens: FetchedResults<TokenData>
-    
-    
     @FetchRequest(fetchRequest: TokenData.PersonalResults)
     var fetchedTokensPeronal: FetchedResults<TokenData>
 
