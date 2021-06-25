@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FB64E4326851C5D0044659F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB64E4226851C5D0044659F /* SearchBar.swift */; };
-		2FB64E45268537090044659F /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB64E44268537090044659F /* ViewExtension.swift */; };
+		2FA3B4B32686769B0070B0B7 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */; };
 		2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */; };
 		2FCC63BF2684EE19005CC352 /* TokenDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */; };
 		2FEBD9AA267FF66600C98CDC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9A9267FF66600C98CDC /* MainView.swift */; };
@@ -69,8 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2FB64E4226851C5D0044659F /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		2FB64E44268537090044659F /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnhancedTextField.swift; sourceTree = "<group>"; };
 		2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDataExtension.swift; sourceTree = "<group>"; };
 		2FEBD9A9267FF66600C98CDC /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -149,14 +147,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2FB64E4126851C3B0044659F /* SearchView */ = {
-			isa = PBXGroup;
-			children = (
-				2FB64E4226851C5D0044659F /* SearchBar.swift */,
-			);
-			path = SearchView;
-			sourceTree = "<group>";
-		};
 		2FEBD9BD267FF82B00C98CDC /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,7 +186,6 @@
 		37AD030E266C8A920086DD10 /* Authenticator */ = {
 			isa = PBXGroup;
 			children = (
-				2FB64E4126851C3B0044659F /* SearchView */,
 				37AD0359266C8CCA0086DD10 /* Adding */,
 				37AD030F266C8A920086DD10 /* AppDelegate.swift */,
 				37AD0376266C8E0E0086DD10 /* Assets.xcassets */,
@@ -318,7 +307,7 @@
 				37AD0360266C8CCA0086DD10 /* URLExtensions.swift */,
 				37AD0361266C8CCA0086DD10 /* StringExtensions.swift */,
 				2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */,
-				2FB64E44268537090044659F /* ViewExtension.swift */,
+				2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -473,8 +462,6 @@
 				2FEBD9AA267FF66600C98CDC /* MainView.swift in Sources */,
 				37AD0366266C8CCA0086DD10 /* Token.swift in Sources */,
 				2FEBD9B7267FF7B600C98CDC /* TokenGroupPickerView.swift in Sources */,
-				2FB64E45268537090044659F /* ViewExtension.swift in Sources */,
-				2FB64E4326851C5D0044659F /* SearchBar.swift in Sources */,
 				37AD036C266C8CCA0086DD10 /* TokenDetailView.swift in Sources */,
 				2FEBD9B0267FF6EE00C98CDC /* TextExtensions.swift in Sources */,
 				37AD0317266C8A920086DD10 /* Authenticator.xcdatamodeld in Sources */,
@@ -496,6 +483,7 @@
 				37AD0367266C8CCA0086DD10 /* OTPGenerator.swift in Sources */,
 				2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */,
 				2FEBD9C2267FF8A900C98CDC /* BiometricService.swift in Sources */,
+				2FA3B4B32686769B0070B0B7 /* ViewExtension.swift in Sources */,
 				2FEBD9AE267FF6C300C98CDC /* SettingsStore.swift in Sources */,
 				37AD036B266C8CCA0086DD10 /* CodeCardView.swift in Sources */,
 				2FEBD9AD267FF6C300C98CDC /* SettingsView.swift in Sources */,
