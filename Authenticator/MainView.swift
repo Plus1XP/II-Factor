@@ -73,13 +73,13 @@ struct MainView: View {
                     }
                     .onMove(perform: move(from:to:))
                     .onDelete(perform: deleteItems)
-                    .onLongPressGesture {
-                        let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-                        feedbackGenerator?.notificationOccurred(.success)
-                        selectedTokens.removeAll()
-                        indexSetOnDelete.removeAll()
-                        editMode = .active
-                    }
+//                    .onLongPressGesture {
+//                        let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+//                        feedbackGenerator?.notificationOccurred(.success)
+//                        selectedTokens.removeAll()
+//                        indexSetOnDelete.removeAll()
+//                        editMode = .active
+//                    }
                 }
 //                .id(UUID())
                 .listStyle(InsetGroupedListStyle())
@@ -96,6 +96,7 @@ struct MainView: View {
                         generateCodes()
                     }
                 }
+                .animation(.easeIn)
                 .alert(isPresented: $isDeletionAlertPresented) {
                     deletionAlert
                 }
@@ -191,6 +192,8 @@ struct MainView: View {
                         }
                     }
                 }
+                .environment(\.editMode, $editMode)
+
             }
             .sheet(isPresented: $isSheetPresented) {
                 switch presentingSheet {
@@ -220,7 +223,6 @@ struct MainView: View {
                     }
                 }
             }
-            .environment(\.editMode, $editMode)
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(.primary)
@@ -416,21 +418,21 @@ struct MainView: View {
         }
     }
     
-    func getNavigationTitle(groupView: TokenGroupType) -> String {
-        if groupView != .Search {
-            return tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue)
-        } else {
-            return ""
-        }
-    }
+//    func getNavigationTitle(groupView: TokenGroupType) -> String {
+//        if groupView != .Search {
+//            return tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue)
+//        } else {
+//            return ""
+//        }
+//    }
     
-    func isSearchView(tokenView: TokenGroupType) -> Bool {
-        if tokenView == TokenGroupType.Search {
-            return false
-        } else {
-            return true
-        }
-    }
+//    func isSearchView(tokenView: TokenGroupType) -> Bool {
+//        if tokenView == TokenGroupType.Search {
+//            return false
+//        } else {
+//            return true
+//        }
+//    }
 }
 
  var presentingSheet: SheetSet = .moreSettings
