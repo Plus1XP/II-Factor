@@ -12,7 +12,6 @@ enum TokenGroupType: String, Codable {
     case None = ""
     case Personal = "Personal"
     case Work = "Work"
-    case Search = "Search"
 }
 
 struct TokenGroupPicker {
@@ -20,8 +19,7 @@ struct TokenGroupPicker {
     var TokenGroups: [TokenGroupType] = [
         TokenGroupType.None,
         TokenGroupType.Personal,
-        TokenGroupType.Work,
-        TokenGroupType.Search
+        TokenGroupType.Work
     ]
     
     func SetTokenGroupNames(tokenGroupName: inout String, tokenGroup: TokenGroupType) -> Void {
@@ -31,8 +29,6 @@ struct TokenGroupPicker {
         case .Personal:
             tokenGroupName = tokenGroup.rawValue
         case .Work:
-            tokenGroupName = tokenGroup.rawValue
-        case .Search:
             tokenGroupName = tokenGroup.rawValue
         }
     }
@@ -45,8 +41,6 @@ struct TokenGroupPicker {
             return tokenGroup.rawValue
         case .Work:
             return tokenGroup.rawValue
-        case .Search:
-            return tokenGroup.rawValue
         }
     }
     
@@ -56,8 +50,6 @@ struct TokenGroupPicker {
             return .Personal
         case TokenGroupType.Work.rawValue:
             return .Work
-        case TokenGroupType.Search.rawValue:
-            return .Search
         default:
             return .None
         }
