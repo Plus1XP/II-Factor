@@ -67,15 +67,10 @@ struct SettingsView: View {
                     
                     VStack {
                         GroupBox(
-                            label: Label("Defaults", systemImage: "arrow.counterclockwise")
+                            label: Label("Default Group", systemImage: "checkmark.circle")
                                 .foregroundColor(.secondary)
                                 .padding(.bottom)
                         ) {
-                            HStack {
-                                Text(NSLocalizedString("Image Group", comment: "")).font(.headline)
-                                Spacer()
-                            }
-//                            TokenGroupSettingsButtonStyleView()
                             TokenGroupAccountButtonStyleView(buttonSelected: tokenGroupSelected)
                                 .padding(.bottom)
                         }
