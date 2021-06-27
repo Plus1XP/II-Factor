@@ -129,7 +129,7 @@ private struct BannerModifier: ViewModifier {
                         if isPresented {
                                 BannerView()
                                         .animation(.default)
-                                        .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
+                                        .transition(AnyTransition.move(edge: .leading).combined(with: .opacity))
                                         .onAppear {
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                                                         withAnimation {
@@ -147,8 +147,9 @@ private struct BannerView: View {
                 Text("Copied")
                         .padding(.vertical, 8)
                         .padding(.horizontal, 40)
-                        .background(BlurView())
-                        .clipShape(Capsule())
+                        .background(Color.green)
+                        .opacity(1)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
         }
 }
 

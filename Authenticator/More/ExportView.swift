@@ -109,7 +109,7 @@ struct ExportView: View {
 
         private func txtFile() -> URL {
                 let temporaryDirectoryUrl: URL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-                let txtFileName: String = "2FAAuth-accounts-" + Date.currentDateText + ".txt"
+                let txtFileName: String = "IIFactor-accounts-" + Date.currentDateText + ".txt"
                 let txtFileUrl: URL = temporaryDirectoryUrl.appendingPathComponent(txtFileName, isDirectory: false)
                 try? tokensText.write(to: txtFileUrl, atomically: true, encoding: .utf8)
                 return txtFileUrl
@@ -118,7 +118,7 @@ struct ExportView: View {
         // https://recoursive.com/2021/02/25/create_zip_archive_using_only_foundation
         private func zipFile() -> URL {
                 let temporaryDirectoryUrl: URL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-                let imagesDirectoryName: String = "2FAAuth-accounts-" + Date.currentDateText
+                let imagesDirectoryName: String = "IIFactor-accounts-" + Date.currentDateText
                 let imagesDirectoryUrl: URL = temporaryDirectoryUrl.appendingPathComponent(imagesDirectoryName, isDirectory: true)
                 if !(FileManager.default.fileExists(atPath: imagesDirectoryUrl.path)) {
                         try? FileManager.default.createDirectory(at: imagesDirectoryUrl, withIntermediateDirectories: false)
