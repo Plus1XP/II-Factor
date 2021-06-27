@@ -79,6 +79,7 @@ struct ExportView: View {
                                         }) {
                                                 HStack {
                                                         Text("Export all Key URIs as QR Code images combined as a .zip file")
+                                                            .multilineTextAlignment(.center)
                                                             .padding()
                                                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                                                             .background(Color(UIColor.secondarySystemFill))
