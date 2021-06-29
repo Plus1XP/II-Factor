@@ -16,7 +16,7 @@ enum TokenGroupType: String, Codable {
 
 struct TokenGroupPicker {
     
-    let NoneGroupNAme: String = "ALL"
+    let NoneGroupNAme: String = "All"
     
     var TokenGroups: [TokenGroupType] = [
         TokenGroupType.None,
