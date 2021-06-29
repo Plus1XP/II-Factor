@@ -52,7 +52,7 @@ struct ExportView: View {
                                                 isTXTFileActivityPresented = true
                                         }) {
                                                 HStack {
-                                                        Text("Export all Key URIs as a .txt file")
+                                                        Text("Export all Key URIs in .txt file")
                                                             .padding()
                                                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                                                             .background(Color(UIColor.secondarySystemFill))
@@ -78,7 +78,7 @@ struct ExportView: View {
                                                 isZIPFileActivityPresented = true
                                         }) {
                                                 HStack {
-                                                        Text("Export all Key URIs as QR Code images combined as a .zip file")
+                                                        Text("Export all QR Code images in .zip file")
                                                             .multilineTextAlignment(.center)
                                                             .padding()
                                                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
