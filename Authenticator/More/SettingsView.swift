@@ -72,7 +72,7 @@ struct SettingsView: View {
                             label: Label("Security", systemImage: "lock")
                                 .foregroundColor(.secondary)
                         ) {
-                            Toggle("Enable Password", isOn: isLockEnabled)
+                            Toggle("Enable App Lock", isOn: isLockEnabled)
                             Toggle("Enable Auto-Lock", isOn: isAutoLockEnabled)
                                 .disabled(!isLockEnabled.wrappedValue)
                             }
