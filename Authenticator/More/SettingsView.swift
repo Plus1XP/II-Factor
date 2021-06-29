@@ -56,6 +56,12 @@ struct SettingsView: View {
         })
     }
     
+    private let versionString: String = {
+            let version: String = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "_error"
+            let build: String = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "_error"
+            return version + " (" + build + ")"
+    }()
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -122,6 +128,14 @@ struct SettingsView: View {
                         }
                         .padding()
                     }
+                    
+                    HStack {
+                            Text("Version - \(versionString)")
+                    }
+                    .font(.footnote)
+                    .contextMenu(menuItems: {
+                            MenuCopyButton(content: versionString)
+                    })
                 }
             }
             .navigationTitle("Settings")
