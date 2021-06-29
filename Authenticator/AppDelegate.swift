@@ -24,44 +24,82 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // MARK: - Core Data stack
-
-        lazy var persistentContainer: NSPersistentCloudKitContainer = {
-                /*
-                 The persistent container for the application. This implementation
-                 creates and returns a container, having loaded the store for the
-                 application to it. This property is optional since there are legitimate
-                 error conditions that could cause the creation of the store to fail.
-                 */
-                let container = NSPersistentCloudKitContainer(name: "Authenticator")
-                container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-                        if let error = error as NSError? {
-                                /*
-                                 Typical reasons for an error here include:
-                                 * The parent directory does not exist, cannot be created, or disallows writing.
-                                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                                 * The device is out of space.
-                                 * The store could not be migrated to the current model version.
-                                 Check the error message to determine what the actual problem was.
-                                 */
-                                logger.debug("Unresolved error \(error), \(error.userInfo)")
-                        }
-                })
-                container.viewContext.automaticallyMergesChangesFromParent = true
-                return container
+    
+        lazy var persistentContainer: NSPersistentContainer = {
+            /*
+             The persistent container for the application. This implementation
+             creates and returns a container, having loaded the store for the
+             application to it. This property is optional since there are legitimate
+             error conditions that could cause the creation of the store to fail.
+             */
+            setupContainer()
         }()
-
-        // MARK: - Core Data Saving support
-
-        func saveContext () {
-                let context = persistentContainer.viewContext
-                if context.hasChanges {
-                        do {
-                                try context.save()
-                        } catch {
-                                let nserror = error as NSError
-                                logger.debug("Unresolved error \(nserror), \(nserror.userInfo)")
-                        }
+        
+        func setupContainer() -> NSPersistentContainer {
+            
+            let isCloudKitEnabled = UserDefaults.standard.bool(forKey: "isCloudKitEnabled")
+            
+            let container: NSPersistentContainer?
+            
+            if isCloudKitEnabled {
+                print("Is syncing iCloud")
+                container = NSPersistentCloudKitContainer(name: "Authenticator")
+                container?.viewContext.automaticallyMergesChangesFromParent = true
+                
+                guard let description = container?.persistentStoreDescriptions.first else {
+                    fatalError("###\(#function): Failed to retrieve a persistent store description.")
                 }
-        }
+                
+                description.setOption(true as NSNumber,
+                                      forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+                
+                // this will output the cloudKit Container Name
+                print("cloudkit container identifier : \(String(describing: description.cloudKitContainerOptions?.containerIdentifier))")
+            } else {
+                print("Is Not syncing iCloud")
+                container = NSPersistentContainer(name: "Authenticator")
+                
+                guard let description = container?.persistentStoreDescriptions.first else {
+                    fatalError("###\(#function): Failed to retrieve a persistent store description.")
+                }
+                
+                description.setOption(true as NSNumber,
+                                      forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+                
+                // This allows a 'non-iCloud' sycning container to keep track of changes if a user changes their mind
+                // and turns it on.
+                description.setOption(true as NSNumber,
+                                      forKey: NSPersistentHistoryTrackingKey)
+            }
+            container!.loadPersistentStores(completionHandler: { (storeDescription, error) in
+                if let error = error as NSError? {
+                    /*
+                     Typical reasons for an error here include:
+                     * The parent directory does not exist, cannot be created, or disallows writing.
+                     * The persistent store is not accessible, due to permissions or data protection when the device is locked.
+                     * The device is out of space.
+                     * The store could not be migrated to the current model version.
+                     Check the error message to determine what the actual problem was.
+                     */
+                    logger.debug("Unresolved error \(error), \(error.userInfo)")
 
+                }
+            })
+            // As NSPersistentCloudKitContainer is a subclass of NSPersistentContainer, you can return either.
+            return container!
+            }
+        
+            // MARK: - Core Data Saving support
+
+            func saveContext () {
+                let context = persistentContainer.viewContext
+                    if context.hasChanges {
+                            do {
+                                    try context.save()
+                            } catch {
+                                    let nserror = error as NSError
+                                    logger.debug("Unresolved error \(nserror), \(nserror.userInfo)")
+                            }
+                    }
+            }
 }

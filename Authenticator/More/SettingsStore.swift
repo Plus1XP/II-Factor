@@ -6,17 +6,14 @@
 //  Copyright © 2021 Bing Jeung. All rights reserved.
 //
 
-import Foundation
 import CoreData
-import SwiftUI
 
 class SettingsStore: ObservableObject {
     
     @Published var config: GlobalSettings?
     
-    // Mark: - Core Data
-    
     func setupGlobalSettings(_ context: NSManagedObjectContext) -> Void {
+        setUserDefaults()
         fetchGlobalSettings(context)
         if config == nil {
             print("! Settings Empty")
@@ -67,5 +64,30 @@ class SettingsStore: ObservableObject {
         } catch let error as NSError {
             print("Delete settings failed: \(error.localizedDescription)")
         }
+    }
+    
+    func deleteGlobalSettings(_ context: NSManagedObjectContext) -> Void {
+        do {
+            var settings: [GlobalSettings] = try context.fetch(GlobalSettings.fetchRequest())
+            print("config count: \(settings.count)")
+            for item in settings {
+                var number: Int = 1
+                deleteGlobalSettings(context, settings: item)
+                print("Deleted config: \(number) of \(settings.count)")
+                number += 1
+            }
+            settings = try context.fetch(GlobalSettings.fetchRequest())
+            print("config count: \(settings.count)")
+        } catch let error as NSError {
+            print("Load settings failed: \(error.localizedDescription)")
+        }
+    }
+    
+    func setUserDefaults() -> Void {
+        UserDefaults.standard.register(
+            defaults: [
+                "isCloudKitEnabled": false
+            ]
+        )
     }
 }

@@ -48,6 +48,14 @@ struct SettingsView: View {
         })
     }
     
+    private var isCloudKitEnabled: Binding<Bool> {
+        Binding<Bool>(get: {
+            return UserDefaults.standard.bool(forKey: "isCloudKitEnabled")
+        }, set: {
+            UserDefaults.standard.setValue($0, forKey: "isCloudKitEnabled")
+        })
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -61,7 +69,23 @@ struct SettingsView: View {
                             Toggle("Enable Password", isOn: isLockEnabled)
                             Toggle("Enable Auto-Lock", isOn: isAutoLockEnabled)
                                 .disabled(!isLockEnabled.wrappedValue)
-                        }
+                            }
+                        .padding()
+                    }
+                    
+                    VStack {
+                        GroupBox(
+                            label: Label("Sync", systemImage: "icloud")
+                                .foregroundColor(.secondary)
+                        ) {
+                            Toggle("iCloud", isOn: isCloudKitEnabled)
+                            HStack {
+                                Text("NOTE: iCloud Changes will not be applied untill app is restarted")
+                                    .font(.footnote)
+                                    .foregroundColor(Color.secondary)
+                                    .multilineTextAlignment(.center)
+                                Spacer()
+                            }                        }
                         .padding()
                     }
                     
