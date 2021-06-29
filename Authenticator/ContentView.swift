@@ -3,7 +3,7 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var context
-    @StateObject private var settings = SettingsStore()
+    @EnvironmentObject var settings: SettingsStore
     @StateObject private var biometricService = BiometricService()
 
     @State private var isAppLocked = true
