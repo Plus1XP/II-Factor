@@ -4,7 +4,7 @@ struct AboutView: View {
 
     var body: some View {
         VStack {
-            VersionLabel()
+//            VersionLabel()
             LinkCardView(heading: "Source Code", message: "https://github.com/plus1xp/authenticator")
             LinkCardView(heading: "Forked From", message: "https://github.com/ososoio/authenticator")
         }
