@@ -23,17 +23,15 @@ struct MainView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 30 - (Int(Date().timeIntervalSince1970) % 30)
     @State private var codes: [String] = Array(repeating: "000000", count: 50)
-    
     @State private var isSheetPresented: Bool = false
-    
     @State private var editMode: EditMode = .inactive
     @State private var selectedTokens = Set<TokenData>()
     @State private var indexSetOnDelete: IndexSet = IndexSet()
     @State private var isDeletionAlertPresented: Bool = false
+    @State private var canEditGroup: Bool = false
+    @State private var searchText: String = ""
     
-    @State var searchText: String = ""
-    
-    var tokenGroupPicker = TokenGroupPicker()
+    private var tokenGroupPicker = TokenGroupPicker()
     
     private var tokenGroupSelected: Binding<String> {
         Binding<String>(get: {
@@ -99,6 +97,27 @@ struct MainView: View {
             .alert(isPresented: $isDeletionAlertPresented) {
                 deletionAlert
             }
+            .actionSheet(isPresented: $canEditGroup) {
+                        ActionSheet(
+                            title: Text("Token Group"),
+                            message: Text("Select Token Group"),
+                            buttons: [
+                                .default(Text("None"), action: {
+                                    SetSelectedTokengroups(selectedTokenGroup: TokenGroupType.None.rawValue)
+                                }),
+                                .default(Text("Personal"), action: {
+                                    SetSelectedTokengroups(selectedTokenGroup: TokenGroupType.Personal.rawValue)
+                                }),
+                                .default(Text("Work"), action: {
+                                    SetSelectedTokengroups(selectedTokenGroup: TokenGroupType.Work.rawValue)
+                                }),
+                                .destructive(Text("Cancel"), action: {
+                                    canEditGroup = false
+                                    selectedTokens.removeAll()
+                                })
+                            ]
+                        )
+                    }
             .navigationTitle(tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue))
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
@@ -129,6 +148,13 @@ struct MainView: View {
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     if editMode == .active {
+                        Button(action: {
+                            if !selectedTokens.isEmpty {
+                                canEditGroup = true
+                            }
+                        }) {
+                            Image(systemName: "pencil")
+                        }
                         Button(action: {
                             if !selectedTokens.isEmpty {
                                 isDeletionAlertPresented = true
@@ -303,7 +329,19 @@ struct MainView: View {
                      primaryButton: .cancel(cancelDeletion),
                      secondaryButton: .destructive(Text("Delete"), action: performDeletion))
     }
-    
+    func SetSelectedTokengroups(selectedTokenGroup: String) -> Void {
+        for token in selectedTokens {
+            token.displayGroup = selectedTokenGroup
+        }
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            logger.debug("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        canEditGroup = false
+        selectedTokens.removeAll()
+    }
     
     // MARK: - Account Adding
     private func handleScanning(result: Result<String, ScannerView.ScanError>) {
