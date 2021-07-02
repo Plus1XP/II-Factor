@@ -110,10 +110,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // replace the identifier with your container identifier
                 let container = CKContainer(identifier: "iCloud.io.plus1xp.authenticator")
-
                 let database = container.privateCloudDatabase
                 
                 // instruct iCloud to delete the whole zone (and all of its records)
+                // TODO: Code seems to run async and delays updating the bool.
                 database.delete(withRecordZoneID: .init(zoneName: "com.apple.coredata.cloudkit.zone"), completionHandler: { (zoneID, error) in
                     if let error = error {
                         print("error deleting zone: - \(error.localizedDescription)")
@@ -122,6 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         wasSuccessful = true
                     }
                 })
+                print("wasSuccessful: \(wasSuccessful)")
                 return wasSuccessful
             }
 }
