@@ -6,26 +6,35 @@
 //  Copyright © 2021 Bing Jeung. All rights reserved.
 //
 
-import Foundation
 import CoreData
-import SwiftUI
 
 class SettingsStore: ObservableObject {
     
     @Published var config: GlobalSettings?
     
-    // Mark: - Core Data
-    
     func setupGlobalSettings(_ context: NSManagedObjectContext) -> Void {
-        fetchGlobalSettings(context)
+        setUserDefaults()
+        fetchAndValidateGlobalSettings(context)
         if config == nil {
             print("! Settings Empty")
             saveGlobalSettings(context ,isLockEnabled: false, isAutoLockEnabled: false, defaultTokenGroup: TokenGroupType.None.rawValue, defaultView: "")
             print("! Created new DB")
             fetchGlobalSettings(context)
-        }
-        else {
+        } else {
             print("! Settings Loaded")
+        }
+    }
+    
+    func fetchAndValidateGlobalSettings(_ context: NSManagedObjectContext) -> Void {
+        do {
+            let settings: [GlobalSettings] = try context.fetch(GlobalSettings.fetchRequest())
+            print("config count: \(settings.count)")
+            if settings.count > 1 {
+                deleteGlobalSettings(context, canDeleteFirstValue: false)
+            }
+            config = settings.first
+        } catch let error as NSError {
+            print("Load settings failed: \(error.localizedDescription)")
         }
     }
 
@@ -67,5 +76,34 @@ class SettingsStore: ObservableObject {
         } catch let error as NSError {
             print("Delete settings failed: \(error.localizedDescription)")
         }
+    }
+    
+    func deleteGlobalSettings(_ context: NSManagedObjectContext, canDeleteFirstValue: Bool) -> Void {
+        do {
+            var settings: [GlobalSettings] = try context.fetch(GlobalSettings.fetchRequest())
+            print("config count: \(settings.count)")
+            var count: Int = 1
+            for item in settings {
+                if !canDeleteFirstValue && count == 1 {
+                    count += 1
+                    continue
+                }
+                deleteGlobalSettings(context, settings: item)
+                print("Deleted config: \(count) of \(settings.count)")
+                count += 1
+            }
+            settings = try context.fetch(GlobalSettings.fetchRequest())
+            print("config count: \(settings.count)")
+        } catch let error as NSError {
+            print("Load settings failed: \(error.localizedDescription)")
+        }
+    }
+    
+    func setUserDefaults() -> Void {
+        UserDefaults.standard.register(
+            defaults: [
+                "isCloudKitEnabled": false
+            ]
+        )
     }
 }

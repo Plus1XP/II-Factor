@@ -3,7 +3,6 @@ import CoreImage.CIFilterBuiltins
 
 struct ExportView: View {
 
-        @Binding var isPresented: Bool
         let tokens: [Token]
 
         @State private var isPlainTextActivityPresented: Bool = false
@@ -11,33 +10,33 @@ struct ExportView: View {
         @State private var isZIPFileActivityPresented: Bool = false
 
         var body: some View {
-                NavigationView {
-                        ZStack {
-                                GlobalBackgroundColor().ignoresSafeArea()
-                                ScrollView {
+                                VStack {
                                         Button(action: {
                                                 UIPasteboard.general.string = tokensText
                                         }) {
                                                 HStack {
                                                         Text("Copy all Key URIs to Clipboard")
+                                                            .padding()
+                                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                            .background(Color(UIColor.secondarySystemFill))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                            .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding()
-                                                .fillBackground()
-                                                .padding()
                                         }
 
                                         Button(action: {
                                                 isPlainTextActivityPresented = true
                                         }) {
                                                 HStack {
-                                                        Text("Export all Key URIs as plain ") +
-                                                                Text("text").font(.system(.body, design: .monospaced)).foregroundColor(.primary)
-                                                        Spacer()
+                                                    Text("Export all Key URIs as plain text")
+                                                        .padding()
+                                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                        .background(Color(UIColor.secondarySystemFill))
+                                                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                        .foregroundColor(.primary)
+                                                    Spacer()
                                                 }
-                                                .padding()
-                                                .fillBackground()
-                                                .padding()
                                         }
                                         .sheet(isPresented: $isPlainTextActivityPresented) {
                                                 ActivityView(activityItems: [tokensText]) {
@@ -49,14 +48,14 @@ struct ExportView: View {
                                                 isTXTFileActivityPresented = true
                                         }) {
                                                 HStack {
-                                                        Text("Export all Key URIs as a ") +
-                                                                Text(".txt").font(.system(.body, design: .monospaced)).foregroundColor(.primary) +
-                                                                Text(" file")
+                                                        Text("Export all Key URIs in .txt file")
+                                                            .padding()
+                                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                            .background(Color(UIColor.secondarySystemFill))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                            .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding()
-                                                .fillBackground()
-                                                .padding()
                                         }
                                         .sheet(isPresented: $isTXTFileActivityPresented) {
                                                 let url = txtFile()
@@ -73,14 +72,15 @@ struct ExportView: View {
                                                 isZIPFileActivityPresented = true
                                         }) {
                                                 HStack {
-                                                        Text("Export all Key URIs as QR Code images combined as a ") +
-                                                                Text(".zip").font(.system(.body, design: .monospaced)).foregroundColor(.primary) +
-                                                                Text(" file")
+                                                        Text("Export all QR Code images in .zip file")
+                                                            .multilineTextAlignment(.center)
+                                                            .padding()
+                                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                            .background(Color(UIColor.secondarySystemFill))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                            .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding()
-                                                .fillBackground()
-                                                .padding()
                                         }
                                         .sheet(isPresented: $isZIPFileActivityPresented) {
                                                 let url: URL = zipFile()
@@ -92,18 +92,6 @@ struct ExportView: View {
                                                 }
                                                 #endif
                                         }
-                                }
-                        }
-                        .navigationTitle("Export accounts")
-                        .toolbar {
-                                ToolbarItem(placement: .navigationBarLeading) {
-                                        Button(action: {
-                                                isPresented  = false
-                                        }) {
-                                                Text("Back")
-                                        }
-                                }
-                        }
                 }
         }
 
@@ -113,7 +101,7 @@ struct ExportView: View {
 
         private func txtFile() -> URL {
                 let temporaryDirectoryUrl: URL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-                let txtFileName: String = "2FAAuth-accounts-" + Date.currentDateText + ".txt"
+                let txtFileName: String = "IIFactor-accounts-" + Date.currentDateText + ".txt"
                 let txtFileUrl: URL = temporaryDirectoryUrl.appendingPathComponent(txtFileName, isDirectory: false)
                 try? tokensText.write(to: txtFileUrl, atomically: true, encoding: .utf8)
                 return txtFileUrl
@@ -122,7 +110,7 @@ struct ExportView: View {
         // https://recoursive.com/2021/02/25/create_zip_archive_using_only_foundation
         private func zipFile() -> URL {
                 let temporaryDirectoryUrl: URL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-                let imagesDirectoryName: String = "2FAAuth-accounts-" + Date.currentDateText
+                let imagesDirectoryName: String = "IIFactor-accounts-" + Date.currentDateText
                 let imagesDirectoryUrl: URL = temporaryDirectoryUrl.appendingPathComponent(imagesDirectoryName, isDirectory: true)
                 if !(FileManager.default.fileExists(atPath: imagesDirectoryUrl.path)) {
                         try? FileManager.default.createDirectory(at: imagesDirectoryUrl, withIntermediateDirectories: false)

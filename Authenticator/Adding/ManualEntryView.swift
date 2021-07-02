@@ -43,12 +43,22 @@ struct ManualEntryView: View {
                                                                 Text("Key URI")
                                                                 Spacer()
                                                         }
+                                                        #if targetEnvironment(macCatalyst)
                                                         TextField("otpauth://totp/...", text: $keyUri)
+                                                                .keyboardType(.URL)
+                                                                .disableAutocorrection(true)
+                                                                .autocapitalization(.none)
+                                                                .font(.system(.footnote, design: .monospaced))
+                                                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                        #else
+                                                        TextField("otpauth://totp/...", text: $keyUri)
+                                                                .padding(.all, 10)
                                                                 .keyboardType(.URL)
                                                                 .autocapitalization(.none)
                                                                 .disableAutocorrection(true)
-                                                                .font(.system(.footnote, design: .monospaced))
-                                                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                                .font(.system(size: 13, weight: .regular, design: .monospaced))
+                                                                .fillBackground(cornerRadius: 8)
+                                                        #endif
                                                 }.padding()
                                             
                                                 VStack {
@@ -66,32 +76,60 @@ struct ManualEntryView: View {
                                                                         Text("Issuer")
                                                                         Spacer()
                                                                 }
+                                                                #if targetEnvironment(macCatalyst)
                                                                 TextField("Service Provider (Optional)", text: $issuer)
                                                                         .disableAutocorrection(true)
+                                                                        .autocapitalization(.words)
                                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                                #else
+                                                                TextField("Service Provider (Optional)", text: $issuer)
+                                                                        .padding(.all, 8)
+                                                                        .disableAutocorrection(true)
+                                                                        .autocapitalization(.words)
+                                                                        .fillBackground(cornerRadius: 8)
+                                                                #endif
                                                         }.padding()
                                                         VStack {
                                                                 HStack {
                                                                         Text("Account Name")
                                                                         Spacer()
                                                                 }
+                                                                #if targetEnvironment(macCatalyst)
                                                                 TextField("email@example.com (Optional)", text: $accountName)
+                                                                        .keyboardType(.emailAddress)
+                                                                        .disableAutocorrection(true)
+                                                                        .autocapitalization(.none)
+                                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                                #else
+                                                                TextField("email@example.com (Optional)", text: $accountName)
+                                                                        .padding(.all, 8)
                                                                         .keyboardType(.emailAddress)
                                                                         .autocapitalization(.none)
                                                                         .disableAutocorrection(true)
-                                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                                        .fillBackground(cornerRadius: 8)
+                                                                #endif
                                                         }.padding(.horizontal)
                                                         VStack {
                                                                 HStack {
                                                                         Text("Secret Key")
                                                                         Spacer()
                                                                 }
+                                                                #if targetEnvironment(macCatalyst)
                                                                 TextField("SECRET (Required)", text: $secretKey)
+                                                                        .keyboardType(.alphabet)
+                                                                        .disableAutocorrection(true)
+                                                                        .autocapitalization(.none)
+                                                                        .font(.system(.body, design: .monospaced))
+                                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                                #else
+                                                                TextField("SECRET (Required)", text: $secretKey)
+                                                                        .padding(.all, 8)
                                                                         .keyboardType(.alphabet)
                                                                         .autocapitalization(.none)
                                                                         .disableAutocorrection(true)
                                                                         .font(.system(.body, design: .monospaced))
-                                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                                        .fillBackground(cornerRadius: 8)
+                                                                #endif
                                                         }.padding()
                                                         VStack {
                                                             HStack {
