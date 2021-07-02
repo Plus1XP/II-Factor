@@ -15,6 +15,7 @@ struct SettingsView: View {
     @Binding var isPresented: Bool
     @State var tokens: [Token]
     @State var canDeleteIcloud: Bool = false
+    @State private var isDeletionAlertPresented: Bool = false
     
     var personalGroup: String = "Personal"
     var workGroup: String = "Work"
@@ -177,5 +178,26 @@ struct SettingsView: View {
             }
         }
         .accentColor(.primary)
+        .alert(isPresented: $isDeletionAlertPresented) {
+            deletionAlert
+        }
+    }
+    }
+    
+    private var deletionAlert: Alert {
+        let message: String = "Removing iCloud Data is not reversable.\n\nMake sure you have a backup."
+        return Alert(title: Text("Delete iCloud Data?"),
+                     message: Text(NSLocalizedString(message, comment: "")),
+                     primaryButton: .cancel(cancelDeletion),
+                     secondaryButton: .destructive(Text("Delete"), action: performDeletion))
+    }
+    
+    private func performDeletion() {
+        guard let isSuccessful = (UIApplication.shared.delegate as? AppDelegate)?.RemoveiCloudData() else { return }
+        isDeletionBannerPresented = true
+    }
+    
+    private func cancelDeletion() {
+        isDeletionAlertPresented = false
     }
 }
