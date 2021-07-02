@@ -14,7 +14,6 @@ struct SettingsView: View {
 
     @Binding var isPresented: Bool
     @State var tokens: [Token]
-    @State var canDeleteIcloud: Bool = false
     @State private var isDeletionAlertPresented: Bool = false
     @State private var isDeletionBannerPresented: Bool = false
     @State private var hasIcloudDeletedSuccessfuly: Bool = false
@@ -57,7 +56,7 @@ struct SettingsView: View {
             return UserDefaults.standard.bool(forKey: "isCloudKitEnabled")
         }, set: {
             UserDefaults.standard.setValue($0, forKey: "isCloudKitEnabled")
-            canDeleteIcloud = $0
+            canDeleteIcloudData(isCloudKitEnabled: $0)
         })
     }
     
@@ -102,27 +101,6 @@ struct SettingsView: View {
                                 .foregroundColor(.secondary)
                         ) {
                             Toggle("iCloud", isOn: isCloudKitEnabled)
-                            Button(action: {
-                                // Needs if statement to check if there even is cloud data..
-                                isDeletionAlertPresented = true
-                            })
-                            {
-                                HStack {
-                                    Text("Delete iCloud Data")
-                                        .padding()
-                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                                        .background(Color.red)
-                                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                        .foregroundColor(.primary)
-                                    Spacer()
-                                }
-                            }
-                            .onAppear {
-                                canDeleteIcloud = isCloudKitEnabled.wrappedValue
-                            }
-                            .isHidden(canDeleteIcloud, remove: canDeleteIcloud)
-//                            .disabled(canDeleteIcloud)
-//                            .opacity(canDeleteIcloud ? 0.2 : 1)
                         }
                         .padding(.horizontal)
                         
@@ -200,6 +178,12 @@ struct SettingsView: View {
         })
     }
     
+    func canDeleteIcloudData(isCloudKitEnabled: Bool) -> Void {
+        if isCloudKitEnabled == false {
+            isDeletionAlertPresented = true
+        }
+    }
+    
     func GetdeletionBanner() -> BannerData {
         if hasIcloudDeletedSuccessfuly {
             return iCloudDeleteSuccessfulBanner
@@ -209,7 +193,7 @@ struct SettingsView: View {
     }
     
     private var deletionAlert: Alert {
-        let message: String = "Removing iCloud Data is not reversable.\n\nMake sure you have a backup."
+        let message: String = "This is an irreversable action.\nPlease ensure you have a backup."
         return Alert(title: Text("Delete iCloud Data?"),
                      message: Text(NSLocalizedString(message, comment: "")),
                      primaryButton: .cancel(cancelDeletion),
