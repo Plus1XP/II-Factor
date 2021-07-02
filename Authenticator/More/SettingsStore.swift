@@ -14,15 +14,27 @@ class SettingsStore: ObservableObject {
     
     func setupGlobalSettings(_ context: NSManagedObjectContext) -> Void {
         setUserDefaults()
-        fetchGlobalSettings(context)
+        fetchAndValidateGlobalSettings(context)
         if config == nil {
             print("! Settings Empty")
             saveGlobalSettings(context ,isLockEnabled: false, isAutoLockEnabled: false, defaultTokenGroup: TokenGroupType.None.rawValue, defaultView: "")
             print("! Created new DB")
             fetchGlobalSettings(context)
-        }
-        else {
+        } else {
             print("! Settings Loaded")
+        }
+    }
+    
+    func fetchAndValidateGlobalSettings(_ context: NSManagedObjectContext) -> Void {
+        do {
+            let settings: [GlobalSettings] = try context.fetch(GlobalSettings.fetchRequest())
+            print("config count: \(settings.count)")
+            if settings.count > 1 {
+                deleteGlobalSettings(context, canDeleteFirstValue: false)
+            }
+            config = settings.first
+        } catch let error as NSError {
+            print("Load settings failed: \(error.localizedDescription)")
         }
     }
 
@@ -66,15 +78,19 @@ class SettingsStore: ObservableObject {
         }
     }
     
-    func deleteGlobalSettings(_ context: NSManagedObjectContext) -> Void {
+    func deleteGlobalSettings(_ context: NSManagedObjectContext, canDeleteFirstValue: Bool) -> Void {
         do {
             var settings: [GlobalSettings] = try context.fetch(GlobalSettings.fetchRequest())
             print("config count: \(settings.count)")
+            var count: Int = 1
             for item in settings {
-                var number: Int = 1
+                if !canDeleteFirstValue && count == 1 {
+                    count += 1
+                    continue
+                }
                 deleteGlobalSettings(context, settings: item)
-                print("Deleted config: \(number) of \(settings.count)")
-                number += 1
+                print("Deleted config: \(count) of \(settings.count)")
+                count += 1
             }
             settings = try context.fetch(GlobalSettings.fetchRequest())
             print("config count: \(settings.count)")
