@@ -16,6 +16,8 @@ struct SettingsView: View {
     @State var tokens: [Token]
     @State var canDeleteIcloud: Bool = false
     @State private var isDeletionAlertPresented: Bool = false
+    @State private var isDeletionBannerPresented: Bool = false
+    @State private var hasIcloudDeletedSuccessfuly: Bool = false
     
     var personalGroup: String = "Personal"
     var workGroup: String = "Work"
@@ -64,6 +66,18 @@ struct SettingsView: View {
             let build: String = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "_error"
             return version + " (" + build + ")"
     }()
+    
+    private let iCloudDeleteSuccessfulBanner: BannerData = BannerData(
+        title: "iCloud Data has been Deleted",
+        level: .success,
+        style: .popUp
+    )
+    
+    private let iCloudDeleteErrorBanner: BannerData = BannerData(
+        title: "Error Deleting iCloud Data",
+        level: .warning,
+        style: .popUp
+    )
     
     var body: some View {
         NavigationView {
@@ -181,7 +195,17 @@ struct SettingsView: View {
         .alert(isPresented: $isDeletionAlertPresented) {
             deletionAlert
         }
+        .banner(isPresented: $isDeletionBannerPresented, data: GetdeletionBanner(), action: {
+            // Place action here..
+        })
     }
+    
+    func GetdeletionBanner() -> BannerData {
+        if hasIcloudDeletedSuccessfuly {
+            return iCloudDeleteSuccessfulBanner
+        } else {
+            return iCloudDeleteErrorBanner
+        }
     }
     
     private var deletionAlert: Alert {
@@ -194,6 +218,11 @@ struct SettingsView: View {
     
     private func performDeletion() {
         guard let isSuccessful = (UIApplication.shared.delegate as? AppDelegate)?.RemoveiCloudData() else { return }
+        if isSuccessful {
+            hasIcloudDeletedSuccessfuly = true
+        } else {
+            hasIcloudDeletedSuccessfuly = false
+        }
         isDeletionBannerPresented = true
     }
     

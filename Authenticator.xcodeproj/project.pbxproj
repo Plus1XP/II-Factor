@@ -18,6 +18,7 @@
 		2FEBD9B8267FF7B600C98CDC /* TokenGroupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9B6267FF7B600C98CDC /* TokenGroupPicker.swift */; };
 		2FEBD9BC267FF7EC00C98CDC /* TokenGroupButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9BB267FF7EC00C98CDC /* TokenGroupButtonStyle.swift */; };
 		2FEBD9C2267FF8A900C98CDC /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9C1267FF8A800C98CDC /* BiometricService.swift */; };
+		2FFCEA65268E2C1700BE2859 /* NotificationBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */; };
 		2FFD356C2688C16A009AE891 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFD356B2688C16A009AE891 /* CloudKit.framework */; };
 		37AD0310266C8A920086DD10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD030F266C8A920086DD10 /* AppDelegate.swift */; };
 		37AD0312266C8A920086DD10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0311266C8A920086DD10 /* SceneDelegate.swift */; };
@@ -80,6 +81,7 @@
 		2FEBD9B6267FF7B600C98CDC /* TokenGroupPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenGroupPicker.swift; sourceTree = "<group>"; };
 		2FEBD9BB267FF7EC00C98CDC /* TokenGroupButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGroupButtonStyle.swift; sourceTree = "<group>"; };
 		2FEBD9C1267FF8A800C98CDC /* BiometricService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
+		2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBannerView.swift; sourceTree = "<group>"; };
 		2FFD356B2688C16A009AE891 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		37AD030C266C8A920086DD10 /* Authenticator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Authenticator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37AD030F266C8A920086DD10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				2FEBD9B5267FF7B600C98CDC /* TokenGroupPickerView.swift */,
 				37AD0345266C8CCA0086DD10 /* MenuViews.swift */,
 				37AD0346266C8CCA0086DD10 /* ActivityView.swift */,
+				2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */,
 				2FEBD9C2267FF8A900C98CDC /* BiometricService.swift in Sources */,
 				2FA3B4B32686769B0070B0B7 /* ViewExtension.swift in Sources */,
+				2FFCEA65268E2C1700BE2859 /* NotificationBannerView.swift in Sources */,
 				2FEBD9AE267FF6C300C98CDC /* SettingsStore.swift in Sources */,
 				37AD036B266C8CCA0086DD10 /* CodeCardView.swift in Sources */,
 				2FEBD9AD267FF6C300C98CDC /* SettingsView.swift in Sources */,
