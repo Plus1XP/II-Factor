@@ -194,12 +194,13 @@ struct SettingsView: View {
     
     private var deletionAlert: Alert {
         let message: String = "This is an irreversable action.\nPlease ensure you have a backup."
-        return Alert(title: Text("Delete iCloud Data?"),
+        return Alert(title: Text("Delete iCloud data?"),
                      message: Text(NSLocalizedString(message, comment: "")),
-                     primaryButton: .cancel(cancelDeletion),
-                     secondaryButton: .destructive(Text("Delete"), action: performDeletion))
+                     primaryButton: .cancel(Text("Turn off, KEEP data"), action: cancelDeletion),
+                     secondaryButton: .destructive(Text("Turn off, DELETE data"), action: performDeletion))
     }
     
+    // TODO: Disabled banner as appDelegate method RemoveiCloudData delays return correct bool
     private func performDeletion() {
         guard let isSuccessful = (UIApplication.shared.delegate as? AppDelegate)?.RemoveiCloudData() else { return }
         if isSuccessful {
@@ -207,7 +208,7 @@ struct SettingsView: View {
         } else {
             hasIcloudDeletedSuccessfuly = false
         }
-        isDeletionBannerPresented = true
+//        isDeletionBannerPresented = true
     }
     
     private func cancelDeletion() {
