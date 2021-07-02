@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FA3B4B32686769B0070B0B7 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */; };
+		2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */; };
+		2FCC63BF2684EE19005CC352 /* TokenDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */; };
 		2FEBD9AA267FF66600C98CDC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9A9267FF66600C98CDC /* MainView.swift */; };
 		2FEBD9AD267FF6C300C98CDC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9AB267FF6C300C98CDC /* SettingsView.swift */; };
 		2FEBD9AE267FF6C300C98CDC /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9AC267FF6C300C98CDC /* SettingsStore.swift */; };
@@ -15,6 +18,8 @@
 		2FEBD9B8267FF7B600C98CDC /* TokenGroupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9B6267FF7B600C98CDC /* TokenGroupPicker.swift */; };
 		2FEBD9BC267FF7EC00C98CDC /* TokenGroupButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9BB267FF7EC00C98CDC /* TokenGroupButtonStyle.swift */; };
 		2FEBD9C2267FF8A900C98CDC /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9C1267FF8A800C98CDC /* BiometricService.swift */; };
+		2FFCEA65268E2C1700BE2859 /* NotificationBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */; };
+		2FFD356C2688C16A009AE891 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFD356B2688C16A009AE891 /* CloudKit.framework */; };
 		37AD0310266C8A920086DD10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD030F266C8A920086DD10 /* AppDelegate.swift */; };
 		37AD0312266C8A920086DD10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0311266C8A920086DD10 /* SceneDelegate.swift */; };
 		37AD0314266C8A920086DD10 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0313266C8A920086DD10 /* ContentView.swift */; };
@@ -65,6 +70,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnhancedTextField.swift; sourceTree = "<group>"; };
+		2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDataExtension.swift; sourceTree = "<group>"; };
 		2FEBD9A9267FF66600C98CDC /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2FEBD9AB267FF6C300C98CDC /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2FEBD9AC267FF6C300C98CDC /* SettingsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
@@ -73,6 +81,8 @@
 		2FEBD9B6267FF7B600C98CDC /* TokenGroupPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenGroupPicker.swift; sourceTree = "<group>"; };
 		2FEBD9BB267FF7EC00C98CDC /* TokenGroupButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGroupButtonStyle.swift; sourceTree = "<group>"; };
 		2FEBD9C1267FF8A800C98CDC /* BiometricService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
+		2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBannerView.swift; sourceTree = "<group>"; };
+		2FFD356B2688C16A009AE891 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		37AD030C266C8A920086DD10 /* Authenticator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Authenticator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37AD030F266C8A920086DD10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37AD0311266C8A920086DD10 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37AD037A266C90610086DD10 /* SwiftOTP in Frameworks */,
+				2FFD356C2688C16A009AE891 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +168,14 @@
 			path = Security;
 			sourceTree = "<group>";
 		};
+		2FFD356A2688C16A009AE891 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2FFD356B2688C16A009AE891 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		37AD0303266C8A920086DD10 = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +183,7 @@
 				37AD0328266C8A930086DD10 /* AuthenticatorTests */,
 				37AD0333266C8A930086DD10 /* AuthenticatorUITests */,
 				37AD030D266C8A920086DD10 /* Products */,
+				2FFD356A2688C16A009AE891 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -235,10 +255,12 @@
 		37AD0344266C8CCA0086DD10 /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */,
 				2FEBD9B6267FF7B600C98CDC /* TokenGroupPicker.swift */,
 				2FEBD9B5267FF7B600C98CDC /* TokenGroupPickerView.swift */,
 				37AD0345266C8CCA0086DD10 /* MenuViews.swift */,
 				37AD0346266C8CCA0086DD10 /* ActivityView.swift */,
+				2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -299,6 +321,8 @@
 				37AD035F266C8CCA0086DD10 /* DateExtensions.swift */,
 				37AD0360266C8CCA0086DD10 /* URLExtensions.swift */,
 				37AD0361266C8CCA0086DD10 /* StringExtensions.swift */,
+				2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */,
+				2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -458,6 +482,7 @@
 				37AD0317266C8A920086DD10 /* Authenticator.xcdatamodeld in Sources */,
 				37AD036E266C8CCA0086DD10 /* AboutView.swift in Sources */,
 				37AD0373266C8CCA0086DD10 /* DateExtensions.swift in Sources */,
+				2FCC63BF2684EE19005CC352 /* TokenDataExtension.swift in Sources */,
 				37AD036F266C8CCA0086DD10 /* ScannerView.swift in Sources */,
 				37AD036A266C8CCA0086DD10 /* EditAccountView.swift in Sources */,
 				37AD0370266C8CCA0086DD10 /* ManualEntryView.swift in Sources */,
@@ -471,7 +496,10 @@
 				37AD0365266C8CCA0086DD10 /* ActivityView.swift in Sources */,
 				37AD0374266C8CCA0086DD10 /* URLExtensions.swift in Sources */,
 				37AD0367266C8CCA0086DD10 /* OTPGenerator.swift in Sources */,
+				2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */,
 				2FEBD9C2267FF8A900C98CDC /* BiometricService.swift in Sources */,
+				2FA3B4B32686769B0070B0B7 /* ViewExtension.swift in Sources */,
+				2FFCEA65268E2C1700BE2859 /* NotificationBannerView.swift in Sources */,
 				2FEBD9AE267FF6C300C98CDC /* SettingsStore.swift in Sources */,
 				37AD036B266C8CCA0086DD10 /* CodeCardView.swift in Sources */,
 				2FEBD9AD267FF6C300C98CDC /* SettingsView.swift in Sources */,
@@ -656,7 +684,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Authenticator/Authenticator.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_ASSET_PATHS = "\"Authenticator/Preview Content\"";
 				DEVELOPMENT_TEAM = L4UU7WP4CE;
 				ENABLE_PREVIEWS = YES;
@@ -667,7 +695,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = IO.Plus1XP.Authenticator;
+				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.authenticator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
@@ -682,7 +710,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Authenticator/Authenticator.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_ASSET_PATHS = "\"Authenticator/Preview Content\"";
 				DEVELOPMENT_TEAM = L4UU7WP4CE;
 				ENABLE_PREVIEWS = YES;
@@ -693,7 +721,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = IO.Plus1XP.Authenticator;
+				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.authenticator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;

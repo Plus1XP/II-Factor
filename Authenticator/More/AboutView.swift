@@ -2,55 +2,39 @@ import SwiftUI
 
 struct AboutView: View {
 
-        @Binding var isPresented: Bool
-
-        var body: some View {
-                NavigationView {
-                        ZStack {
-                                GlobalBackgroundColor().ignoresSafeArea()
-                                ScrollView {
-                                        VersionLabel()
-                                        LinkCardView(heading: "Source Code", message: "https://github.com/ososoio/authenticator")
-                                                .padding(.horizontal)
-                                        
-                                        LinkCardView(heading: "Privacy Policy", message: "https://ososo.io/authenticator/privacy")
-                                                .padding()
-                                }
-                        }
-                        .navigationTitle("About")
-                        .toolbar {
-                                ToolbarItem(placement: .navigationBarLeading) {
-                                        Button(action: {
-                                                isPresented = false
-                                        }) {
-                                                Text("Back")
-                                        }
-                                }
-                        }
-                }
+    var body: some View {
+        VStack {
+//            VersionLabel()
+            LinkCardView(heading: "Source Code", message: "https://github.com/plus1xp/authenticator")
+                .padding(.bottom)
+            LinkCardView(heading: "Forked From", message: "https://github.com/ososoio/authenticator")
         }
+    }
 }
 
 private struct VersionLabel: View {
 
         private let versionString: String = {
-                let version: String = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "_error"
+                let version: String = (Bundle.main.infoDictionary?["CFBundleLongVersionString"] as? String) ?? "_error"
                 let build: String = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "_error"
                 return version + " (" + build + ")"
         }()
 
         var body: some View {
+            VStack {
                 HStack {
                         Text("Version")
+                            .font(.headline)
                         Spacer()
                         Text(versionString)
                 }
-                .padding()
                 .fillBackground()
                 .contextMenu(menuItems: {
                         MenuCopyButton(content: versionString)
                 })
-                .padding()
+                .padding(.bottom)
+        }
+            
         }
 }
 private struct LinkCardView: View {
@@ -67,10 +51,8 @@ private struct LinkCardView: View {
                         HStack {
                                 Text(NSLocalizedString(message, comment: "")).font(.system(.footnote, design: .monospaced))
                                 Spacer()
-                        }.padding(.top, 4)
+                        }
                 }
-                .padding()
-                .fillBackground()
                 .contextMenu(menuItems: {
                         MenuCopyButton(content: message)
                 })

@@ -5,10 +5,11 @@ struct EditAccountView: View {
         @Binding var isPresented: Bool
         let token: Token
         let tokenIndex: Int
-        let completion: (Int, String, String) -> Void
+        let completion: (Int, String, String, String) -> Void
 
         @State private var displayIssuer: String = ""
         @State private var displayAccountName: String = ""
+        @State private var displayGroup: String = TokenGroupType.None.rawValue
 
         var body: some View {
                 NavigationView {
@@ -20,9 +21,18 @@ struct EditAccountView: View {
                                                         Text("Issuer").font(.headline)
                                                         Spacer()
                                                 }
-                                                TextField("Issuer", text: $displayIssuer)
+                                                #if targetEnvironment(macCatalyst)
+                                                TextField(token.displayIssuer, text: $displayIssuer)
                                                         .disableAutocorrection(true)
+                                                        .autocapitalization(.words)
                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                #else
+                                                TextField(token.displayIssuer, text: $displayIssuer)
+                                                        .padding(.all, 8)
+                                                        .disableAutocorrection(true)
+                                                        .autocapitalization(.words)
+                                                        .fillBackground(cornerRadius: 8)
+                                                #endif
                                         }.padding()
                                         
                                         VStack {
@@ -30,11 +40,20 @@ struct EditAccountView: View {
                                                         Text("Account Name").font(.headline)
                                                         Spacer()
                                                 }
-                                                TextField("Account Name", text: $displayAccountName)
+                                                #if targetEnvironment(macCatalyst)
+                                                TextField(token.displayAccountName, text: $displayAccountName)
                                                         .keyboardType(.emailAddress)
                                                         .disableAutocorrection(true)
                                                         .autocapitalization(.none)
                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                #else
+                                                TextField(token.displayAccountName, text: $displayAccountName)
+                                                        .padding(.all, 8)
+                                                        .keyboardType(.emailAddress)
+                                                        .disableAutocorrection(true)
+                                                        .autocapitalization(.none)
+                                                        .fillBackground(cornerRadius: 8)
+                                                #endif
                                         }.padding(.horizontal)
                                         
                                         VStack {
@@ -42,7 +61,7 @@ struct EditAccountView: View {
                                                 Text("Group").font(.headline)
                                                 Spacer()
                                             }
-//                                            TokenGroupAccountButtonStyleView(buttonSelected: $token.displayGroup)
+                                            TokenGroupAccountButtonStyleView(buttonSelected: $displayGroup)
                                         }.padding()
                                     
                                         HStack {
@@ -67,7 +86,8 @@ struct EditAccountView: View {
                                         Button(action: {
                                                 displayIssuer = displayIssuer.trimming()
                                                 displayAccountName = displayAccountName.trimming()
-                                                completion(tokenIndex, displayIssuer, displayAccountName)
+                                                displayGroup = displayGroup.trimming()
+                                                completion(tokenIndex, displayIssuer, displayAccountName, displayGroup)
                                                 isPresented = false
                                         }) {
                                                 Text("Done")
@@ -77,6 +97,7 @@ struct EditAccountView: View {
                 }.onAppear {
                         displayIssuer = token.displayIssuer
                         displayAccountName = token.displayAccountName
+                        displayGroup = token.displayGroup
                 }
         }
 }

@@ -4,6 +4,8 @@ import os.log
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         var window: UIWindow?
+        
+        var settings = SettingsStore()
 
         func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
                 // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -12,10 +14,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
                 // Get the managed object context from the shared persistent container.
                 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
+            
                 // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
                 // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-                let contentView = ContentView().environment(\.managedObjectContext, context)
+                let contentView = ContentView()
+                    .environment(\.managedObjectContext, context)
+                    .environmentObject(settings)
 
                 // Use a UIHostingController as window root view controller.
                 if let windowScene = scene as? UIWindowScene {
@@ -62,12 +66,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 let logger: Logger = Logger(subsystem: "io.ososo.Authenticator", category: "debug")
 
 extension View {
-        func fillBackground() -> some View {
-                return modifier(BackgroundColorModifier())
+        func fillBackground(cornerRadius: CGFloat = 10) -> some View {
+                return modifier(BackgroundColorModifier(cornerRadius: cornerRadius))
         }
 }
 private struct BackgroundColorModifier: ViewModifier {
+
         @Environment (\.colorScheme) var colorScheme: ColorScheme
+        let cornerRadius: CGFloat
+
         func body(content: Content) -> some View {
                 let backgroundColor: Color = {
                         switch colorScheme {
@@ -79,7 +86,7 @@ private struct BackgroundColorModifier: ViewModifier {
                                 return Color(UIColor.systemBackground)
                         }
                 }()
-                return content.background(RoundedRectangle(cornerRadius: 10).fill(backgroundColor))
+                return content.background(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).fill(backgroundColor))
         }
 }
 
