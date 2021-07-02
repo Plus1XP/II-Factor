@@ -23,8 +23,6 @@ struct ExportView: View {
                                                             .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding(.bottom)
-                                                .fillBackground()
                                         }
 
                                         Button(action: {
@@ -39,8 +37,6 @@ struct ExportView: View {
                                                         .foregroundColor(.primary)
                                                     Spacer()
                                                 }
-                                                .padding(.bottom)
-                                                .fillBackground()
                                         }
                                         .sheet(isPresented: $isPlainTextActivityPresented) {
                                                 ActivityView(activityItems: [tokensText]) {
@@ -60,8 +56,6 @@ struct ExportView: View {
                                                             .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding(.bottom)
-                                                .fillBackground()
                                         }
                                         .sheet(isPresented: $isTXTFileActivityPresented) {
                                                 let url = txtFile()
@@ -87,8 +81,6 @@ struct ExportView: View {
                                                             .foregroundColor(.primary)
                                                         Spacer()
                                                 }
-                                                .padding(.bottom)
-                                                .fillBackground()
                                         }
                                         .sheet(isPresented: $isZIPFileActivityPresented) {
                                                 let url: URL = zipFile()

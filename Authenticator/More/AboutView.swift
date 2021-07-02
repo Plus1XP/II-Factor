@@ -6,6 +6,7 @@ struct AboutView: View {
         VStack {
 //            VersionLabel()
             LinkCardView(heading: "Source Code", message: "https://github.com/plus1xp/authenticator")
+                .padding(.bottom)
             LinkCardView(heading: "Forked From", message: "https://github.com/ososoio/authenticator")
         }
     }
@@ -52,8 +53,6 @@ private struct LinkCardView: View {
                                 Spacer()
                         }
                 }
-                .padding(.bottom)
-                .fillBackground()
                 .contextMenu(menuItems: {
                         MenuCopyButton(content: message)
                 })

@@ -28,9 +28,10 @@ struct EditAccountView: View {
                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 #else
                                                 TextField(token.displayIssuer, text: $displayIssuer)
+                                                        .padding(.all, 8)
                                                         .disableAutocorrection(true)
                                                         .autocapitalization(.words)
-                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                        .fillBackground(cornerRadius: 8)
                                                 #endif
                                         }.padding()
                                         
@@ -47,10 +48,11 @@ struct EditAccountView: View {
                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 #else
                                                 TextField(token.displayAccountName, text: $displayAccountName)
+                                                        .padding(.all, 8)
                                                         .keyboardType(.emailAddress)
                                                         .disableAutocorrection(true)
                                                         .autocapitalization(.none)
-                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                        .fillBackground(cornerRadius: 8)
                                                 #endif
                                         }.padding(.horizontal)
                                         
