@@ -102,4 +102,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             }
                     }
             }
+    
+            // MARK: - CloudKit Deletion
+    
+            func RemoveiCloudData() -> Bool {
+                var wasSuccessful: Bool = false
+                
+                // replace the identifier with your container identifier
+                let container = CKContainer(identifier: "iCloud.io.plus1xp.authenticator")
+
+                let database = container.privateCloudDatabase
+                
+                // instruct iCloud to delete the whole zone (and all of its records)
+                database.delete(withRecordZoneID: .init(zoneName: "com.apple.coredata.cloudkit.zone"), completionHandler: { (zoneID, error) in
+                    if let error = error {
+                        print("error deleting zone: - \(error.localizedDescription)")
+                    } else {
+                        print("successfully deleted zone")
+                        wasSuccessful = true
+                    }
+                })
+                return wasSuccessful
+            }
 }
