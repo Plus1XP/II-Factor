@@ -14,6 +14,7 @@ struct SettingsView: View {
 
     @Binding var isPresented: Bool
     @State var tokens: [Token]
+    @State var canDeleteIcloud: Bool = false
     
     var personalGroup: String = "Personal"
     var workGroup: String = "Work"
@@ -53,6 +54,7 @@ struct SettingsView: View {
             return UserDefaults.standard.bool(forKey: "isCloudKitEnabled")
         }, set: {
             UserDefaults.standard.setValue($0, forKey: "isCloudKitEnabled")
+            canDeleteIcloud = $0
         })
     }
     
@@ -85,14 +87,39 @@ struct SettingsView: View {
                                 .foregroundColor(.secondary)
                         ) {
                             Toggle("iCloud", isOn: isCloudKitEnabled)
-                            HStack {
-                                Text("NOTE: iCloud Changes will not be applied untill app is restarted")
-                                    .font(.footnote)
-                                    .foregroundColor(Color.secondary)
-                                    .multilineTextAlignment(.center)
-                                Spacer()
-                            }                        }
-                        .padding()
+                            Button(action: {
+                                // Needs if statement to check if there even is cloud data..
+                                isDeletionAlertPresented = true
+                            })
+                            {
+                                HStack {
+                                    Text("Delete iCloud Data")
+                                        .padding()
+                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                        .background(Color.red)
+                                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                        .foregroundColor(.primary)
+                                    Spacer()
+                                }
+                            }
+                            .onAppear {
+                                canDeleteIcloud = isCloudKitEnabled.wrappedValue
+                            }
+                            .isHidden(canDeleteIcloud, remove: canDeleteIcloud)
+//                            .disabled(canDeleteIcloud)
+//                            .opacity(canDeleteIcloud ? 0.2 : 1)
+                        }
+                        .padding(.horizontal)
+                        
+                        HStack {
+                            Text("NOTE: iCloud Changes will not be applied untill app is restarted")
+                                .font(.footnote)
+                                .foregroundColor(Color.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                            Spacer()
+                        }
+                        .padding(.horizontal)
                     }
                     
                     VStack {
