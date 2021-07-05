@@ -71,13 +71,13 @@ struct MainView: View {
                 }
                 .onMove(perform: move(from:to:))
                 .onDelete(perform: deleteItems)
-                .onLongPressGesture {
-                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-                    feedbackGenerator?.notificationOccurred(.success)
-                    selectedTokens.removeAll()
-                    indexSetOnDelete.removeAll()
-                    editMode = .active
-                }
+//                .onLongPressGesture {
+//                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+//                    feedbackGenerator?.notificationOccurred(.success)
+//                    selectedTokens.removeAll()
+//                    indexSetOnDelete.removeAll()
+//                    editMode = .active
+//                }
             }
             .navigationBarSearch(self.$searchText)
             .listStyle(InsetGroupedListStyle())
@@ -120,9 +120,27 @@ struct MainView: View {
                     }
             .navigationTitle(tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue))
             .toolbar {
-                ToolbarItem(placement: .bottomBar) {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Spacer()
                     TokenGroupPickerView(selectedTokenGroup: tokenViewSelected)
+                    Spacer()
+                    Button {
+                        let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                        feedbackGenerator?.notificationOccurred(.success)
+                        selectedTokens.removeAll()
+                        indexSetOnDelete.removeAll()
+                        editMode = .active
+                    } label: {
+                        Image(systemName: "filemenu.and.selection")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                            .contentShape(Rectangle())
+                    }
                 }
+//                ToolbarItem(placement: .bottomBar) {
+//                    TokenGroupPickerView(selectedTokenGroup: tokenViewSelected)
+//                }
                 ToolbarItem(placement: .navigationBarLeading) {
                     if editMode == .active {
                         Button(action: {
