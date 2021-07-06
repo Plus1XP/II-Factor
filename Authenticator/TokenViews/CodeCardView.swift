@@ -125,20 +125,18 @@ private struct BannerModifier: ViewModifier {
 
         func body(content: Content) -> some View {
                 ZStack {
-                        content
+                        content.zIndex(0)
                         if isPresented {
-                            BannerView()
-//                                        .animation(.easeInOut(duration: 1.0))
-//                                        .transition(.opacity)
-                                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 1)))
-//                                        .onAppear {
-//                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-//                                                        withAnimation {
-//                                                                isPresented = false
-//                                                        }
-//                                                }
-//                                        }
-                        }
+                                BannerView().zIndex(1)
+                                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.25)))
+                                        .onAppear {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                        withAnimation {
+                                                            isPresented = false
+                                                        }
+                                                }
+                                        }
+                            }
                 }
         }
 }
