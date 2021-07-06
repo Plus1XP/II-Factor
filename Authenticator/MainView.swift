@@ -71,13 +71,6 @@ struct MainView: View {
                 }
                 .onMove(perform: move(from:to:))
                 .onDelete(perform: deleteItems)
-//                .onLongPressGesture {
-//                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-//                    feedbackGenerator?.notificationOccurred(.success)
-//                    selectedTokens.removeAll()
-//                    indexSetOnDelete.removeAll()
-//                    editMode = .active
-//                }
             }
             .navigationBarSearch(self.$searchText)
             .listStyle(InsetGroupedListStyle())
@@ -125,11 +118,20 @@ struct MainView: View {
                     TokenGroupPickerView(selectedTokenGroup: tokenViewSelected)
                     Spacer()
                     Button {
-                        let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-                        feedbackGenerator?.notificationOccurred(.success)
-                        selectedTokens.removeAll()
-                        indexSetOnDelete.removeAll()
-                        editMode = .active
+                        if editMode == .inactive {
+                            let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                            feedbackGenerator?.notificationOccurred(.success)
+                            selectedTokens.removeAll()
+                            indexSetOnDelete.removeAll()
+                            editMode = .active
+                        }
+                        else if editMode == .active {
+                            let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                            feedbackGenerator?.notificationOccurred(.warning)
+                            selectedTokens.removeAll()
+                            indexSetOnDelete.removeAll()
+                            editMode = .inactive
+                        }
                     } label: {
                         Image(systemName: "filemenu.and.selection")
                             .resizable()
@@ -138,17 +140,14 @@ struct MainView: View {
                             .contentShape(Rectangle())
                     }
                 }
-//                ToolbarItem(placement: .bottomBar) {
-//                    TokenGroupPickerView(selectedTokenGroup: tokenViewSelected)
-//                }
                 ToolbarItem(placement: .navigationBarLeading) {
                     if editMode == .active {
                         Button(action: {
-                            editMode = .inactive
-                            selectedTokens.removeAll()
-                            indexSetOnDelete.removeAll()
+                            if !selectedTokens.isEmpty {
+                                canEditGroup = true
+                            }
                         }) {
-                            Text("Done")
+                            Image(systemName: "rectangle.and.pencil.and.ellipsis")
                         }
                     } else {
                         Button {
@@ -166,13 +165,6 @@ struct MainView: View {
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     if editMode == .active {
-                        Button(action: {
-                            if !selectedTokens.isEmpty {
-                                canEditGroup = true
-                            }
-                        }) {
-                            Image(systemName: "pencil")
-                        }
                         Button(action: {
                             if !selectedTokens.isEmpty {
                                 isDeletionAlertPresented = true
