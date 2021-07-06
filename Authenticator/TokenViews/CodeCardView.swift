@@ -125,19 +125,18 @@ private struct BannerModifier: ViewModifier {
 
         func body(content: Content) -> some View {
                 ZStack {
-                        content
+                        content.zIndex(0)
                         if isPresented {
-                                BannerView()
-                                        .animation(.default)
-                                        .transition(AnyTransition.move(edge: .leading).combined(with: .opacity))
+                                BannerView().zIndex(1)
+                                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.25)))
                                         .onAppear {
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                                         withAnimation {
-                                                                isPresented = false
+                                                            isPresented = false
                                                         }
                                                 }
                                         }
-                        }
+                            }
                 }
         }
 }
@@ -147,8 +146,7 @@ private struct BannerView: View {
                 Text("Copied")
                         .padding(.vertical, 8)
                         .padding(.horizontal, 40)
-                        .background(Color.green)
-                        .opacity(1)
+                        .background(BlurView())
                         .clipShape(RoundedRectangle(cornerRadius: 12))
         }
 }
