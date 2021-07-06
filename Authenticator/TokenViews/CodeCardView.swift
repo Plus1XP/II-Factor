@@ -127,16 +127,17 @@ private struct BannerModifier: ViewModifier {
                 ZStack {
                         content
                         if isPresented {
-                                BannerView()
-                                        .animation(.default)
-                                        .transition(AnyTransition.move(edge: .leading).combined(with: .opacity))
-                                        .onAppear {
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                                        withAnimation {
-                                                                isPresented = false
-                                                        }
-                                                }
-                                        }
+                            BannerView()
+//                                        .animation(.easeInOut(duration: 1.0))
+//                                        .transition(.opacity)
+                                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 1)))
+//                                        .onAppear {
+//                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+//                                                        withAnimation {
+//                                                                isPresented = false
+//                                                        }
+//                                                }
+//                                        }
                         }
                 }
         }
@@ -147,8 +148,7 @@ private struct BannerView: View {
                 Text("Copied")
                         .padding(.vertical, 8)
                         .padding(.horizontal, 40)
-                        .background(Color.green)
-                        .opacity(1)
+                        .background(BlurView())
                         .clipShape(RoundedRectangle(cornerRadius: 12))
         }
 }
