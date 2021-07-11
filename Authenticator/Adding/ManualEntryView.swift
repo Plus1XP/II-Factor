@@ -184,7 +184,7 @@ struct ManualEntryView: View {
                         guard let token: Token = Token(issuerPrefix: issuer.trimming(),
                                                        accountName: accountName.trimming(),
                                                        group: tokenGroup.wrappedValue.trimming(),
-                                                       secret: secretKey.trimming(),
+                                                       secret: secretKey.trimming().removeSpaces(),
                                                        issuer: issuer.trimming()) else { return nil }
                         return token
                 }
