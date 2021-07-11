@@ -14,6 +14,21 @@ extension String {
         func trimming() -> String {
                 return trimmingCharacters(in: .whitespacesAndNewlines)
         }
+    
+        /// Returns a new string made by removing `.whitespaces` from within the String.
+        /// - Returns: A new string made by removing `.whitespaces` from within the String.
+        func removeSpaces() -> String {
+            var characters = String(self)
+            var index = 0
+            characters.forEach { character in
+                if character.isWhitespace {
+                    characters.remove(at: characters.index(characters.startIndex, offsetBy: index))
+                    index -= 1
+                }
+                index += 1
+            }
+            return String(characters)
+        }
 }
 
 extension Optional where Wrapped == String {
