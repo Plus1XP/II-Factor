@@ -135,6 +135,8 @@ private struct BannerModifier: ViewModifier {
                                                             isPresented = false
                                                         }
                                                 }
+                                            let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                                            feedbackGenerator?.notificationOccurred(.success)
                                         }
                             }
                 }
