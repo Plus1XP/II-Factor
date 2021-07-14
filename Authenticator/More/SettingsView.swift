@@ -199,16 +199,17 @@ struct SettingsView: View {
                      primaryButton: .cancel(Text("Turn off, KEEP data"), action: cancelDeletion),
                      secondaryButton: .destructive(Text("Turn off, DELETE data"), action: performDeletion))
     }
-    
-    // TODO: Disabled banner as appDelegate method RemoveiCloudData delays return correct bool
+
     private func performDeletion() {
-        guard let isSuccessful = (UIApplication.shared.delegate as? AppDelegate)?.RemoveiCloudData() else { return }
-        if isSuccessful {
-            hasIcloudDeletedSuccessfuly = true
-        } else {
-            hasIcloudDeletedSuccessfuly = false
+        (UIApplication.shared.delegate as? AppDelegate)?.RemoveiCloudData() { (result) in
+            if result {
+                hasIcloudDeletedSuccessfuly = true
+            } else {
+                hasIcloudDeletedSuccessfuly = false
+            }
+            print("iCloud Banner Displayed: \(result)")
+            isDeletionBannerPresented = true
         }
-//        isDeletionBannerPresented = true
     }
     
     private func cancelDeletion() {
