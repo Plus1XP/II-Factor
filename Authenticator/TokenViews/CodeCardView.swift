@@ -9,6 +9,8 @@ struct CodeCardView: View {
         @Binding var isPresented: Bool
         @State private var isBannerPresented: Bool = false
 
+        private let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+    
         var body: some View {
                 VStack {
                         HStack {
@@ -64,6 +66,10 @@ struct CodeCardView: View {
                         .onTapGesture {
                                 UIPasteboard.general.string = totp
                                 isBannerPresented = true
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    feedbackGenerator?.notificationOccurred(.success)
+                                    self.isBannerPresented = false
+                                }
                         }
                 }
                 .padding()
@@ -128,14 +134,6 @@ private struct BannerModifier: ViewModifier {
                         content.zIndex(0)
                         if isPresented {
                                 BannerView().zIndex(1)
-                                        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.25)))
-                                        .onAppear {
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                                        withAnimation {
-                                                            isPresented = false
-                                                        }
-                                                }
-                                        }
                             }
                 }
         }
