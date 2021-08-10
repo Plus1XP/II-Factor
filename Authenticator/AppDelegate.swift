@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if isCloudKitEnabled {
                 print("Is syncing iCloud")
                 container = NSPersistentCloudKitContainer(name: "Authenticator")
+                container?.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
                 container?.viewContext.automaticallyMergesChangesFromParent = true
                 
                 guard let description = container?.persistentStoreDescriptions.first else {
