@@ -13,11 +13,10 @@ struct CodeCardView: View {
     
         var body: some View {
                 VStack {
-                        HStack {
+                        HStack(spacing: 16) {
                                 issuerImage.resizable().scaledToFit().frame(width: 24, height: 24)
-                                Spacer().frame(width: 16)
-                                Text(token.displayIssuer).font(.headline)
-                                Spacer(minLength: 16)
+                                Text(verbatim: token.displayIssuer).font(.headline)
+                                Spacer()
                                 Menu {
                                     Button(action: {
                                         tokenIndex = index
@@ -45,7 +44,7 @@ struct CodeCardView: View {
                         }
                         VStack(spacing: 8) {
                                 HStack {
-                                        Text(formattedTotp).font(.largeTitle)
+                                        Text(verbatim: formattedTotp).font(.largeTitle)
                                         Spacer()
                                 }
                                 HStack {
@@ -84,7 +83,8 @@ struct CodeCardView: View {
                         code.insert(" ", at: code.index(code.startIndex, offsetBy: 3))
                 case 8:
                         code.insert(" ", at: code.index(code.startIndex, offsetBy: 4))
-                default: break
+                default:
+                        break
                 }
                 return code
         }
