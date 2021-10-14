@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(*, deprecated, message: "Use .fileImporter() instead")
 struct DocumentPicker: UIViewControllerRepresentable {
 
         @Binding var isPresented: Bool
