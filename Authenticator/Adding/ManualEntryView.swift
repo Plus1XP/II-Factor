@@ -36,7 +36,6 @@ struct ManualEntryView: View {
                                         }
                                         .pickerStyle(SegmentedPickerStyle())
                                         .padding()
-                                        
                                         if selection == 0 {
                                                 VStack {
                                                         HStack {
@@ -46,8 +45,8 @@ struct ManualEntryView: View {
                                                         #if targetEnvironment(macCatalyst)
                                                         TextField("otpauth://totp/...", text: $keyUri)
                                                                 .keyboardType(.URL)
-                                                                .disableAutocorrection(true)
                                                                 .autocapitalization(.none)
+                                                                .disableAutocorrection(true)
                                                                 .font(.system(.footnote, design: .monospaced))
                                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                         #else
@@ -59,16 +58,16 @@ struct ManualEntryView: View {
                                                                 .font(.system(size: 13, weight: .regular, design: .monospaced))
                                                                 .fillBackground(cornerRadius: 8)
                                                         #endif
-                                                }.padding()
-                                            
+                                                }
+                                                .padding()
                                                 VStack {
                                                     HStack {
                                                         Text("Group")
                                                         Spacer()
                                                     }
                                                     TokenGroupAccountButtonStyleView(buttonSelected: tokenGroup)
-                                                }.padding()
-                                            
+                                                }
+                                                .padding()
                                         } else {
                                                 VStack {
                                                         VStack {
@@ -78,17 +77,18 @@ struct ManualEntryView: View {
                                                                 }
                                                                 #if targetEnvironment(macCatalyst)
                                                                 TextField("Service Provider (Optional)", text: $issuer)
-                                                                        .disableAutocorrection(true)
                                                                         .autocapitalization(.words)
+                                                                        .disableAutocorrection(true)
                                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                                                 #else
                                                                 TextField("Service Provider (Optional)", text: $issuer)
                                                                         .padding(.all, 8)
-                                                                        .disableAutocorrection(true)
                                                                         .autocapitalization(.words)
+                                                                        .disableAutocorrection(true)
                                                                         .fillBackground(cornerRadius: 8)
                                                                 #endif
-                                                        }.padding()
+                                                        }
+                                                        .padding()
                                                         VStack {
                                                                 HStack {
                                                                         Text("Account Name")
@@ -97,8 +97,8 @@ struct ManualEntryView: View {
                                                                 #if targetEnvironment(macCatalyst)
                                                                 TextField("email@example.com (Optional)", text: $accountName)
                                                                         .keyboardType(.emailAddress)
-                                                                        .disableAutocorrection(true)
                                                                         .autocapitalization(.none)
+                                                                        .disableAutocorrection(true)
                                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                                                 #else
                                                                 TextField("email@example.com (Optional)", text: $accountName)
@@ -108,7 +108,8 @@ struct ManualEntryView: View {
                                                                         .disableAutocorrection(true)
                                                                         .fillBackground(cornerRadius: 8)
                                                                 #endif
-                                                        }.padding(.horizontal)
+                                                        }
+                                                        .padding(.horizontal)
                                                         VStack {
                                                                 HStack {
                                                                         Text("Secret Key")
@@ -117,8 +118,8 @@ struct ManualEntryView: View {
                                                                 #if targetEnvironment(macCatalyst)
                                                                 TextField("SECRET (Required)", text: $secretKey)
                                                                         .keyboardType(.alphabet)
-                                                                        .disableAutocorrection(true)
                                                                         .autocapitalization(.none)
+                                                                        .disableAutocorrection(true)
                                                                         .font(.system(.body, design: .monospaced))
                                                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                                                 #else
@@ -130,21 +131,23 @@ struct ManualEntryView: View {
                                                                         .font(.system(.body, design: .monospaced))
                                                                         .fillBackground(cornerRadius: 8)
                                                                 #endif
-                                                        }.padding()
+                                                        }
+                                                        .padding()
                                                         VStack {
                                                             HStack {
                                                                 Text("Group")
                                                                 Spacer()
                                                             }
                                                             TokenGroupAccountButtonStyleView(buttonSelected: tokenGroup)
-                                                        }.padding()
+                                                        }
+                                                        .padding()
                                                 }
                                         }
                                 }
                         }.alert(isPresented: $isAlertPresented) {
                                 Alert(title: Text("Error"), message: Text("Invalid Key"), dismissButton: .cancel(Text("OK")))
                         }
-                        .navigationTitle("Add account")
+                        .navigationTitle("Add Account")
                         .toolbar {
                                 ToolbarItem(placement: .navigationBarLeading) {
                                         Button(action: {
