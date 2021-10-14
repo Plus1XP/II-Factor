@@ -24,6 +24,7 @@ struct MainView: View {
     @State private var timeRemaining: Int = 30 - (Int(Date().timeIntervalSince1970) % 30)
     @State private var codes: [String] = Array(repeating: "000000", count: 50)
     @State private var isSheetPresented: Bool = false
+    @State private var isFileImporterPresented: Bool = false
     @State private var editMode: EditMode = .inactive
     @State private var selectedTokens = Set<TokenData>()
     @State private var indexSetOnDelete: IndexSet = IndexSet()
@@ -86,6 +87,14 @@ struct MainView: View {
                 if timeRemaining == 30 {
                     generateCodes()
                 }
+            }
+            .fileImporter(isPresented: $isFileImporterPresented, allowedContentTypes: [.text, .image], allowsMultipleSelection: false) { result in
+                    switch result {
+                    case .failure(let error):
+                            logger.debug(".fileImporter() failure: \(error.localizedDescription)")
+                    case .success(let urls):
+                            handlePickedFile(url: urls.first)
+                    }
             }
             .alert(isPresented: $isDeletionAlertPresented) {
                 deletionAlert
@@ -197,8 +206,7 @@ struct MainView: View {
                                 }
                             }
                             Button(action: {
-                                presentingSheet = .addByPickingFile
-                                isSheetPresented = true
+                                isFileImporterPresented = true
                             }) {
                                 HStack {
                                     Text("Import from file")
@@ -245,8 +253,6 @@ struct MainView: View {
                     .overlay(
                         TokenGroupOverlayButtonStyleView(buttonSelected: tokenGroupSelected)
                         ,alignment: .bottom)
-            case .addByPickingFile:
-                DocumentPicker(isPresented: $isSheetPresented, completion: handlePickedFile(url:))
             case .addByManually:
                 ManualEntryView(isPresented: $isSheetPresented, completion: addItem(_:))
                     .environmentObject(settings)
@@ -472,7 +478,6 @@ struct MainView: View {
     case moreSettings
     case addByScanning
     case addByQRCodeImage
-    case addByPickingFile
     case addByManually
     case cardDetailView
     case cardEditing

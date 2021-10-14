@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2FA3B4B32686769B0070B0B7 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */; };
+		2FB57FFA27187D9300036B16 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFD356B2688C16A009AE891 /* CloudKit.framework */; };
 		2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */; };
 		2FCC63BF2684EE19005CC352 /* TokenDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */; };
 		2FEBD9AA267FF66600C98CDC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9A9267FF66600C98CDC /* MainView.swift */; };
@@ -19,7 +20,6 @@
 		2FEBD9BC267FF7EC00C98CDC /* TokenGroupButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9BB267FF7EC00C98CDC /* TokenGroupButtonStyle.swift */; };
 		2FEBD9C2267FF8A900C98CDC /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9C1267FF8A800C98CDC /* BiometricService.swift */; };
 		2FFCEA65268E2C1700BE2859 /* NotificationBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */; };
-		2FFD356C2688C16A009AE891 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFD356B2688C16A009AE891 /* CloudKit.framework */; };
 		37AD0310266C8A920086DD10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD030F266C8A920086DD10 /* AppDelegate.swift */; };
 		37AD0312266C8A920086DD10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0311266C8A920086DD10 /* SceneDelegate.swift */; };
 		37AD0314266C8A920086DD10 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0313266C8A920086DD10 /* ContentView.swift */; };
@@ -131,7 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37AD037A266C90610086DD10 /* SwiftOTP in Frameworks */,
-				2FFD356C2688C16A009AE891 /* CloudKit.framework in Frameworks */,
+				2FB57FFA27187D9300036B16 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +565,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -626,6 +627,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
