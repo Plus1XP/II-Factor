@@ -188,41 +188,25 @@ struct MainView: View {
                                 presentingSheet = .addByScanning
                                 isSheetPresented = true
                             }) {
-                                HStack {
-                                    Text("Scan QR Code")
-                                    Spacer()
-                                    Image(systemName: "qrcode.viewfinder")
-                                }
+                                Label("Scan QR Code", systemImage: "qrcode.viewfinder")
                             }
                             #endif
                             Button(action: {
                                 presentingSheet = .addByQRCodeImage
                                 isSheetPresented = true
                             }) {
-                                HStack {
-                                    Text(readQRCodeImage)
-                                    Spacer()
-                                    Image(systemName: "photo")
-                                }
+                                Label("Import from Photos", systemImage: "photo")
                             }
                             Button(action: {
                                 isFileImporterPresented = true
                             }) {
-                                HStack {
-                                    Text("Import from file")
-                                    Spacer()
-                                    Image(systemName: "doc.badge.plus")
-                                }
+                                Label("Import from Files", systemImage: "doc.badge.plus")
                             }
                             Button(action: {
                                 presentingSheet = .addByManually
                                 isSheetPresented = true
                             }) {
-                                HStack {
-                                    Text("Enter manually")
-                                    Spacer()
-                                    Image(systemName: "text.cursor")
-                                }
+                                Label("Enter Manually", systemImage: "text.cursor")
                             }
                         } label: {
                             Image(systemName: "qrcode.viewfinder")
@@ -450,14 +434,6 @@ struct MainView: View {
         guard let urls: [URL] = try? FileManager.default.contentsOfDirectory(at: temporaryDirectoryUrl, includingPropertiesForKeys: nil) else { return }
         _ = urls.map { try? FileManager.default.removeItem(at: $0) }
     }
-    
-    private let readQRCodeImage: String = {
-        #if targetEnvironment(macCatalyst)
-        return NSLocalizedString("Read from QR Code picture", comment: "")
-        #else
-        return NSLocalizedString("Read QR Code image", comment: "")
-        #endif
-    }()
     
     func fetchedTokens(tokenView: TokenGroupType) -> FetchedResults<TokenData> {
         switch tokenView {
