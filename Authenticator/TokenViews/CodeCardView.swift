@@ -23,14 +23,14 @@ struct CodeCardView: View {
                                         presentingSheet = .cardDetailView
                                         isPresented = true
                                     }) {
-                                        MenuLabel(text: "View Details", image: "text.justifyleft")
+                                        Label("View Details", systemImage: "text.justifyleft")
                                     }
                                     Button(action: {
                                         tokenIndex = index
                                         presentingSheet = .cardEditing
                                         isPresented = true
                                     }) {
-                                        MenuLabel(text: "Edit Details", image: "square.and.pencil")
+                                        Label("Edit Details", systemImage: "square.and.pencil")
                                     }
                                 } label: {
                                         Image(systemName: "ellipsis.circle")
