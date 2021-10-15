@@ -75,16 +75,13 @@ struct MainView: View {
             }
             .navigationBarSearch(self.$searchText)
             .listStyle(InsetGroupedListStyle())
-            .onAppear {
-                generateCodes()
-            }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 generateCodes()
                 clearTemporaryDirectory()
             }
             .onReceive(timer) { _ in
                 timeRemaining = 30 - (Int(Date().timeIntervalSince1970) % 30)
-                if timeRemaining == 30 {
+                if timeRemaining == 30 || codes.first == "000000" {
                     generateCodes()
                 }
             }
