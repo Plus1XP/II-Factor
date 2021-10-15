@@ -96,7 +96,7 @@ struct ExportView: View {
         }
 
         private var tokensText: String {
-                return tokens.reduce("") { $0 + $1.uri + "\n" }
+                return tokens.reduce(.empty) { $0 + $1.uri + "\n" }
         }
 
         private func txtFile() -> URL {

@@ -8,11 +8,6 @@ struct ManualEntryView: View {
         let completion: (Token) -> Void
         
         @State private var selection: Int = 0
-        @State private var keyUri: String = ""
-        @State private var issuer: String = ""
-        @State private var accountName: String = ""
-        @State private var secretKey: String = ""
-    
         private var tokenGroup: Binding<String> {
             Binding<String>(get: {
                 return settings.config!.defaultTokenGroup!
@@ -23,6 +18,11 @@ struct ManualEntryView: View {
             })
         }
         
+        @State private var keyUri: String = .empty
+        @State private var issuer: String = .empty
+        @State private var accountName: String = .empty
+        @State private var secretKey: String = .empty
+
         @State private var isAlertPresented: Bool = false
         
         var body: some View {

@@ -30,7 +30,7 @@ struct MainView: View {
     @State private var indexSetOnDelete: IndexSet = IndexSet()
     @State private var isDeletionAlertPresented: Bool = false
     @State private var canEditGroup: Bool = false
-    @State private var searchText: String = ""
+    @State private var searchText: String = .empty
     
     private var tokenGroupPicker = TokenGroupPicker()
     
@@ -57,7 +57,7 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             List(selection: $selectedTokens) {
-                ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }).filter({ searchText.isEmpty ? true : ($0.displayIssuer ?? "").lowercased().contains(searchText.lowercased()) }), id: \.self) { item in
+                ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }).filter({ searchText.isEmpty ? true : ($0.displayIssuer ?? .empty).lowercased().contains(searchText.lowercased()) }), id: \.self) { item in
                     let index: Int = Int(fetchedTokens.firstIndex(of: item) ?? 0)
                     if editMode == .active {
                         CodeCardView(token: token(of: item), index: index, totp: $codes[index], timeRemaining: $timeRemaining, isPresented: $isSheetPresented)
@@ -332,7 +332,7 @@ struct MainView: View {
     private var deletionAlert: Alert {
         let message: String = "Removing account will NOT turn off Two-Factor Authentication.\n\nMake sure you have alternate ways to sign into your service."
         return Alert(title: Text("Delete Account?"),
-                     message: Text(NSLocalizedString(message, comment: "")),
+                     message: Text(NSLocalizedString(message, comment: .empty)),
                      primaryButton: .cancel(cancelDeletion),
                      secondaryButton: .destructive(Text("Delete"), action: performDeletion))
     }

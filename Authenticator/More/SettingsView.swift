@@ -195,7 +195,7 @@ struct SettingsView: View {
     private var deletionAlert: Alert {
         let message: String = "This is an irreversable action.\nPlease ensure you have a backup."
         return Alert(title: Text("Delete iCloud data?"),
-                     message: Text(NSLocalizedString(message, comment: "")),
+                     message: Text(NSLocalizedString(message, comment: .empty)),
                      primaryButton: .cancel(Text("Turn off, KEEP data"), action: cancelDeletion),
                      secondaryButton: .destructive(Text("Turn off, DELETE data"), action: performDeletion))
     }
