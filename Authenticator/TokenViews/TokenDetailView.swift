@@ -1,6 +1,8 @@
 import SwiftUI
 import CoreImage.CIFilterBuiltins
 
+private var imageUrl: URL? = nil
+
 struct TokenDetailView: View {
 
         @Binding var isPresented: Bool
@@ -70,11 +72,7 @@ struct TokenDetailView: View {
                         .navigationTitle("Account detail")
                         .toolbar {
                                 ToolbarItem(placement: .navigationBarLeading) {
-                                        Button(action: {
-                                                isPresented = false
-                                        }) {
-                                                Text("Back")
-                                        }
+                                        Button("Back", action: { isPresented = false })
                                 }
                         }
                 }
@@ -114,9 +112,6 @@ struct TokenDetailView: View {
                 return name
         }
 }
-
-private var imageUrl: URL? = nil
-
 
 private struct MessageCardView: View {
 
