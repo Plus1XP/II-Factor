@@ -74,6 +74,7 @@ struct MainView: View {
                 .onDelete(perform: deleteItems)
             }
             .navigationBarSearch(self.$searchText)
+            .listStyle(SidebarListStyle())
             .listStyle(InsetGroupedListStyle())
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 generateCodes()
