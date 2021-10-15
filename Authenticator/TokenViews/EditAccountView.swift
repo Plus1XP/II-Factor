@@ -84,9 +84,9 @@ struct EditAccountView: View {
                                 }
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                         Button(action: {
-                                                displayIssuer = displayIssuer.trimming()
-                                                displayAccountName = displayAccountName.trimming()
-                                                displayGroup = displayGroup.trimming()
+                                                displayIssuer = displayIssuer.trimmed()
+                                                displayAccountName = displayAccountName.trimmed()
+                                                displayGroup = displayGroup.trimmed()
                                                 completion(tokenIndex, displayIssuer, displayAccountName, displayGroup)
                                                 isPresented = false
                                         }) {

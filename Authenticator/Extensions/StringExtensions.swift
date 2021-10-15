@@ -11,7 +11,7 @@ extension String {
 
         /// Returns a new string made by removing `.whitespacesAndNewlines` from both ends of the String.
         /// - Returns: A new string made by removing `.whitespacesAndNewlines` from both ends of the String.
-        func trimming() -> String {
+        func trimmed() -> String {
                 return trimmingCharacters(in: .whitespacesAndNewlines)
         }
     
