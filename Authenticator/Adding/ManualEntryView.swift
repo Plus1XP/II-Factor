@@ -180,15 +180,15 @@ struct ManualEntryView: View {
         private var newToken: Token? {
                 if selection == 0 {
                         guard !keyUri.isEmpty else { return nil }
-                        guard let token: Token = Token(uri: keyUri.trimming(), group: tokenGroup.wrappedValue.trimming()) else { return nil }
+                        guard let token: Token = Token(uri: keyUri.trimmed(), group: tokenGroup.wrappedValue.trimmed()) else { return nil }
                         return token
                 } else {
                         guard !secretKey.isEmpty else { return nil }
-                        guard let token: Token = Token(issuerPrefix: issuer.trimming(),
-                                                       accountName: accountName.trimming(),
-                                                       group: tokenGroup.wrappedValue.trimming(),
-                                                       secret: secretKey.trimming().removeSpaces(),
-                                                       issuer: issuer.trimming()) else { return nil }
+                        guard let token: Token = Token(issuerPrefix: issuer.trimmed(),
+                                                       accountName: accountName.trimmed(),
+                                                       group: tokenGroup.wrappedValue.trimmed(),
+                                                       secret: secretKey.trimmed().removeSpaces(),
+                                                       issuer: issuer.trimmed()) else { return nil }
                         return token
                 }
         }

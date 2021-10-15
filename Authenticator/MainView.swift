@@ -355,7 +355,7 @@ struct MainView: View {
         isSheetPresented = false
         switch result {
         case .success(let code):
-            let uri: String = code.trimming()
+            let uri: String = code.trimmed()
             guard !uri.isEmpty else { return }
             let group: String = tokenGroupSelected.wrappedValue
             guard let newToken: Token = Token(uri: uri, group: group) else { return }
@@ -365,7 +365,7 @@ struct MainView: View {
         }
     }
     private func handlePickedImage(uri: String) {
-        let qrCodeUri: String = uri.trimming()
+        let qrCodeUri: String = uri.trimmed()
         guard !qrCodeUri.isEmpty else { return }
         let group: String = tokenGroupSelected.wrappedValue
         guard let newToken: Token = Token(uri: qrCodeUri, group: group) else { return }
@@ -376,7 +376,7 @@ struct MainView: View {
         let group: String = tokenGroupSelected.wrappedValue
         let lines: [String] = content.components(separatedBy: .newlines)
         _ = lines.map {
-            if let newToken: Token = Token(uri: $0.trimming(), group: group) {
+            if let newToken: Token = Token(uri: $0.trimmed(), group: group) {
                 addItem(newToken)
             }
         }
