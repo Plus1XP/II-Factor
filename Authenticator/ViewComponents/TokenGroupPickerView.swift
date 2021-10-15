@@ -24,6 +24,6 @@ struct TokenGroupPickerView: View {
                     })
             }
         }
-        .pickerStyle(.segmented)
+        .pickerStyle(SegmentedPickerStyle())
     }
 }
