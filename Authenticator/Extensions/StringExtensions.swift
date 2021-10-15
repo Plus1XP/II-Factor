@@ -8,6 +8,9 @@ extension String {
         func trimmingSpaces() -> String {
                 trimmingCharacters(in: CharacterSet(charactersIn: " "))
         }
+    
+        /// aka. `String.init()`
+        static let empty: String = ""
 
         /// Returns a new string made by removing `.whitespacesAndNewlines` from both ends of the String.
         /// - Returns: A new string made by removing `.whitespacesAndNewlines` from both ends of the String.

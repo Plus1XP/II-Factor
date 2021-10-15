@@ -45,11 +45,11 @@ private struct LinkCardView: View {
         var body: some View {
                 VStack {
                         HStack {
-                                Text(NSLocalizedString(heading, comment: "")).font(.headline)
+                                Text(NSLocalizedString(heading, comment: .empty)).font(.headline)
                                 Spacer()
                         }
                         HStack {
-                                Text(NSLocalizedString(message, comment: "")).font(.system(.footnote, design: .monospaced))
+                                Text(NSLocalizedString(message, comment: .empty)).font(.system(.footnote, design: .monospaced))
                                 Spacer()
                         }
                 }

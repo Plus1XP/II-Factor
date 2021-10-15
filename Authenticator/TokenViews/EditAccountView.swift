@@ -7,9 +7,9 @@ struct EditAccountView: View {
         let tokenIndex: Int
         let completion: (Int, String, String, String) -> Void
 
-        @State private var displayIssuer: String = ""
-        @State private var displayAccountName: String = ""
         @State private var displayGroup: String = TokenGroupType.None.rawValue
+        @State private var displayIssuer: String = .empty
+        @State private var displayAccountName: String = .empty
 
         var body: some View {
                 NavigationView {
