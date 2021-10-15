@@ -69,7 +69,7 @@ struct TokenDetailView: View {
                                         Spacer().frame(height: 50)
                                 }
                         }
-                        .navigationTitle("Account detail")
+                        .navigationTitle("Account Details")
                         .toolbar {
                                 ToolbarItem(placement: .navigationBarLeading) {
                                         Button("Back", action: { isPresented = false })

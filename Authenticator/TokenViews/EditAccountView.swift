@@ -66,7 +66,7 @@ struct EditAccountView: View {
                                     
                                         HStack {
                                                 // TODO: Localization
-                                                Text("NOTE: Changes would not apply to the Key URI")
+                                                Text("**NOTE**: Changes would not apply to the Key URI")
                                                         .font(.footnote)
                                                         .foregroundColor(Color.secondary)
                                                 Spacer()
