@@ -105,7 +105,7 @@ struct SettingsView: View {
                         .padding(.horizontal)
                         
                         HStack {
-                            Text("NOTE: iCloud Changes will not be applied untill app is restarted")
+                            Text("**NOTE:** iCloud Changes may take a while & will not be applied untill app is restarted")
                                 .font(.footnote)
                                 .foregroundColor(Color.secondary)
                                 .multilineTextAlignment(.center)
