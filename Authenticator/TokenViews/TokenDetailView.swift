@@ -129,12 +129,12 @@ private struct MessageCardView: View {
                                 Text(message).font(messageFont)
                                 Spacer()
                         }
-                        .padding(.top, 4)
+                        .padding(.all, 8)
+                        .fillBackground(cornerRadius: 8)
+                        .contextMenu(menuItems: {
+                                MenuCopyButton(content: message)
+                        })
                 }
                 .padding()
-                .fillBackground()
-                .contextMenu(menuItems: {
-                        MenuCopyButton(content: message)
-                })
         }
 }
