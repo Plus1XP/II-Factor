@@ -89,29 +89,32 @@ struct CodeCardView: View {
                 return code
         }
 
+        ///  The  Guard statement has a Ternary Operator within, which checks if the displayIssuer (imageName) contains a white space.
+        ///  If the value  does contain a white space, it will remove the white spaces from the string and attempt to return a logo from Images.
+        ///  If the value does not contain a white space, it will attempt to return a logo from Images.
+        ///  If either of the values returns nil (there is no logo matching imageName) the guard is invoked and will finally return a default system image.
         private var issuerImage: Image {
                 let imageName: String = token.displayIssuer.lowercased()
-                guard !imageName.isEmpty else { return Image(systemName: "person.circle") }
-                guard let uiImage: UIImage = UIImage(named: imageName) else { return Image(systemName: "person.circle") }
+                guard let uiImage: UIImage = imageName.contains(" ") ? UIImage(named: imageName.removeSpaces()) : (UIImage(named: imageName)) else { return Image(systemName: "person.circle") }
                 return Image(uiImage: uiImage)
         }
 
         private var endAngle: Double { Double((30 - timeRemaining) * 12 - 89) }
     
-    private func ArcColor(timeRemaining: Int) -> Color {
-        switch timeRemaining {
-        case 22...:
-            return Color.blue
-        case 14..<22:
-            return Color.green
-        case 7..<14:
-            return Color.yellow
-        case timeRemaining ..< 7:
-            return Color.red
-        default:
-            return Color.primary
+        private func ArcColor(timeRemaining: Int) -> Color {
+            switch timeRemaining {
+            case 22...:
+                return Color.blue
+            case 14..<22:
+                return Color.green
+            case 7..<14:
+                return Color.yellow
+            case timeRemaining ..< 7:
+                return Color.red
+            default:
+                return Color.primary
+            }
         }
-    }
 }
 
 private struct Arc: Shape {
