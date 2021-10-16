@@ -16,22 +16,17 @@ struct TokenDetailView: View {
                                 GlobalBackgroundColor().ignoresSafeArea()
                                 ScrollView {
                                         MessageCardView(heading: "Issuer", message: token.displayIssuer, messageFont: .body)
-                                                .padding()
-
+                                            .padding(.top)
+                                        
                                         MessageCardView(heading: "Account Name", message: token.displayAccountName, messageFont: .body)
-                                                .padding(.horizontal)
-
+                                    
                                         MessageCardView(heading: "Secret Key",
                                                         message: token.secret,
                                                         messageFont: .system(.footnote, design: .monospaced))
-                                                .padding()
-
                                         MessageCardView(heading: "Key URI",
                                                         message: token.uri,
                                                         messageFont: .system(.footnote, design: .monospaced))
-                                                .padding(.horizontal)
-                                                .padding(.bottom, 30)
-
+                                    
                                         if let uiImage = qrCodeImage {
                                                 HStack {
                                                         Spacer()
@@ -135,6 +130,7 @@ private struct MessageCardView: View {
                                 MenuCopyButton(content: message)
                         })
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.bottom)
         }
 }
