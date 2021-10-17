@@ -17,7 +17,7 @@ class SettingsStore: ObservableObject {
         fetchAndValidateGlobalSettings(context)
         if config == nil {
             print("! Settings Empty")
-            saveGlobalSettings(context ,isLockEnabled: false, isAutoLockEnabled: false, defaultTokenGroup: TokenGroupType.None.rawValue, defaultView: "")
+            saveGlobalSettings(context ,isLockEnabled: false, isAutoLockEnabled: false, defaultTokenGroup: TokenGroupType.None.rawValue, defaultView: .empty)
             print("! Created new DB")
             fetchGlobalSettings(context)
         } else {

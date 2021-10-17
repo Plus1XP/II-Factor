@@ -24,12 +24,13 @@ struct MainView: View {
     @State private var timeRemaining: Int = 30 - (Int(Date().timeIntervalSince1970) % 30)
     @State private var codes: [String] = Array(repeating: "000000", count: 50)
     @State private var isSheetPresented: Bool = false
+    @State private var isFileImporterPresented: Bool = false
     @State private var editMode: EditMode = .inactive
     @State private var selectedTokens = Set<TokenData>()
     @State private var indexSetOnDelete: IndexSet = IndexSet()
     @State private var isDeletionAlertPresented: Bool = false
     @State private var canEditGroup: Bool = false
-    @State private var searchText: String = ""
+    @State private var searchText: String = .empty
     
     private var tokenGroupPicker = TokenGroupPicker()
     
@@ -56,7 +57,7 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             List(selection: $selectedTokens) {
-                ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }).filter({ searchText.isEmpty ? true : ($0.displayIssuer ?? "").lowercased().contains(searchText.lowercased()) }), id: \.self) { item in
+                ForEach(fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }).filter({ searchText.isEmpty ? true : ($0.displayIssuer ?? .empty).lowercased().contains(searchText.lowercased()) }), id: \.self) { item in
                     let index: Int = Int(fetchedTokens.firstIndex(of: item) ?? 0)
                     if editMode == .active {
                         CodeCardView(token: token(of: item), index: index, totp: $codes[index], timeRemaining: $timeRemaining, isPresented: $isSheetPresented)
@@ -73,19 +74,32 @@ struct MainView: View {
                 .onDelete(perform: deleteItems)
             }
             .navigationBarSearch(self.$searchText)
+            .listStyle(SidebarListStyle())
             .listStyle(InsetGroupedListStyle())
-            .onAppear {
-                generateCodes()
-            }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 generateCodes()
                 clearTemporaryDirectory()
             }
             .onReceive(timer) { _ in
                 timeRemaining = 30 - (Int(Date().timeIntervalSince1970) % 30)
-                if timeRemaining == 30 {
+                if timeRemaining == 30 || codes.first == "000000" {
                     generateCodes()
                 }
+            }
+            .fileImporter(isPresented: $isFileImporterPresented, allowedContentTypes: [.text, .image], allowsMultipleSelection: false) { result in
+                    switch result {
+                    case .failure(let error):
+                            logger.debug(".fileImporter() failure: \(error.localizedDescription)")
+                    case .success(let urls):
+                            guard let pickedUrl: URL = urls.first else { return }
+                            guard pickedUrl.startAccessingSecurityScopedResource() else { return }
+                            let cachePathComponent = Date.currentDateText + pickedUrl.lastPathComponent
+                            let tmpDirectoryUrl: URL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+                            let cacheUrl: URL = tmpDirectoryUrl.appendingPathComponent(cachePathComponent)
+                            try? FileManager.default.copyItem(at: pickedUrl, to: cacheUrl)
+                            pickedUrl.stopAccessingSecurityScopedResource()
+                            handlePickedFile(url: cacheUrl)
+                    }
             }
             .alert(isPresented: $isDeletionAlertPresented) {
                 deletionAlert
@@ -138,6 +152,7 @@ struct MainView: View {
                             .scaledToFit()
                             .frame(width: 24, height: 24)
                             .contentShape(Rectangle())
+                            .foregroundColor(editMode == .inactive ? Color.primary : Color.blue)
                     }
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -148,6 +163,7 @@ struct MainView: View {
                             }
                         }) {
                             Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                                .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.blue)
                         }
                     } else {
                         Button {
@@ -171,6 +187,7 @@ struct MainView: View {
                             }
                         }) {
                             Image(systemName: "trash")
+                                .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.red)
                         }
                     } else {
                         Menu {
@@ -179,42 +196,25 @@ struct MainView: View {
                                 presentingSheet = .addByScanning
                                 isSheetPresented = true
                             }) {
-                                HStack {
-                                    Text("Scan QR Code")
-                                    Spacer()
-                                    Image(systemName: "qrcode.viewfinder")
-                                }
+                                Label("Scan QR Code", systemImage: "qrcode.viewfinder")
                             }
                             #endif
                             Button(action: {
                                 presentingSheet = .addByQRCodeImage
                                 isSheetPresented = true
                             }) {
-                                HStack {
-                                    Text(readQRCodeImage)
-                                    Spacer()
-                                    Image(systemName: "photo")
-                                }
+                                Label("Import from Photos", systemImage: "photo")
                             }
                             Button(action: {
-                                presentingSheet = .addByPickingFile
-                                isSheetPresented = true
+                                isFileImporterPresented = true
                             }) {
-                                HStack {
-                                    Text("Import from file")
-                                    Spacer()
-                                    Image(systemName: "doc.badge.plus")
-                                }
+                                Label("Import from Files", systemImage: "doc.badge.plus")
                             }
                             Button(action: {
                                 presentingSheet = .addByManually
                                 isSheetPresented = true
                             }) {
-                                HStack {
-                                    Text("Enter manually")
-                                    Spacer()
-                                    Image(systemName: "text.cursor")
-                                }
+                                Label("Enter Manually", systemImage: "text.cursor")
                             }
                         } label: {
                             Image(systemName: "qrcode.viewfinder")
@@ -245,8 +245,6 @@ struct MainView: View {
                     .overlay(
                         TokenGroupOverlayButtonStyleView(buttonSelected: tokenGroupSelected)
                         ,alignment: .bottom)
-            case .addByPickingFile:
-                DocumentPicker(isPresented: $isSheetPresented, completion: handlePickedFile(url:))
             case .addByManually:
                 ManualEntryView(isPresented: $isSheetPresented, completion: addItem(_:))
                     .environmentObject(settings)
@@ -335,7 +333,7 @@ struct MainView: View {
     private var deletionAlert: Alert {
         let message: String = "Removing account will NOT turn off Two-Factor Authentication.\n\nMake sure you have alternate ways to sign into your service."
         return Alert(title: Text("Delete Account?"),
-                     message: Text(NSLocalizedString(message, comment: "")),
+                     message: Text(NSLocalizedString(message, comment: .empty)),
                      primaryButton: .cancel(cancelDeletion),
                      secondaryButton: .destructive(Text("Delete"), action: performDeletion))
     }
@@ -358,7 +356,7 @@ struct MainView: View {
         isSheetPresented = false
         switch result {
         case .success(let code):
-            let uri: String = code.trimming()
+            let uri: String = code.trimmed()
             guard !uri.isEmpty else { return }
             let group: String = tokenGroupSelected.wrappedValue
             guard let newToken: Token = Token(uri: uri, group: group) else { return }
@@ -368,19 +366,18 @@ struct MainView: View {
         }
     }
     private func handlePickedImage(uri: String) {
-        let qrCodeUri: String = uri.trimming()
+        let qrCodeUri: String = uri.trimmed()
         guard !qrCodeUri.isEmpty else { return }
         let group: String = tokenGroupSelected.wrappedValue
         guard let newToken: Token = Token(uri: qrCodeUri, group: group) else { return }
         addItem(newToken)
     }
-    private func handlePickedFile(url: URL?) {
-        guard let url: URL = url else { return }
+    private func handlePickedFile(url: URL) {
         guard let content: String = url.readText() else { return }
         let group: String = tokenGroupSelected.wrappedValue
         let lines: [String] = content.components(separatedBy: .newlines)
         _ = lines.map {
-            if let newToken: Token = Token(uri: $0.trimming(), group: group) {
+            if let newToken: Token = Token(uri: $0.trimmed(), group: group) {
                 addItem(newToken)
             }
         }
@@ -445,14 +442,6 @@ struct MainView: View {
         _ = urls.map { try? FileManager.default.removeItem(at: $0) }
     }
     
-    private let readQRCodeImage: String = {
-        #if targetEnvironment(macCatalyst)
-        return NSLocalizedString("Read from QR Code picture", comment: "")
-        #else
-        return NSLocalizedString("Read QR Code image", comment: "")
-        #endif
-    }()
-    
     func fetchedTokens(tokenView: TokenGroupType) -> FetchedResults<TokenData> {
         switch tokenView {
         case .Personal:
@@ -472,7 +461,6 @@ struct MainView: View {
     case moreSettings
     case addByScanning
     case addByQRCodeImage
-    case addByPickingFile
     case addByManually
     case cardDetailView
     case cardEditing

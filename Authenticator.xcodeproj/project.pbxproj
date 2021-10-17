@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F14D2C62718D3ED00538FBF /* MenuCopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F14D2C52718D3ED00538FBF /* MenuCopyButton.swift */; };
 		2FA3B4B32686769B0070B0B7 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */; };
+		2FB57FFA27187D9300036B16 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFD356B2688C16A009AE891 /* CloudKit.framework */; };
 		2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */; };
 		2FCC63BF2684EE19005CC352 /* TokenDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */; };
 		2FEBD9AA267FF66600C98CDC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9A9267FF66600C98CDC /* MainView.swift */; };
@@ -19,7 +21,6 @@
 		2FEBD9BC267FF7EC00C98CDC /* TokenGroupButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9BB267FF7EC00C98CDC /* TokenGroupButtonStyle.swift */; };
 		2FEBD9C2267FF8A900C98CDC /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBD9C1267FF8A800C98CDC /* BiometricService.swift */; };
 		2FFCEA65268E2C1700BE2859 /* NotificationBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */; };
-		2FFD356C2688C16A009AE891 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFD356B2688C16A009AE891 /* CloudKit.framework */; };
 		37AD0310266C8A920086DD10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD030F266C8A920086DD10 /* AppDelegate.swift */; };
 		37AD0312266C8A920086DD10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0311266C8A920086DD10 /* SceneDelegate.swift */; };
 		37AD0314266C8A920086DD10 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0313266C8A920086DD10 /* ContentView.swift */; };
@@ -30,7 +31,6 @@
 		37AD0335266C8A930086DD10 /* AuthenticatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0334266C8A930086DD10 /* AuthenticatorUITests.swift */; };
 		37AD0362266C8CCA0086DD10 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 37AD0342266C8CC90086DD10 /* Settings.bundle */; };
 		37AD0363266C8CCA0086DD10 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37AD0343266C8CCA0086DD10 /* Images.xcassets */; };
-		37AD0364266C8CCA0086DD10 /* MenuViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0345266C8CCA0086DD10 /* MenuViews.swift */; };
 		37AD0365266C8CCA0086DD10 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0346266C8CCA0086DD10 /* ActivityView.swift */; };
 		37AD0366266C8CCA0086DD10 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0348266C8CCA0086DD10 /* Token.swift */; };
 		37AD0367266C8CCA0086DD10 /* OTPGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AD0349266C8CCA0086DD10 /* OTPGenerator.swift */; };
@@ -70,6 +70,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F14D2C52718D3ED00538FBF /* MenuCopyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCopyButton.swift; sourceTree = "<group>"; };
 		2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnhancedTextField.swift; sourceTree = "<group>"; };
 		2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDataExtension.swift; sourceTree = "<group>"; };
@@ -99,7 +100,6 @@
 		37AD0336266C8A930086DD10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37AD0342266C8CC90086DD10 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		37AD0343266C8CCA0086DD10 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		37AD0345266C8CCA0086DD10 /* MenuViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViews.swift; sourceTree = "<group>"; };
 		37AD0346266C8CCA0086DD10 /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		37AD0348266C8CCA0086DD10 /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		37AD0349266C8CCA0086DD10 /* OTPGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPGenerator.swift; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37AD037A266C90610086DD10 /* SwiftOTP in Frameworks */,
-				2FFD356C2688C16A009AE891 /* CloudKit.framework in Frameworks */,
+				2FB57FFA27187D9300036B16 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,10 +255,10 @@
 		37AD0344266C8CCA0086DD10 /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				2F14D2C52718D3ED00538FBF /* MenuCopyButton.swift */,
 				2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */,
 				2FEBD9B6267FF7B600C98CDC /* TokenGroupPicker.swift */,
 				2FEBD9B5267FF7B600C98CDC /* TokenGroupPickerView.swift */,
-				37AD0345266C8CCA0086DD10 /* MenuViews.swift */,
 				37AD0346266C8CCA0086DD10 /* ActivityView.swift */,
 				2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */,
 			);
@@ -487,8 +487,8 @@
 				37AD036A266C8CCA0086DD10 /* EditAccountView.swift in Sources */,
 				37AD0370266C8CCA0086DD10 /* ManualEntryView.swift in Sources */,
 				37AD0312266C8A920086DD10 /* SceneDelegate.swift in Sources */,
+				2F14D2C62718D3ED00538FBF /* MenuCopyButton.swift in Sources */,
 				37AD0314266C8A920086DD10 /* ContentView.swift in Sources */,
-				37AD0364266C8CCA0086DD10 /* MenuViews.swift in Sources */,
 				37AD0375266C8CCA0086DD10 /* StringExtensions.swift in Sources */,
 				37AD036D266C8CCA0086DD10 /* ExportView.swift in Sources */,
 				37AD0372266C8CCA0086DD10 /* PhotoPicker.swift in Sources */,
@@ -565,6 +565,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -626,6 +627,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -694,7 +696,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.authenticator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -720,7 +722,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.authenticator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;

@@ -1,6 +1,8 @@
 import SwiftUI
 import CoreImage.CIFilterBuiltins
 
+private var imageUrl: URL? = nil
+
 struct TokenDetailView: View {
 
         @Binding var isPresented: Bool
@@ -14,22 +16,17 @@ struct TokenDetailView: View {
                                 GlobalBackgroundColor().ignoresSafeArea()
                                 ScrollView {
                                         MessageCardView(heading: "Issuer", message: token.displayIssuer, messageFont: .body)
-                                                .padding()
-
+                                            .padding(.top)
+                                        
                                         MessageCardView(heading: "Account Name", message: token.displayAccountName, messageFont: .body)
-                                                .padding(.horizontal)
-
+                                    
                                         MessageCardView(heading: "Secret Key",
                                                         message: token.secret,
                                                         messageFont: .system(.footnote, design: .monospaced))
-                                                .padding()
-
                                         MessageCardView(heading: "Key URI",
                                                         message: token.uri,
                                                         messageFont: .system(.footnote, design: .monospaced))
-                                                .padding(.horizontal)
-                                                .padding(.bottom, 30)
-
+                                    
                                         if let uiImage = qrCodeImage {
                                                 HStack {
                                                         Spacer()
@@ -67,14 +64,10 @@ struct TokenDetailView: View {
                                         Spacer().frame(height: 50)
                                 }
                         }
-                        .navigationTitle("Account detail")
+                        .navigationTitle("Account Details")
                         .toolbar {
                                 ToolbarItem(placement: .navigationBarLeading) {
-                                        Button(action: {
-                                                isPresented = false
-                                        }) {
-                                                Text("Back")
-                                        }
+                                        Button("Back", action: { isPresented = false })
                                 }
                         }
                 }
@@ -115,9 +108,6 @@ struct TokenDetailView: View {
         }
 }
 
-private var imageUrl: URL? = nil
-
-
 private struct MessageCardView: View {
 
         let heading: String
@@ -134,12 +124,13 @@ private struct MessageCardView: View {
                                 Text(message).font(messageFont)
                                 Spacer()
                         }
-                        .padding(.top, 4)
+                        .padding(.all, 8)
+                        .fillBackground(cornerRadius: 8)
+                        .contextMenu(menuItems: {
+                                MenuCopyButton(content: message)
+                        })
                 }
-                .padding()
-                .fillBackground()
-                .contextMenu(menuItems: {
-                        MenuCopyButton(content: message)
-                })
+                .padding(.horizontal)
+                .padding(.bottom)
         }
 }
