@@ -7,9 +7,9 @@ struct EditAccountView: View {
         let tokenIndex: Int
         let completion: (Int, String, String, String) -> Void
 
-        @State private var displayIssuer: String = ""
-        @State private var displayAccountName: String = ""
         @State private var displayGroup: String = TokenGroupType.None.rawValue
+        @State private var displayIssuer: String = .empty
+        @State private var displayAccountName: String = .empty
 
         var body: some View {
                 NavigationView {
@@ -21,56 +21,42 @@ struct EditAccountView: View {
                                                         Text("Issuer").font(.headline)
                                                         Spacer()
                                                 }
-                                                #if targetEnvironment(macCatalyst)
-                                                TextField(token.displayIssuer, text: $displayIssuer)
-                                                        .disableAutocorrection(true)
-                                                        .autocapitalization(.words)
-                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                #else
                                                 TextField(token.displayIssuer, text: $displayIssuer)
                                                         .padding(.all, 8)
                                                         .disableAutocorrection(true)
                                                         .autocapitalization(.words)
                                                         .fillBackground(cornerRadius: 8)
-                                                #endif
-                                        }.padding()
-                                        
+                                        }
+                                        .padding()
                                         VStack {
                                                 HStack {
                                                         Text("Account Name").font(.headline)
                                                         Spacer()
                                                 }
-                                                #if targetEnvironment(macCatalyst)
-                                                TextField(token.displayAccountName, text: $displayAccountName)
-                                                        .keyboardType(.emailAddress)
-                                                        .disableAutocorrection(true)
-                                                        .autocapitalization(.none)
-                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                #else
                                                 TextField(token.displayAccountName, text: $displayAccountName)
                                                         .padding(.all, 8)
                                                         .keyboardType(.emailAddress)
                                                         .disableAutocorrection(true)
                                                         .autocapitalization(.none)
                                                         .fillBackground(cornerRadius: 8)
-                                                #endif
-                                        }.padding(.horizontal)
-                                        
+                                        }
+                                        .padding(.horizontal)
                                         VStack {
                                             HStack {
                                                 Text("Group").font(.headline)
                                                 Spacer()
                                             }
                                             TokenGroupAccountButtonStyleView(buttonSelected: $displayGroup)
-                                        }.padding()
-                                    
+                                        }
+                                        .padding()
                                         HStack {
                                                 // TODO: Localization
-                                                Text("NOTE: Changes would not apply to the Key URI")
+                                                Text("**NOTE**: Changes would not apply to the Key URI")
                                                         .font(.footnote)
                                                         .foregroundColor(Color.secondary)
                                                 Spacer()
-                                        }.padding()
+                                        }
+                                        .padding()
                                 }
                         }
                         .navigationTitle("title.edit_account")
@@ -84,9 +70,9 @@ struct EditAccountView: View {
                                 }
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                         Button(action: {
-                                                displayIssuer = displayIssuer.trimming()
-                                                displayAccountName = displayAccountName.trimming()
-                                                displayGroup = displayGroup.trimming()
+                                                displayIssuer = displayIssuer.trimmed()
+                                                displayAccountName = displayAccountName.trimmed()
+                                                displayGroup = displayGroup.trimmed()
                                                 completion(tokenIndex, displayIssuer, displayAccountName, displayGroup)
                                                 isPresented = false
                                         }) {
@@ -94,7 +80,8 @@ struct EditAccountView: View {
                                         }
                                 }
                         }
-                }.onAppear {
+                }
+                .onAppear {
                         displayIssuer = token.displayIssuer
                         displayAccountName = token.displayAccountName
                         displayGroup = token.displayGroup

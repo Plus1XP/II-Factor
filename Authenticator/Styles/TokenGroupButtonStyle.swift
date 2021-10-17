@@ -129,7 +129,7 @@ func GetTokenGroupButtonVisibility(buttonName: String, buttonSelected: String) -
 
 func GetTokenGroupSelection(buttonName: String, buttonSelected: String) -> String {
     if buttonName == buttonSelected {
-        return ""
+        return .empty
     }
     else {
         return buttonName
