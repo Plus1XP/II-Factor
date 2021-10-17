@@ -11,13 +11,15 @@ II Factor give you FULL control over YOUR keys. That means allowing you to keep 
 
 # Screenshots
 ### iOS
-![](images/ios1.png) ![](images/ios2.png)
-![](images/ios3.png) ![](images/ios4.png)
-![](images/ios5.png) ![](images/ios6.png)
+| ![](images/ios1.png)| ![](images/ios2.png)|
+|---------------------|---------------------|
+| ![](images/ios3.png)| ![](images/ios4.png)|
+| ![](images/ios5.png)| ![](images/ios6.png)|
 
 ### macOS
-![](images/macos1.png) ![](images/macos2.png)
-![](images/macos3.png) ![](images/macos4.png)
+| ![](images/macos1.png)| ![](images/macos2.png)|
+|-----------------------|-----------------------|
+| ![](images/macos3.png)| ![](images/macos4.png)|
 
 
 ## Third-party Libraries
