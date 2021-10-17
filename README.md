@@ -11,18 +11,18 @@ II Factor give you FULL control over YOUR keys. That means allowing you to keep 
 
 # Screenshots
 ### iOS
-<img src="images/ios1.png" alt="iPhone screen shots" width="480"/>
-<img src="images/ios2.png" alt="iPhone screen shots" width="480"/>
-<img src="images/ios3.png" alt="iPhone screen shots" width="480"/>
-<img src="images/ios4.png" alt="iPhone screen shots" width="480"/>
-<img src="images/ios5.png" alt="iPhone screen shots" width="480"/>
-<img src="images/ios6.png" alt="iPhone screen shots" width="480"/>
+<img src="images/ios1.png" alt="iPhone screen shots" width="240"/>
+<img src="images/ios2.png" alt="iPhone screen shots" width="240"/>
+<img src="images/ios3.png" alt="iPhone screen shots" width="240"/>
+<img src="images/ios4.png" alt="iPhone screen shots" width="240"/>
+<img src="images/ios5.png" alt="iPhone screen shots" width="240"/>
+<img src="images/ios6.png" alt="iPhone screen shots" width="240"/>
 
 ### macOS
-<img src="images/macos1.png" alt="Mac screen shots" width="480"/>
-<img src="images/macos2.png" alt="Mac screen shots" width="480"/>
-<img src="images/macos3.png" alt="Mac screen shots" width="480"/>
-<img src="images/macos4.png" alt="Mac screen shots" width="480"/>
+<img src="images/macos1.png" alt="Mac screen shots" width="240"/>
+<img src="images/macos2.png" alt="Mac screen shots" width="240"/>
+<img src="images/macos3.png" alt="Mac screen shots" width="240"/>
+<img src="images/macos4.png" alt="Mac screen shots" width="240"/>
 
 
 ## Third-party Libraries
