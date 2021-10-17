@@ -152,6 +152,7 @@ struct MainView: View {
                             .scaledToFit()
                             .frame(width: 24, height: 24)
                             .contentShape(Rectangle())
+                            .foregroundColor(editMode == .inactive ? Color.primary : Color.blue)
                     }
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -162,6 +163,7 @@ struct MainView: View {
                             }
                         }) {
                             Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                                .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.blue)
                         }
                     } else {
                         Button {
@@ -185,6 +187,7 @@ struct MainView: View {
                             }
                         }) {
                             Image(systemName: "trash")
+                                .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.red)
                         }
                     } else {
                         Menu {
