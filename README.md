@@ -24,3 +24,6 @@ II Factor give you FULL control over YOUR keys. That means allowing you to keep 
 
 ## Third-party Libraries
 - [SwiftOTP](https://github.com/lachlanbell/SwiftOTP)
+
+## Forked From
+- [ososoio/authenticator](https://github.com/ososoio/authenticator)
