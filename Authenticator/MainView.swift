@@ -280,6 +280,7 @@ struct MainView: View {
             generateCodes()
         }
     }
+    
     private func move(from source: IndexSet, to destination: Int) {
         var idArray: [String] = fetchedTokens.map({ $0.id ?? Token().id })
         idArray.move(fromOffsets: source, toOffset: destination)
@@ -298,23 +299,29 @@ struct MainView: View {
             logger.debug("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
+    
     private func deleteItems(offsets: IndexSet) {
+        debugPrint("Deleted TokenID: \(offsets.map { self.fetchedTokens[$0].id} ) ")
+        debugPrint("Deleted TokenIndex: \(offsets.map { self.fetchedTokens[$0].indexNumber} ) ")
+        
         selectedTokens.removeAll()
         indexSetOnDelete = offsets
         isDeletionAlertPresented = true
     }
+    
     private func cancelDeletion() {
         indexSetOnDelete.removeAll()
         selectedTokens.removeAll()
         isDeletionAlertPresented = false
     }
+    
     private func performDeletion() {
         if !selectedTokens.isEmpty {
             _ = selectedTokens.map { oneSelection in
                 _ = fetchedTokens.filter({ $0.id == oneSelection.id }).map(viewContext.delete)
             }
         } else if !indexSetOnDelete.isEmpty {
-            _ = indexSetOnDelete.map({ fetchedTokens[$0] }).map(viewContext.delete)
+            _ = indexSetOnDelete.map({ fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }).filter({ searchText.isEmpty ? true : ($0.displayIssuer ?? .empty).lowercased().contains(searchText.lowercased()) })[$0] }).map(viewContext.delete)
         } else {
             viewContext.delete(fetchedTokens[tokenIndex])
         }
@@ -329,6 +336,7 @@ struct MainView: View {
         isDeletionAlertPresented = false
         generateCodes()
     }
+    
     private var deletionAlert: Alert {
         let message: String = "Removing account will NOT turn off Two-Factor Authentication.\n\nMake sure you have alternate ways to sign into your service."
         return Alert(title: Text("Delete Account?"),
@@ -336,6 +344,7 @@ struct MainView: View {
                      primaryButton: .cancel(cancelDeletion),
                      secondaryButton: .destructive(Text("Delete"), action: performDeletion))
     }
+    
     func SetSelectedTokengroups(selectedTokenGroup: String) -> Void {
         for token in selectedTokens {
             token.displayGroup = selectedTokenGroup
@@ -364,6 +373,7 @@ struct MainView: View {
             logger.debug("\(error.localizedDescription)")
         }
     }
+    
     private func handlePickedImage(uri: String) {
         let qrCodeUri: String = uri.trimmed()
         guard !qrCodeUri.isEmpty else { return }
@@ -371,6 +381,7 @@ struct MainView: View {
         guard let newToken: Token = Token(uri: qrCodeUri, group: group) else { return }
         addItem(newToken)
     }
+    
     private func handlePickedFile(url: URL) {
         guard let content: String = url.readText() else { return }
         let group: String = tokenGroupSelected.wrappedValue
@@ -394,6 +405,7 @@ struct MainView: View {
         guard let token = Token(id: id, uri: uri, displayIssuer: displayIssuer, displayAccountName: displayAccountName, displayGroup: displayGroup) else { return Token() }
         return token
     }
+    
     private func generateCodes() {
         let placeholder: [String] = Array(repeating: "000000", count: 30)
         guard !fetchedTokens.isEmpty else {
@@ -403,6 +415,7 @@ struct MainView: View {
         let generated: [String] = fetchedTokens.map { code(of: $0) }
         codes = generated + placeholder
     }
+    
     private func code(of tokenData: TokenData) -> String {
         guard let uri: String = tokenData.uri else { return "000000" }
         guard let group: String = tokenData.displayGroup else { return TokenGroupType.None.rawValue}
