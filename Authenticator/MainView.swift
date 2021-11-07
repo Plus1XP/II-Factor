@@ -76,6 +76,9 @@ struct MainView: View {
             .navigationBarSearch(self.$searchText)
             .listStyle(SidebarListStyle())
             .listStyle(InsetGroupedListStyle())
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "AppLocked"))) {
+                _ in self.isSheetPresented = false; self.isFileImporterPresented = false
+            }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 generateCodes()
                 clearTemporaryDirectory()
