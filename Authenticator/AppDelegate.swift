@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let container: NSPersistentContainer?
             
             if isCloudKitEnabled {
-                print("Is syncing iCloud")
+                debugPrint("Is syncing iCloud")
                 container = NSPersistentCloudKitContainer(name: "Authenticator")
                 container?.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
                 container?.viewContext.automaticallyMergesChangesFromParent = true
@@ -56,9 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
                 
                 // this will output the cloudKit Container Name
-                print("cloudkit container identifier : \(String(describing: description.cloudKitContainerOptions?.containerIdentifier))")
+                debugPrint("cloudkit container identifier : \(String(describing: description.cloudKitContainerOptions?.containerIdentifier))")
             } else {
-                print("Is Not syncing iCloud")
+                debugPrint("Is Not syncing iCloud")
                 container = NSPersistentContainer(name: "Authenticator")
                 
                 guard let description = container?.persistentStoreDescriptions.first else {
@@ -116,10 +116,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 database.delete(withRecordZoneID: .init(zoneName: "com.apple.coredata.cloudkit.zone"), completionHandler: { (zoneID, error) in
                     if let error = error {
                         completion(false)
-                        print("error deleting zone: - \(error.localizedDescription)")
+                        debugPrint("error deleting zone: - \(error.localizedDescription)")
                     } else {
                         completion(true)
-                        print("successfully deleted zone")
+                        debugPrint("successfully deleted zone")
                     }
                 })
             }

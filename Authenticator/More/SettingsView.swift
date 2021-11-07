@@ -11,6 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var settings: SettingsStore
+    @ObservedObject private var biometricService = BiometricService()
 
     @Binding var isPresented: Bool
     @State var tokens: [Token]
@@ -28,6 +29,9 @@ struct SettingsView: View {
             settings.config?.isLockEnabled = $0
             settings.saveGlobalSettings(context)
             settings.fetchGlobalSettings(context)
+            if settings.config?.isLockEnabled == true {
+                biometricService.ValidateBiometrics()
+            }
         })
     }
 
@@ -207,7 +211,7 @@ struct SettingsView: View {
             } else {
                 hasIcloudDeletedSuccessfuly = false
             }
-            print("iCloud Banner Displayed: \(result)")
+            debugPrint("iCloud Banner Displayed: \(result)")
             isDeletionBannerPresented = true
         }
     }

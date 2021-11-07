@@ -104,6 +104,25 @@ class BiometricService : ObservableObject{
         }
     }
     
+    func ValidateBiometrics() -> Void {
+        canEvaluate { (canEvaluate, _, canEvaluateError) in
+            guard canEvaluate else {
+                // Face ID/Touch ID may not be available or configured
+                debugPrint("authentication not available")
+                return
+            }
+            evaluate { (success, error) in
+                guard success else {
+                    // Face ID/Touch ID may not be configured
+                    debugPrint("authentication not successful")
+                    return
+                }
+                // You are successfully verified
+                debugPrint("authentication successful")
+            }
+        }
+    }
+    
     func canEvaluate(completion: (Bool, BiometricType, BiometricError?) -> Void) {
         // Asks Context if it can evaluate a Policy
         // Passes an Error pointer to get error code in case of failure
