@@ -38,15 +38,18 @@ struct ContentView: View {
         }
         .onAppear {
             getLockStatusFromGlobalSettings()
-            if isLockEnabled && isAppLocked {
-                ValidateBiometrics()
-            }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
             print("Moving to the background!")
+            getLockStatusFromGlobalSettings()
+            print("auto lock local content view: \(isAutoLockEnable)")
             if isLockEnabled && isAutoLockEnable {
                 isAppLocked = true
+                NotificationCenter.default.post(Notification.init(name: Notification.Name(rawValue: "AppLocked")))
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            print("Moving to the foreground!")
         }
     }
     
