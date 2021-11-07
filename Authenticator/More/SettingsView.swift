@@ -211,7 +211,7 @@ struct SettingsView: View {
             } else {
                 hasIcloudDeletedSuccessfuly = false
             }
-            print("iCloud Banner Displayed: \(result)")
+            debugPrint("iCloud Banner Displayed: \(result)")
             isDeletionBannerPresented = true
         }
     }
