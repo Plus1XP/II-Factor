@@ -20,7 +20,7 @@ struct ContentView: View {
             
             if isLockEnabled && isAppLocked {
                 Button(action: {
-                    print("authenticate button Pushed")
+                    debugPrint("authenticate button Pushed")
                     ValidateBiometrics()
                 }, label: {
                     Text("\(Text(biometricService.setBiometricIcon()))")
@@ -38,15 +38,17 @@ struct ContentView: View {
         }
         .onAppear {
             getLockStatusFromGlobalSettings()
-            if isLockEnabled && isAppLocked {
-                ValidateBiometrics()
-            }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-            print("Moving to the background!")
+            debugPrint("Moving to the background!")
+            getLockStatusFromGlobalSettings()
             if isLockEnabled && isAutoLockEnable {
                 isAppLocked = true
+                NotificationCenter.default.post(Notification.init(name: Notification.Name(rawValue: "AppLocked")))
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            debugPrint("Moving to the foreground!")
         }
     }
     
@@ -73,17 +75,17 @@ struct ContentView: View {
         biometricService.canEvaluate { (canEvaluate, _, canEvaluateError) in
             guard canEvaluate else {
                 // Face ID/Touch ID may not be available or configured
-                print("authentication not available")
+                debugPrint("authentication not available")
                 return
             }
             biometricService.evaluate { (success, error) in
                 guard success else {
                     // Face ID/Touch ID may not be configured
-                    print("authentication not successful")
+                    debugPrint("authentication not successful")
                     return
                 }
                 // You are successfully verified
-                print("authentication successful")
+                debugPrint("authentication successful")
                 self.isAppLocked = false
             }
         }
