@@ -16,35 +16,35 @@ class SettingsStore: ObservableObject {
         setUserDefaults()
         fetchAndValidateGlobalSettings(context)
         if config == nil {
-            print("! Settings Empty")
+            debugPrint("! Settings Empty")
             saveGlobalSettings(context ,isLockEnabled: false, isAutoLockEnabled: false, defaultTokenGroup: TokenGroupType.None.rawValue, defaultView: .empty)
-            print("! Created new DB")
+            debugPrint("! Created new DB")
             fetchGlobalSettings(context)
         } else {
-            print("! Settings Loaded")
+            debugPrint("! Settings Loaded")
         }
     }
     
     func fetchAndValidateGlobalSettings(_ context: NSManagedObjectContext) -> Void {
         do {
             let settings: [GlobalSettings] = try context.fetch(GlobalSettings.fetchRequest())
-            print("config count: \(settings.count)")
+            debugPrint("config count: \(settings.count)")
             if settings.count > 1 {
                 deleteGlobalSettings(context, canDeleteFirstValue: false)
             }
             config = settings.first
         } catch let error as NSError {
-            print("Load settings failed: \(error.localizedDescription)")
+            debugPrint("Load settings failed: \(error.localizedDescription)")
         }
     }
 
     func fetchGlobalSettings(_ context: NSManagedObjectContext) -> Void {
         do {
             let settings: [GlobalSettings] = try context.fetch(GlobalSettings.fetchRequest())
-            print("config count: \(settings.count)")
+            debugPrint("config count: \(settings.count)")
             config = settings.first
         } catch let error as NSError {
-            print("Load settings failed: \(error.localizedDescription)")
+            debugPrint("Load settings failed: \(error.localizedDescription)")
         }
     }
     
@@ -52,7 +52,7 @@ class SettingsStore: ObservableObject {
         do {
             try context.save()
         } catch let error as NSError {
-            print("Save settings failed: \(error.localizedDescription)")
+            debugPrint("Save settings failed: \(error.localizedDescription)")
         }
     }
 
@@ -65,7 +65,7 @@ class SettingsStore: ObservableObject {
         do {
             try context.save()
         } catch let error as NSError {
-            print("Save settings failed: \(error.localizedDescription)")
+            debugPrint("Save settings failed: \(error.localizedDescription)")
         }
     }
 
@@ -74,14 +74,14 @@ class SettingsStore: ObservableObject {
         do {
             try context.save()
         } catch let error as NSError {
-            print("Delete settings failed: \(error.localizedDescription)")
+            debugPrint("Delete settings failed: \(error.localizedDescription)")
         }
     }
     
     func deleteGlobalSettings(_ context: NSManagedObjectContext, canDeleteFirstValue: Bool) -> Void {
         do {
             var settings: [GlobalSettings] = try context.fetch(GlobalSettings.fetchRequest())
-            print("config count: \(settings.count)")
+            debugPrint("config count: \(settings.count)")
             var count: Int = 1
             for item in settings {
                 if !canDeleteFirstValue && count == 1 {
@@ -89,13 +89,13 @@ class SettingsStore: ObservableObject {
                     continue
                 }
                 deleteGlobalSettings(context, settings: item)
-                print("Deleted config: \(count) of \(settings.count)")
+                debugPrint("Deleted config: \(count) of \(settings.count)")
                 count += 1
             }
             settings = try context.fetch(GlobalSettings.fetchRequest())
-            print("config count: \(settings.count)")
+            debugPrint("config count: \(settings.count)")
         } catch let error as NSError {
-            print("Load settings failed: \(error.localizedDescription)")
+            debugPrint("Load settings failed: \(error.localizedDescription)")
         }
     }
     
