@@ -104,7 +104,9 @@ class BiometricService : ObservableObject{
         }
     }
     
-    func ValidateBiometrics() -> Void {
+    func ValidateBiometrics() -> Bool {
+        var validated: Bool = false
+        
         canEvaluate { (canEvaluate, _, canEvaluateError) in
             guard canEvaluate else {
                 // Face ID/Touch ID may not be available or configured
@@ -119,8 +121,10 @@ class BiometricService : ObservableObject{
                 }
                 // You are successfully verified
                 debugPrint("authentication successful")
+                validated = true
             }
         }
+        return validated
     }
     
     func canEvaluate(completion: (Bool, BiometricType, BiometricError?) -> Void) {
