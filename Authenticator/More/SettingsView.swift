@@ -30,7 +30,9 @@ struct SettingsView: View {
             settings.saveGlobalSettings(context)
             settings.fetchGlobalSettings(context)
             if settings.config?.isLockEnabled == true {
-                biometricService.ValidateBiometrics()
+                // Results is un-needed as we only need to trigger iOS notification.
+                // Strictly here to stop Xcode complaining
+                _ = biometricService.ValidateBiometrics()
             }
         })
     }
