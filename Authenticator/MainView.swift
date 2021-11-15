@@ -130,8 +130,22 @@ struct MainView: View {
             .navigationTitle(tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue))
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
+                    Button {
+                            if !selectedTokens.isEmpty {
+                                canEditGroup = true
+                            }
+                    } label: {
+                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                            .resizable()
+                            .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.blue)
+                            .opacity(editMode == .inactive ? 0 : 1)
+                    }
+                    .disabled(editMode == .inactive ? true : false)
                     Spacer()
                     TokenGroupPickerView(selectedTokenGroup: tokenViewSelected)
+                        .onChange(of: tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue)) {
+                            newValue in selectedTokens.removeAll()
+                        }
                     Spacer()
                     Button {
                         if editMode == .inactive {
@@ -160,13 +174,23 @@ struct MainView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     if editMode == .active {
                         Button(action: {
-                            if !selectedTokens.isEmpty {
-                                canEditGroup = true
+                            if selectedTokens.isEmpty {
+                                for token in fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }).filter({ searchText.isEmpty ? true : ($0.displayIssuer ?? .empty).lowercased().contains(searchText.lowercased()) }) {
+                                    selectedTokens.insert(token)
+                                }
+                                debugPrint("Selected \(selectedTokens.count) Tokens")
+                            } else {
+                                debugPrint("De-Selected \(selectedTokens.count) Tokens")
+                                selectedTokens.removeAll()
                             }
                         }) {
-                            Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                                .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.blue)
+                            if !selectedTokens.isEmpty {
+                                Image(systemName: "rectangle.grid.1x2.fill")
+                            } else {
+                                Image(systemName: "rectangle.grid.1x2")
+                            }
                         }
+                        .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.blue)
                     } else {
                         Button {
                             presentingSheet = .moreSettings
