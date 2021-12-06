@@ -289,21 +289,21 @@ struct MainView: View {
     
     // MARK: - Modification
     private func addItem(_ token: Token) {
+        let newTokenData = TokenData(context: viewContext)
+        newTokenData.id = token.id
+        newTokenData.uri = token.uri
+        newTokenData.displayIssuer = token.displayIssuer
+        newTokenData.displayAccountName = token.displayAccountName
+        newTokenData.displayGroup = token.displayGroup
+        let lastIndexNumber: Int64 = fetchedTokens.last?.indexNumber ?? Int64(fetchedTokens.count)
+        newTokenData.indexNumber = lastIndexNumber + 1
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            debugPrint("Add Item error \(nsError), \(nsError.userInfo)")
+        }
         withAnimation {
-            let newTokenData = TokenData(context: viewContext)
-            newTokenData.id = token.id
-            newTokenData.uri = token.uri
-            newTokenData.displayIssuer = token.displayIssuer
-            newTokenData.displayAccountName = token.displayAccountName
-            newTokenData.displayGroup = token.displayGroup
-            let lastIndexNumber: Int64 = fetchedTokens.last?.indexNumber ?? Int64(fetchedTokens.count)
-            newTokenData.indexNumber = lastIndexNumber + 1
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                logger.debug("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
             generateCodes()
         }
     }
