@@ -54,6 +54,10 @@ struct MainView: View {
         })
     }
     
+    init() {
+                 UITextField.appearance().clearButtonMode = .always
+         }
+    
     var body: some View {
         NavigationView {
             List(selection: $selectedTokens) {
