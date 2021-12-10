@@ -307,9 +307,7 @@ struct MainView: View {
             let nsError = error as NSError
             debugPrint("Add Item error \(nsError), \(nsError.userInfo)")
         }
-        withAnimation {
-            generateCodes()
-        }
+        generateCodes()
     }
     
     private func move(from source: IndexSet, to destination: Int) {
