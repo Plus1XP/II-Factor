@@ -23,7 +23,7 @@ struct MainView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 30 - (Int(Date().timeIntervalSince1970) % 30)
     @State private var codes: [String] = Array(repeating: "000000", count: 50)
-    @State private var isRefreshed: Bool = false
+    @State private var animationTrigger: Bool = false
     @State private var isSheetPresented: Bool = false
     @State private var isFileImporterPresented: Bool = false
     @State private var editMode: EditMode = .inactive
@@ -84,7 +84,7 @@ struct MainView: View {
             .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "AppLocked"))) {
                 _ in self.isSheetPresented = false; self.isFileImporterPresented = false
             }
-            .animation(.default, value: isRefreshed)
+            .animation(.default, value: animationTrigger)
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 generateCodes()
                 clearTemporaryDirectory()
@@ -444,7 +444,7 @@ struct MainView: View {
         }
         let generated: [String] = fetchedTokens.map { code(of: $0) }
         codes = generated + placeholder
-        isRefreshed.toggle()
+        animationTrigger.toggle()
     }
     
     private func code(of tokenData: TokenData) -> String {
