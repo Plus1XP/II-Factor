@@ -26,11 +26,14 @@ private struct VersionLabel: View {
                         Text("Version")
                             .font(.headline)
                         Spacer()
-                        Text(versionString)
+                        Text(version)
+                                #if targetEnvironment(macCatalyst)
+                                .textSelection(.enabled)
+                                #endif
                 }
                 .fillBackground()
                 .contextMenu(menuItems: {
-                        MenuCopyButton(content: versionString)
+                        MenuCopyButton(content: version)
                 })
                 .padding(.bottom)
         }
@@ -52,6 +55,10 @@ private struct LinkCardView: View {
                                 Text(NSLocalizedString(message, comment: .empty)).font(.system(.footnote, design: .monospaced))
                                 Spacer()
                         }
+                        .padding(.bottom, 4)
+                        #if targetEnvironment(macCatalyst)
+                        .textSelection(.enabled)
+                        #endif
                 }
                 #if targetEnvironment(macCatalyst)
                 .textSelection(.enabled)
