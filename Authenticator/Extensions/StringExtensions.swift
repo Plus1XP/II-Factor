@@ -12,6 +12,9 @@ extension String {
         /// aka. `String.init()`
         static let empty: String = ""
 
+         /// Six zeros
+        static let zeros: String = "000000"
+
         /// Returns a new string made by removing `.whitespacesAndNewlines` from both ends of the String.
         /// - Returns: A new string made by removing `.whitespacesAndNewlines` from both ends of the String.
         func trimmed() -> String {
