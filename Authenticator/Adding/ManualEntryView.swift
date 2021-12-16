@@ -96,7 +96,7 @@ struct ManualEntryView: View {
                                                                 }
                                                                 TextField("SECRET (Required)", text: $secretKey)
                                                                         .padding(.all, 8)
-                                                                        .keyboardType(.alphabet)
+                                                                        .keyboardType(.asciiCapable)
 //                                                                        .submitLabel(.done)
                                                                         .autocapitalization(.none)
                                                                         .disableAutocorrection(true)
