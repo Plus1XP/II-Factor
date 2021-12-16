@@ -14,10 +14,10 @@ struct AboutView: View {
 
 private struct VersionLabel: View {
 
-        private let versionString: String = {
-                let version: String = (Bundle.main.infoDictionary?["CFBundleLongVersionString"] as? String) ?? "_error"
-                let build: String = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "_error"
-                return version + " (" + build + ")"
+        private let version: String = {
+                let versionString: String = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "_error"
+                let buildString: String = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "_error"
+                return versionString + " (" + buildString + ")"
         }()
 
         var body: some View {
@@ -53,6 +53,9 @@ private struct LinkCardView: View {
                                 Spacer()
                         }
                 }
+                #if targetEnvironment(macCatalyst)
+                .textSelection(.enabled)
+                #endif
                 .contextMenu(menuItems: {
                         MenuCopyButton(content: message)
                 })
