@@ -38,8 +38,9 @@ struct ContentView: View {
         }
         .onAppear {
             getLockStatusFromGlobalSettings()
+            ValidateBiometrics()
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             debugPrint("Moving to the background!")
             getLockStatusFromGlobalSettings()
             if isLockEnabled && isAutoLockEnable {
@@ -49,7 +50,23 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             debugPrint("Moving to the foreground!")
+            // Uncomment once working
+//            ValidateBiometrics()
         }
+//        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { (_) in
+//            debugPrint("Moving to the background!")
+//            isBackground = true
+//            getLockStatusFromGlobalSettings()
+//            if isLockEnabled && isAutoLockEnable {
+//              isAppLocked = true
+//              NotificationCenter.default.post(Notification.init(name: Notification.Name(rawValue: "AppLocked")))
+//            }
+//        }
+//        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { (_) in
+//            debugPrint("Moving to the foreground!")
+//            isBackground = false
+//            ValidateBiometrics()
+//        }
     }
     
     func SetBlur(isLocked: Bool) -> CGFloat {
