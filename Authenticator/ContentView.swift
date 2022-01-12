@@ -4,8 +4,7 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var settings: SettingsStore
-    @StateObject private var biometricService = BiometricService()
-
+    
     @State private var isAppLocked = true
     @State private var isLockEnabled = true
     @State private var isAutoLockEnable = true
@@ -23,7 +22,8 @@ struct ContentView: View {
                     debugPrint("authenticate button Pushed")
                     ValidateBiometrics()
                 }, label: {
-                    Text("\(Text(biometricService.setBiometricIcon()))")
+                    let biometric = BiometricService()
+                    Text("\(Text(biometric.setBiometricIcon()))")
                         .multilineTextAlignment(.center)
                         .padding(30)
                         .background(Color.secondary.blendMode(.overlay))
@@ -50,8 +50,7 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             debugPrint("Moving to the foreground!")
-            // Uncomment once working
-//            ValidateBiometrics()
+            ValidateBiometrics()
         }
 //        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { (_) in
 //            debugPrint("Moving to the background!")
@@ -69,7 +68,7 @@ struct ContentView: View {
 //        }
     }
     
-    func SetBlur(isLocked: Bool) -> CGFloat {
+    private func SetBlur(isLocked: Bool) -> CGFloat {
         switch isLocked {
         case false:
             return 0.0
@@ -78,7 +77,7 @@ struct ContentView: View {
         }
     }
     
-    func getLockStatusFromGlobalSettings() -> Void {
+    private func getLockStatusFromGlobalSettings() -> Void {
         settings.setupGlobalSettings(context)
         isLockEnabled = settings.config!.isLockEnabled
         isAutoLockEnable = settings.config!.isAutoLockEnabled
@@ -88,21 +87,19 @@ struct ContentView: View {
         }
     }
     
-    func ValidateBiometrics() -> Void {
-        biometricService.canEvaluate { (canEvaluate, _, canEvaluateError) in
+    private func ValidateBiometrics() -> Void {
+        let biometric = BiometricService()
+        biometric.canEvaluate { (canEvaluate, _, canEvaluateError) in
             guard canEvaluate else {
-                // Face ID/Touch ID may not be available or configured
-                debugPrint("authentication not available")
+                debugPrint(canEvaluateError?.localizedDescription ?? "Authentication Failure, No Biometrics or Password Set")
                 return
             }
-            biometricService.evaluate { (success, error) in
+            biometric.evaluate { (success, error) in
                 guard success else {
-                    // Face ID/Touch ID may not be configured
-                    debugPrint("authentication not successful")
+                    debugPrint(error?.localizedDescription ?? "Authentication Error, Incorrect Biometrics or Password, User Cancelled")
                     return
                 }
-                // You are successfully verified
-                debugPrint("authentication successful")
+                debugPrint("Authentication Successful")
                 self.isAppLocked = false
             }
         }
