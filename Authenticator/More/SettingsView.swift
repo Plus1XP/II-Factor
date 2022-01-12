@@ -11,7 +11,6 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var settings: SettingsStore
-    @ObservedObject private var biometricService = BiometricService()
 
     @Binding var isPresented: Bool
     @State var tokens: [Token]
@@ -32,7 +31,7 @@ struct SettingsView: View {
             if settings.config?.isLockEnabled == true {
                 // Results is un-needed as we only need to trigger iOS notification.
                 // Strictly here to stop Xcode complaining
-                _ = biometricService.ValidateBiometrics()
+                ValidateBiometrics()
             }
         })
     }
@@ -220,5 +219,22 @@ struct SettingsView: View {
     
     private func cancelDeletion() {
         isDeletionAlertPresented = false
+    }
+    
+    private func ValidateBiometrics() -> Void {
+        let biometric = BiometricService()
+        biometric.canEvaluate { (canEvaluate, _, canEvaluateError) in
+            guard canEvaluate else {
+                debugPrint(canEvaluateError?.localizedDescription ?? "Authentication Failure, No Biometrics or Password Set")
+                return
+            }
+            biometric.evaluate { (success, error) in
+                guard success else {
+                    debugPrint(error?.localizedDescription ?? "Authentication Error, Incorrect Biometrics or Password, User Cancelled")
+                    return
+                }
+                debugPrint("Authentication Successful")
+            }
+        }
     }
 }
