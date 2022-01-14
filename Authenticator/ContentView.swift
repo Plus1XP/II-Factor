@@ -165,7 +165,7 @@ struct ContentView: View {
         // Delay of 7 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
             canShowAuthenticatedBanner = false
-            debugPrint("Banner Dismissed")
+            debugPrint("Authentication Banner Dismissed")
         }
     }
 }

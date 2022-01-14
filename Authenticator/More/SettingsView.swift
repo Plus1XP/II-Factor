@@ -214,11 +214,20 @@ struct SettingsView: View {
             }
             debugPrint("iCloud Banner Displayed: \(result)")
             isDeletionBannerPresented = true
+            DismissBanner()
         }
     }
     
     private func cancelDeletion() {
         isDeletionAlertPresented = false
+    }
+    
+    private func DismissBanner() {
+        // Delay of 5 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            isDeletionBannerPresented = false
+            debugPrint("iCloud Banner Dismissed")
+        }
     }
     
     private func ValidateBiometrics() -> Void {
