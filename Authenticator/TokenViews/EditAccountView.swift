@@ -23,7 +23,7 @@ struct EditAccountView: View {
                                                 }
                                                 TextField(token.displayIssuer, text: $displayIssuer)
                                                         .padding(.all, 8)
-                                                        .submitLabel(.done)
+//                                                        .submitLabel(.done)
                                                         .disableAutocorrection(true)
                                                         .autocapitalization(.words)
                                                         .fillBackground(cornerRadius: 8)
@@ -37,7 +37,7 @@ struct EditAccountView: View {
                                                 TextField(token.displayAccountName, text: $displayAccountName)
                                                         .padding(.all, 8)
                                                         .keyboardType(.emailAddress)
-                                                        .submitLabel(.done)
+//                                                        .submitLabel(.done)
                                                         .disableAutocorrection(true)
                                                         .autocapitalization(.none)
                                                         .fillBackground(cornerRadius: 8)
