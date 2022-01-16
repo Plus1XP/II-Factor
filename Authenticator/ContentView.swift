@@ -72,7 +72,9 @@ struct ContentView: View {
         }
         .onAppear {
             getLockStatusFromGlobalSettings()
-            ValidateBiometrics()
+            if isLockEnabled && isAutoLockEnable {
+                ValidateBiometrics()
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             debugPrint("Moving to the background!")
@@ -84,7 +86,9 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             debugPrint("Moving to the foreground!")
-            ValidateBiometrics()
+            if isLockEnabled && isAutoLockEnable {
+                ValidateBiometrics()
+            }
         }
 //        .banner(isPresented: $canShowAuthenticatedBanner, data: GetAuthenticationBannerData(), action: {
 //            // Place action here..
