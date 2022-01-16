@@ -60,9 +60,6 @@ private struct LinkCardView: View {
                         .textSelection(.enabled)
                         #endif
                 }
-                #if targetEnvironment(macCatalyst)
-                .textSelection(.enabled)
-                #endif
                 .contextMenu(menuItems: {
                         MenuCopyButton(content: message)
                 })
