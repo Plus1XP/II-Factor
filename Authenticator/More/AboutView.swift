@@ -52,7 +52,6 @@ private struct LinkCardView: View {
                                 Text(NSLocalizedString(message, comment: .empty)).font(.system(.footnote, design: .monospaced))
                                 Spacer()
                         }
-                        .padding(.bottom, 4)
                 }
                 .contextMenu(menuItems: {
                         MenuCopyButton(content: message)
