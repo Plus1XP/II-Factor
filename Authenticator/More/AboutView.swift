@@ -27,9 +27,6 @@ private struct VersionLabel: View {
                             .font(.headline)
                         Spacer()
                         Text(version)
-                                #if targetEnvironment(macCatalyst)
-                                .textSelection(.enabled)
-                                #endif
                 }
                 .fillBackground()
                 .contextMenu(menuItems: {
@@ -56,9 +53,6 @@ private struct LinkCardView: View {
                                 Spacer()
                         }
                         .padding(.bottom, 4)
-                        #if targetEnvironment(macCatalyst)
-                        .textSelection(.enabled)
-                        #endif
                 }
                 .contextMenu(menuItems: {
                         MenuCopyButton(content: message)
