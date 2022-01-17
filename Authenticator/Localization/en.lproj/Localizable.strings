@@ -1,4 +1,4 @@
-// English
+// English (en)
 
 // General
 "Copy" = "Copy";
@@ -34,14 +34,9 @@
 "Export" = "Export";
 "Export Accounts" = "Export Accounts";
 "Copy all Key URIs to Clipboard" = "Copy all Key URIs to Clipboard";
-
 "Export all Key URIs as plain text" = "Export all Key URIs as plain text";
-
-"Export all Key URIs as a" = "Export all Key URIs as a";
-"file" = "file";
-
-"Export all Key URIs as QR Code images" = "Export all Key URIs as QR Code images";
-"combined as a" = "combined as a";
+"Export all Key URIs as a %@ file" = "Export all Key URIs as a %@ file";
+"Export all Key URIs as QR Code images combined as a %@ file" = "Export all Key URIs as QR Code images combined as a %@ file";
 
 
 // About
@@ -63,4 +58,4 @@
 "**NOTE**: Changes would not apply to the Key URI" = "**NOTE**: Changes would not apply to the Key URI";
 
 "Delete Account?" = "Delete Account?";
-"Removing account will NOT turn off Two-Factor Authentication.\n\nMake sure you have alternate ways to sign into your service." = "Removing account will NOT turn off Two-Factor Authentication.\n\nMake sure you have alternate ways to sign into your service.";
+"Removing account will NOT turn off Two-Factor Authentication. Make sure you have alternate ways to sign into your service." = "Removing account will NOT turn off Two-Factor Authentication.\n\nMake sure you have alternate ways to sign into your service.";

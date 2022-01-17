@@ -22,7 +22,8 @@ struct MainView: View {
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 30 - (Int(Date().timeIntervalSince1970) % 30)
-    @State private var codes: [String] = Array(repeating: "000000", count: 50)
+    @State private var codes: [String] = Array(repeating: String.zeros, count: 50)
+    @State private var animationTrigger: Bool = false
     @State private var isSheetPresented: Bool = false
     @State private var isFileImporterPresented: Bool = false
     @State private var editMode: EditMode = .inactive
@@ -54,6 +55,10 @@ struct MainView: View {
         })
     }
     
+    init() {
+                 UITextField.appearance().clearButtonMode = .always
+         }
+    
     var body: some View {
         NavigationView {
             List(selection: $selectedTokens) {
@@ -79,13 +84,14 @@ struct MainView: View {
             .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "AppLocked"))) {
                 _ in self.isSheetPresented = false; self.isFileImporterPresented = false
             }
+            .animation(.default, value: animationTrigger)
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 generateCodes()
                 clearTemporaryDirectory()
             }
             .onReceive(timer) { _ in
                 timeRemaining = 30 - (Int(Date().timeIntervalSince1970) % 30)
-                if timeRemaining == 30 || codes.first == "000000" {
+                if timeRemaining == 30 || codes.first == String.zeros {
                     generateCodes()
                 }
             }
@@ -130,8 +136,22 @@ struct MainView: View {
             .navigationTitle(tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue))
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
+                    Button {
+                            if !selectedTokens.isEmpty {
+                                canEditGroup = true
+                            }
+                    } label: {
+                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                            .resizable()
+                            .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.blue)
+                            .opacity(editMode == .inactive ? 0 : 1)
+                    }
+                    .disabled(editMode == .inactive ? true : false)
                     Spacer()
                     TokenGroupPickerView(selectedTokenGroup: tokenViewSelected)
+                        .onChange(of: tokenGroupPicker.GetTokenGroupNames(tokenGroup: tokenViewSelected.wrappedValue)) {
+                            newValue in selectedTokens.removeAll()
+                        }
                     Spacer()
                     Button {
                         if editMode == .inactive {
@@ -160,13 +180,23 @@ struct MainView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     if editMode == .active {
                         Button(action: {
-                            if !selectedTokens.isEmpty {
-                                canEditGroup = true
+                            if selectedTokens.isEmpty {
+                                for token in fetchedTokens.filter({ $0.displayGroup == tokenGroupPicker.FilterToken(selectedTokenGroup: tokenViewSelected.wrappedValue) ?? $0.displayGroup }).filter({ searchText.isEmpty ? true : ($0.displayIssuer ?? .empty).lowercased().contains(searchText.lowercased()) }) {
+                                    selectedTokens.insert(token)
+                                }
+                                debugPrint("Selected \(selectedTokens.count) Tokens")
+                            } else {
+                                debugPrint("De-Selected \(selectedTokens.count) Tokens")
+                                selectedTokens.removeAll()
                             }
                         }) {
-                            Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                                .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.blue)
+                            if !selectedTokens.isEmpty {
+                                Image(systemName: "rectangle.grid.1x2.fill")
+                            } else {
+                                Image(systemName: "rectangle.grid.1x2")
+                            }
                         }
+                        .foregroundColor(selectedTokens.isEmpty ? Color.primary : Color.blue)
                     } else {
                         Button {
                             presentingSheet = .moreSettings
@@ -265,23 +295,21 @@ struct MainView: View {
     
     // MARK: - Modification
     private func addItem(_ token: Token) {
-        withAnimation {
-            let newTokenData = TokenData(context: viewContext)
-            newTokenData.id = token.id
-            newTokenData.uri = token.uri
-            newTokenData.displayIssuer = token.displayIssuer
-            newTokenData.displayAccountName = token.displayAccountName
-            newTokenData.displayGroup = token.displayGroup
-            let lastIndexNumber: Int64 = fetchedTokens.last?.indexNumber ?? Int64(fetchedTokens.count)
-            newTokenData.indexNumber = lastIndexNumber + 1
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                logger.debug("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-            generateCodes()
+        let newTokenData = TokenData(context: viewContext)
+        newTokenData.id = token.id
+        newTokenData.uri = token.uri
+        newTokenData.displayIssuer = token.displayIssuer
+        newTokenData.displayAccountName = token.displayAccountName
+        newTokenData.displayGroup = token.displayGroup
+        let lastIndexNumber: Int64 = fetchedTokens.last?.indexNumber ?? Int64(fetchedTokens.count)
+        newTokenData.indexNumber = lastIndexNumber + 1
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            debugPrint("Add Item error \(nsError), \(nsError.userInfo)")
         }
+        generateCodes()
     }
     
     private func move(from source: IndexSet, to destination: Int) {
@@ -341,9 +369,8 @@ struct MainView: View {
     }
     
     private var deletionAlert: Alert {
-        let message: String = "Removing account will NOT turn off Two-Factor Authentication.\n\nMake sure you have alternate ways to sign into your service."
         return Alert(title: Text("Delete Account?"),
-                     message: Text(NSLocalizedString(message, comment: .empty)),
+                     message: Text("Removing account will NOT turn off Two-Factor Authentication. Make sure you have alternate ways to sign into your service."),
                      primaryButton: .cancel(cancelDeletion),
                      secondaryButton: .destructive(Text("Delete"), action: performDeletion))
     }
@@ -410,20 +437,22 @@ struct MainView: View {
     }
     
     private func generateCodes() {
-        let placeholder: [String] = Array(repeating: "000000", count: 30)
+        let placeholder: [String] = Array(repeating: String.zeros, count: 30)
         guard !fetchedTokens.isEmpty else {
             codes = placeholder
             return
         }
         let generated: [String] = fetchedTokens.map { code(of: $0) }
         codes = generated + placeholder
+        animationTrigger.toggle()
     }
     
     private func code(of tokenData: TokenData) -> String {
-        guard let uri: String = tokenData.uri else { return "000000" }
+        guard let uri: String = tokenData.uri else { return String.zeros }
         guard let group: String = tokenData.displayGroup else { return TokenGroupType.None.rawValue}
-        guard let token: Token = Token(uri: uri, group: group) else { return "000000" }
-        guard let code: String = OTPGenerator.totp(secret: token.secret, algorithm: token.algorithm, period: token.period) else { return "000000" }
+        guard let token: Token = Token(uri: uri, group: group) else { return String.zeros }
+        guard let code: String = OTPGenerator.totp(secret: token.secret, algorithm: token.algorithm, period: token.period) else {
+            return String.zeros }
         return code
     }
     

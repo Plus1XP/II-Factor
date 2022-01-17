@@ -11,7 +11,6 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var settings: SettingsStore
-    @ObservedObject private var biometricService = BiometricService()
 
     @Binding var isPresented: Bool
     @State var tokens: [Token]
@@ -30,7 +29,9 @@ struct SettingsView: View {
             settings.saveGlobalSettings(context)
             settings.fetchGlobalSettings(context)
             if settings.config?.isLockEnabled == true {
-                biometricService.ValidateBiometrics()
+                // Results is un-needed as we only need to trigger iOS notification.
+                // Strictly here to stop Xcode complaining
+                ValidateBiometrics()
             }
         })
     }
@@ -213,10 +214,36 @@ struct SettingsView: View {
             }
             debugPrint("iCloud Banner Displayed: \(result)")
             isDeletionBannerPresented = true
+            DismissBanner()
         }
     }
     
     private func cancelDeletion() {
         isDeletionAlertPresented = false
+    }
+    
+    private func DismissBanner() {
+        // Delay of 5 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            isDeletionBannerPresented = false
+            debugPrint("iCloud Banner Dismissed")
+        }
+    }
+    
+    private func ValidateBiometrics() -> Void {
+        let biometric = BiometricService()
+        biometric.canEvaluate { (canEvaluate, _, canEvaluateError) in
+            guard canEvaluate else {
+                debugPrint(canEvaluateError?.localizedDescription ?? "Authentication Failure, No Biometrics or Password Set")
+                return
+            }
+            biometric.evaluate { (success, error) in
+                guard success else {
+                    debugPrint(error?.localizedDescription ?? "Authentication Error, Incorrect Biometrics or Password, User Cancelled")
+                    return
+                }
+                debugPrint("Authentication Successful")
+            }
+        }
     }
 }
