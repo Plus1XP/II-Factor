@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2F14D2C62718D3ED00538FBF /* MenuCopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F14D2C52718D3ED00538FBF /* MenuCopyButton.swift */; };
+		2F41996027C6654E0034AE78 /* CloudKitStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F41995F27C6654E0034AE78 /* CloudKitStatusView.swift */; };
 		2F649937278C91840063BD44 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F649936278C91840063BD44 /* BiometricService.swift */; };
+		2F7F863E27D2BA2200DEAE51 /* CloudKitStatusLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F863D27D2BA2200DEAE51 /* CloudKitStatusLabelStyle.swift */; };
 		2FA3B4B32686769B0070B0B7 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */; };
 		2FB57FFA27187D9300036B16 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFD356B2688C16A009AE891 /* CloudKit.framework */; };
 		2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */; };
@@ -71,7 +73,9 @@
 
 /* Begin PBXFileReference section */
 		2F14D2C52718D3ED00538FBF /* MenuCopyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCopyButton.swift; sourceTree = "<group>"; };
+		2F41995F27C6654E0034AE78 /* CloudKitStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitStatusView.swift; sourceTree = "<group>"; };
 		2F649936278C91840063BD44 /* BiometricService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
+		2F7F863D27D2BA2200DEAE51 /* CloudKitStatusLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitStatusLabelStyle.swift; sourceTree = "<group>"; };
 		2FA3B4B22686769B0070B0B7 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		2FCC63BA2684CCEC005CC352 /* EnhancedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnhancedTextField.swift; sourceTree = "<group>"; };
 		2FCC63BE2684EE19005CC352 /* TokenDataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDataExtension.swift; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				2FEBD9BB267FF7EC00C98CDC /* TokenGroupButtonStyle.swift */,
+				2F7F863D27D2BA2200DEAE51 /* CloudKitStatusLabelStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 				2FEBD9B5267FF7B600C98CDC /* TokenGroupPickerView.swift */,
 				37AD0346266C8CCA0086DD10 /* ActivityView.swift */,
 				2FFCEA64268E2C1700BE2859 /* NotificationBannerView.swift */,
+				2F41995F27C6654E0034AE78 /* CloudKitStatusView.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -498,11 +504,13 @@
 				2F14D2C62718D3ED00538FBF /* MenuCopyButton.swift in Sources */,
 				37AD0314266C8A920086DD10 /* ContentView.swift in Sources */,
 				37AD0375266C8CCA0086DD10 /* StringExtensions.swift in Sources */,
+				2F7F863E27D2BA2200DEAE51 /* CloudKitStatusLabelStyle.swift in Sources */,
 				37AD036D266C8CCA0086DD10 /* ExportView.swift in Sources */,
 				37AD0372266C8CCA0086DD10 /* PhotoPicker.swift in Sources */,
 				37AD0371266C8CCA0086DD10 /* DocumentPicker.swift in Sources */,
 				37AD0365266C8CCA0086DD10 /* ActivityView.swift in Sources */,
 				37AD0374266C8CCA0086DD10 /* URLExtensions.swift in Sources */,
+				2F41996027C6654E0034AE78 /* CloudKitStatusView.swift in Sources */,
 				37AD0367266C8CCA0086DD10 /* OTPGenerator.swift in Sources */,
 				2F649937278C91840063BD44 /* BiometricService.swift in Sources */,
 				2FCC63BB2684CCEC005CC352 /* EnhancedTextField.swift in Sources */,
