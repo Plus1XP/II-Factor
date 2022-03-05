@@ -11,6 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var settings: SettingsStore
+    @ObservedObject var syncMonitor: SyncMonitor = SyncMonitor.shared
 
     @Binding var isPresented: Bool
     @State var tokens: [Token]
@@ -102,8 +103,15 @@ struct SettingsView: View {
                     
                     VStack {
                         GroupBox(
-                            label: Label("Sync", systemImage: "icloud")
-                                .foregroundColor(.secondary)
+                            label: Label {
+                                Text(stateText(for:SyncMonitor.shared.importState))
+                                    .foregroundColor(.secondary)
+                                    .font(.footnote)
+                            } icon: {
+                                Image(systemName: syncMonitor.syncStateSummary.symbolName)
+                                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
+                            }
+                                .labelStyle(CloudKitStatusLabelStyle())
                         ) {
                             Toggle("iCloud", isOn: isCloudKitEnabled)
                         }
@@ -245,5 +253,26 @@ struct SettingsView: View {
                 debugPrint("Authentication Successful")
             }
         }
+    }
+}
+
+fileprivate var dateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateStyle = DateFormatter.Style.short
+    dateFormatter.timeStyle = DateFormatter.Style.short
+    return dateFormatter
+}()
+
+/// Returns a user-displayable text description of the sync state
+func stateText(for state: SyncMonitor.SyncState) -> String {
+    switch state {
+    case .notStarted:
+        return "Not started"
+    case .inProgress(started: let date):
+        return "In progress since \(dateFormatter.string(from: date))"
+    case let .succeeded(started: _, ended: endDate):
+        return "Suceeded at \(dateFormatter.string(from: endDate))"
+    case let .failed(started: _, ended: endDate, error: _):
+        return "Failed at \(dateFormatter.string(from: endDate))"
     }
 }
