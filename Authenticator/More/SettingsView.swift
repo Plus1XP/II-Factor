@@ -11,7 +11,6 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var settings: SettingsStore
-    @ObservedObject var syncMonitor: SyncMonitor = SyncMonitor.shared
 
     @Binding var isPresented: Bool
     @State var tokens: [Token]
@@ -104,14 +103,16 @@ struct SettingsView: View {
                     VStack {
                         GroupBox(
                             label: Label {
+                                Text("Sync")
+                                    .foregroundColor(.secondary)
                                 Text(stateText(for:SyncMonitor.shared.importState))
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
                                     .foregroundColor(.secondary)
                                     .font(.footnote)
                             } icon: {
-                                Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
+                                Image(systemName: stateIcon(for:SyncMonitor.shared.importState))
+                                    .foregroundColor(stateColour(for:SyncMonitor.shared.importState))
                             }
-                                .labelStyle(CloudKitStatusLabelStyle())
                         ) {
                             Toggle("iCloud", isOn: isCloudKitEnabled)
                         }
@@ -274,5 +275,31 @@ func stateText(for state: SyncMonitor.SyncState) -> String {
         return "Suceeded at \(dateFormatter.string(from: endDate))"
     case let .failed(started: _, ended: endDate, error: _):
         return "Failed at \(dateFormatter.string(from: endDate))"
+    }
+}
+
+func stateIcon(for state: SyncMonitor.SyncState) -> String {
+    switch state {
+    case .notStarted:
+        return "bolt.horizontal.icloud"
+    case .inProgress:
+        return "arrow.clockwise.icloud"
+    case .succeeded:
+        return "icloud"
+    case .failed:
+        return "exclamationmark.icloud"
+    }
+}
+
+func stateColour(for state: SyncMonitor.SyncState) -> Color {
+    switch state {
+    case .notStarted:
+        return .gray
+    case .inProgress:
+        return .yellow
+    case .succeeded:
+        return .green
+    case .failed:
+        return .red
     }
 }
