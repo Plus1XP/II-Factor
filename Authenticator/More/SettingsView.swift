@@ -276,3 +276,29 @@ func stateText(for state: SyncMonitor.SyncState) -> String {
         return "Failed at \(dateFormatter.string(from: endDate))"
     }
 }
+
+func stateIcon(for state: SyncMonitor.SyncState) -> String {
+    switch state {
+    case .notStarted:
+        return "bolt.horizontal.icloud"
+    case .inProgress:
+        return "arrow.clockwise.icloud"
+    case .succeeded:
+        return "icloud"
+    case .failed:
+        return "exclamationmark.icloud"
+    }
+}
+
+func stateColour(for state: SyncMonitor.SyncState) -> Color {
+    switch state {
+    case .notStarted:
+        return .gray
+    case .inProgress:
+        return .yellow
+    case .succeeded:
+        return .green
+    case .failed:
+        return .red
+    }
+}
