@@ -11,6 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var settings: SettingsStore
+    @ObservedObject var syncMonitor = SyncMonitor.shared
 
     @Binding var isPresented: Bool
     @State var tokens: [Token]
@@ -105,13 +106,13 @@ struct SettingsView: View {
                             label: Label {
                                 Text("Sync")
                                     .foregroundColor(.secondary)
-                                Text(stateText(for:SyncMonitor.shared.importState))
+                                Text(stateText(for:syncMonitor.importState))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .foregroundColor(.secondary)
                                     .font(.footnote)
                             } icon: {
-                                Image(systemName: stateIcon(for:SyncMonitor.shared.importState))
-                                    .foregroundColor(stateColour(for:SyncMonitor.shared.importState))
+                                Image(systemName: stateIcon(for:syncMonitor.importState))
+                                    .foregroundColor(stateColour(for:syncMonitor.importState))
                             }
                         ) {
                             Toggle("iCloud", isOn: isCloudKitEnabled)
