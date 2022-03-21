@@ -171,6 +171,7 @@ struct SettingsView: View {
                     .contextMenu(menuItems: {
                             MenuCopyButton(content: versionString)
                     })
+                    .padding(.bottom)
                 }
             }
             .navigationTitle("Settings")
