@@ -4,7 +4,7 @@ struct AboutView: View {
 
     var body: some View {
         VStack {
-            LinkCardView(heading: "Source Code", message: "https://github.com/plus1xp/authenticator")
+            LinkCardView(heading: "Source Code", message: "https://github.com/Plus1XP/II-Factor")
         }
     }
 }
