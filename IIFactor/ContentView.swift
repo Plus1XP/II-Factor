@@ -12,6 +12,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var settings: SettingsStore
     
+    @State private var firstLaunch = true
     @State private var isAppLocked = true
     @State private var isLockEnabled = true
     @State private var isAutoLockEnable = true
@@ -71,9 +72,20 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            getLockStatusFromGlobalSettings()
-            if isLockEnabled && isAutoLockEnable {
-                ValidateBiometrics()
+            if firstLaunch {
+                getLockStatusFromGlobalSettings()
+                if isLockEnabled {
+                    ValidateBiometrics()
+                    firstLaunch = false
+                }
+
+            } else {
+                // Does this need to be here?
+                getLockStatusFromGlobalSettings()
+                if isLockEnabled && isAutoLockEnable {
+                    ValidateBiometrics()
+                }
+
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
