@@ -36,10 +36,10 @@
 		<dict>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
-			<key>NSUbiquitousContainerSupportedFolderLevels</key>
-            <string>Any</string>
-            <key>NSUbiquitousContainerName</key>
+			<key>NSUbiquitousContainerName</key>
 			<string>II Factor</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
 		</dict>
 	</dict>
 	<key>UIApplicationSceneManifest</key>

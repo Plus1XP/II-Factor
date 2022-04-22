@@ -206,6 +206,7 @@
 			children = (
 				37AD0359266C8CCA0086DD10 /* Adding */,
 				37AD030F266C8A920086DD10 /* AppDelegate.swift */,
+				37AD0311266C8A920086DD10 /* SceneDelegate.swift */,
 				37AD0376266C8E0E0086DD10 /* Assets.xcassets */,
 				37AD037B266C93D40086DD10 /* IIFactor.entitlements */,
 				2F20E0E627DCCBC20001B94F /* IIFactor.xcdatamodeld */,
@@ -218,7 +219,6 @@
 				37AD034B266C8CCA0086DD10 /* Localization */,
 				37AD0356266C8CCA0086DD10 /* More */,
 				37AD031A266C8A930086DD10 /* Preview Content */,
-				37AD0311266C8A920086DD10 /* SceneDelegate.swift */,
 				2FEBD9BE267FF83F00C98CDC /* Security */,
 				37AD0342266C8CC90086DD10 /* Settings.bundle */,
 				2FEBD9BD267FF82B00C98CDC /* Styles */,
@@ -717,7 +717,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.IIFactor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -752,7 +752,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.IIFactor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
