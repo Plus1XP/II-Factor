@@ -1,37 +1,23 @@
-## Welcome to GitHub Pages
+# II Factor
 
-You can use the [editor on GitHub](https://github.com/Plus1XP/II-Factor/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+II Factor is a TOTP open source fork from 2FA Auth for iOS & macOS.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+The project was forked to support token groups, for organising the tokens of your personal and work life. It also adds the optional convenience of iCloud backup/syncing as well as cosmetic changes.
 
-### Markdown
+II Factor give you FULL control over YOUR keys. That means allowing you to keep your keys offline, or allowing you to view, export or import your keys via a plethera of methods.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Screenshots
+### iOS
+| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/ios1.png)| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/ios2.png)|
+|---------------------|---------------------|
+| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/ios3.png)| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/ios4.png)|
+| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/ios5.png)| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/ios6.png)|
 
-```markdown
-Syntax highlighted code block
+### macOS
+| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/macos1.png)| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/macos2.png)|
+|-----------------------|-----------------------|
+| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/macos3.png)| ![](https://github.com/Plus1XP/II-Factor/blob/master/images/macos4.png)|
 
-# Header 1
-## Header 2
-### Header 3
+## Support or Contact
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Plus1XP/II-Factor/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Having trouble with II Factor? Check out our [repository](https://github.com/Plus1XP/II-Factor/) or [contact support](mailto:evlbrains@protonmail.ch) and we’ll help you sort it out.
