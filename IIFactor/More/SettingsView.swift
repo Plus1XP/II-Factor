@@ -169,7 +169,7 @@ struct SettingsView: View {
                     }
                     .font(.footnote)
                     .contextMenu(menuItems: {
-                            MenuCopyButton(content: versionString)
+                            MenuCopyButton(versionString)
                     })
                     .padding(.bottom)
                 }

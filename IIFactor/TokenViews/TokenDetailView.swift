@@ -126,7 +126,7 @@ private struct MessageCardView: View {
                         .padding(.all, 8)
                         .fillBackground(cornerRadius: 8)
                         .contextMenu(menuItems: {
-                                MenuCopyButton(content: message)
+                                MenuCopyButton(message)
                         })
                 }
                 .padding(.horizontal)
