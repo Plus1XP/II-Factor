@@ -240,7 +240,11 @@ struct MainView: View {
                             Button(action: {
                                 isFileImporterPresented = true
                             }) {
+                                #if targetEnvironment(macCatalyst)
+                                Label("Import from Finder", systemImage: "text.below.photo")
+                                #else
                                 Label("Import from Files", systemImage: "doc.badge.plus")
+                                #endif
                             }
                             Button(action: {
                                 presentingSheet = .addByManually
