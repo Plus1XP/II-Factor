@@ -455,7 +455,7 @@ struct MainView: View {
         guard let uri: String = tokenData.uri else { return String.zeros }
         guard let group: String = tokenData.displayGroup else { return TokenGroupType.None.rawValue}
         guard let token: Token = Token(uri: uri, group: group) else { return String.zeros }
-        guard let code: String = OTPGenerator.totp(secret: token.secret, algorithm: token.algorithm, period: token.period) else {
+        guard let code: String = OTPGenerator.totp(secret: token.secret, algorithm: token.algorithm, digits: token.digits, period: token.period) else {
             return String.zeros }
         return code
     }
