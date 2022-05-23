@@ -26,6 +26,8 @@
 	<string>public.app-category.utilities</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2022 Plus1XP</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Access Camera to scan QR Code</string>
 	<key>NSFaceIDUsageDescription</key>
