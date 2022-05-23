@@ -240,7 +240,11 @@ struct MainView: View {
                             Button(action: {
                                 isFileImporterPresented = true
                             }) {
+                                #if targetEnvironment(macCatalyst)
+                                Label("Import from Finder", systemImage: "text.below.photo")
+                                #else
                                 Label("Import from Files", systemImage: "doc.badge.plus")
+                                #endif
                             }
                             Button(action: {
                                 presentingSheet = .addByManually
@@ -370,7 +374,7 @@ struct MainView: View {
     
     private var deletionAlert: Alert {
         return Alert(title: Text("Delete Account?"),
-                     message: Text("Removing account will NOT turn off Two-Factor Authentication. Make sure you have alternate ways to sign into your service."),
+                     message: Text("Account Deletion Warning"),
                      primaryButton: .cancel(cancelDeletion),
                      secondaryButton: .destructive(Text("Delete"), action: performDeletion))
     }
@@ -451,7 +455,7 @@ struct MainView: View {
         guard let uri: String = tokenData.uri else { return String.zeros }
         guard let group: String = tokenData.displayGroup else { return TokenGroupType.None.rawValue}
         guard let token: Token = Token(uri: uri, group: group) else { return String.zeros }
-        guard let code: String = OTPGenerator.totp(secret: token.secret, algorithm: token.algorithm, period: token.period) else {
+        guard let code: String = OTPGenerator.totp(secret: token.secret, algorithm: token.algorithm, digits: token.digits, period: token.period) else {
             return String.zeros }
         return code
     }

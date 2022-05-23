@@ -26,7 +26,7 @@ private struct LinkCardView: View {
                         }
                 }
                 .contextMenu(menuItems: {
-                        MenuCopyButton(content: message)
+                        MenuCopyButton(message)
                 })
         }
 }

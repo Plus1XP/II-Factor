@@ -15,6 +15,7 @@
 "Scan QR Code" = "掃描二維碼";
 "Import from Photos" = "讀二維碼相片";
 "Import from Files" = "從檔案導入";
+"Import from Finder" = "從 Finder 導入";
 "Enter Manually" = "手動輸入";
 
 "Scanning" = "掃緊二維碼";
@@ -60,4 +61,4 @@
 "**NOTE**: Changes would not apply to the Key URI" = "注意：呢啲修改毋會作用到 Key URI";
 
 "Delete Account?" = "刪除帳號？";
-"Removing account will NOT turn off Two-Factor Authentication. Make sure you have alternate ways to sign into your service." = "刪除帳號毋等於關閉雙重認證\n\n務必確保你仲有其他方式認證登錄";
+"Account Deletion Warning" = "刪除帳號毋等於關閉雙重認證\n\n務必確保你仲有其他方式認證登錄";

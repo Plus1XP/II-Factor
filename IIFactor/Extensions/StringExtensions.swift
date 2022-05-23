@@ -15,10 +15,10 @@ extension String {
          /// Six zeros
         static let zeros: String = "000000"
 
-        /// Returns a new string made by removing `.whitespacesAndNewlines` from both ends of the String.
-        /// - Returns: A new string made by removing `.whitespacesAndNewlines` from both ends of the String.
+        /// Returns a new string made by removing `.whitespacesAndNewlines` & `.controlCharacters` from both ends of the String.
+        /// - Returns: A new string made by removing `.whitespacesAndNewlines` & `.controlCharacters` from both ends of the String.
         func trimmed() -> String {
-                return trimmingCharacters(in: .whitespacesAndNewlines)
+                return trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: .controlCharacters)
         }
     
         /// Returns a new string made by removing `.whitespaces` from within the String.
